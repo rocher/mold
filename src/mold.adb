@@ -17,7 +17,7 @@ procedure Mold is
    Files_Replaced : Natural;
 
    Text     : constant String  :=
-     "this is a {{test}} of {{template}}{{subs}} that works good";
+     "this is a {{test}} of {{   template   }}{{ subs }} that works good";
    New_Text : Unbounded_String := To_Unbounded_String ("");
    Matcher  : Pattern_Matcher (256);
    Matches  : Match_Array (0 .. 3);
@@ -33,7 +33,7 @@ begin
      ("Replacement finished," & Files_Replaced'Image & " file" &
       (if Files_Replaced > 1 then "s" else "") & " replaced");
 
-   Matcher.Compile ("([^{]*)({{([^}]+)}})");
+   Matcher.Compile ("([^{]*)({{ *([^ }]+) *}})");
 
    loop
       Matcher.Match (Text, Matches, Current);
