@@ -21,7 +21,7 @@ package body Replacer is
       --  Git       : GNAT.OS_Lib.String_Access;
       --  Arg_List  : GNAT.OS_Lib.Argument_List_Access;
       --  Exit_Code : Integer;
-      Rep_List : Replacement_List;
+      Rep_List : Replacement_Map;
    begin
       --  Git       := GNAT.OS_Lib.Locate_Exec_On_Path ("git");
       --  Arg_List  :=

@@ -24,11 +24,11 @@ package body Replacement is
    -- Read_Replacements --
    -----------------------
 
-   function Read_Replacements (File : String) return Replacement_List is
+   function Read_Replacements (File : String) return Replacement_Map is
       use Replacement_Package;
 
       Read_Result : TOML.Read_Result;
-      Rep_List    : Replacement_List := Empty_List;
+      Rep_List    : Replacement_Map := Empty_Map;
    begin
       Read_Result := TOML.File_IO.Load_File (File);
 
@@ -39,7 +39,9 @@ package body Replacement is
             begin
                Replacement.Variable := Element.Key;
                Replacement.Value    := Element.Value.As_Unbounded_String;
-               Rep_List.Append (Replacement);
+               --  Rep_List.Append (Replacement);
+               Rep_List.Include
+                 (Element.Key, Element.Value.As_Unbounded_String);
             end;
          end loop;
       end if;
@@ -47,22 +49,23 @@ package body Replacement is
       return Rep_List;
    end Read_Replacements;
 
-   ----------------------
-   -- Replace_Variable --
-   ----------------------
+   ------------------------
+   -- Get_Variable_Value --
+   ------------------------
 
-   function Replace_Variable
-     (Variable : Unbounded_String; Replacements : Replacement_List)
+   function Get_Variable_Value
+     (Variable : Unbounded_String; Replacements : Replacement_Map)
       return String
    is
+      use Replacement_Package;
+      Ref : constant Cursor := Replacements.Find (Variable);
    begin
-      for Repl of Replacements loop
-         if Repl.Variable = Variable then
-            return To_String (Repl.Value);
-         end if;
-      end loop;
-      return "";
-   end Replace_Variable;
+      if Ref = No_Element then
+         return "";
+      else
+         return To_String (Element (Ref));
+      end if;
+   end Get_Variable_Value;
 
    ---------------------
    -- Copy_File_Lines --
@@ -97,7 +100,7 @@ package body Replacement is
    ---------------------
 
    function Replace_In_File
-     (File : String; Replacements : Replacement_List) return Natural
+     (File : String; Replacements : Replacement_Map) return Natural
    is
       Dst : File_Access_Type := null;
    begin
@@ -111,7 +114,7 @@ package body Replacement is
    ------------------------
 
    function Apply_Replacements
-     (Directory : String; Replacements : Replacement_List) return Natural
+     (Directory : String; Replacements : Replacement_Map) return Natural
    is
       use Ada.Directories;
 

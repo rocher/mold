@@ -6,8 +6,9 @@
 --
 -------------------------------------------------------------------------------
 
-with Ada.Strings.Unbounded;              use Ada.Strings.Unbounded;
-with Ada.Containers.Doubly_Linked_Lists; use Ada.Containers;
+with Ada.Containers.Hashed_Maps; use Ada.Containers;
+with Ada.Strings.Unbounded;      use Ada.Strings.Unbounded;
+with Ada.Strings.Unbounded.Hash;
 
 package Replacement is
 
@@ -16,16 +17,14 @@ package Replacement is
       Value    : Unbounded_String := To_Unbounded_String ("");
    end record;
 
-   overriding function "=" (A, B : Replacement_Type) return Boolean is
-     (A.Variable = B.Variable and then A.Value = B.Value);
+   package Replacement_Package is new Hashed_Maps
+     (Key_Type => Unbounded_String, Element_Type => Unbounded_String,
+      Hash => Ada.Strings.Unbounded.Hash, Equivalent_Keys => "=", "=" => "=");
+   subtype Replacement_Map is Replacement_Package.Map;
 
-   package Replacement_Package is new Doubly_Linked_Lists
-     (Replacement_Type, "=");
-   subtype Replacement_List is Replacement_Package.List;
-
-   function Read_Replacements (File : String) return Replacement_List;
+   function Read_Replacements (File : String) return Replacement_Map;
 
    function Apply_Replacements
-     (Directory : String; Replacements : Replacement_List) return Natural;
+     (Directory : String; Replacements : Replacement_Map) return Natural;
 
 end Replacement;
