@@ -1,11 +1,11 @@
 site_name: Mold
-site_url: https://mold.github.io/
+site_url: https://rocher.github.io/mold
 site_author: Francesc Rocher
 site_description: >-
   Meta-variable Operations for Lean Development.
 
 repo_name: GitHub
-repo_url: https://github.com/rocher/mold/alice-adventures.github.io
+repo_url: https://github.com/rocher/mold
 # remote_branch: main
 
 copyright:
