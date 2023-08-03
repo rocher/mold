@@ -1,0 +1,817 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Meta-variable Operations for Lean Development.">
+      
+      
+        <meta name="author" content="Francesc Rocher">
+      
+      
+        <link rel="canonical" href="https://mold.github.io/reference-guide.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+        <link rel="next" href="installation.html">
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+    
+    
+      
+        <title>Reference Guide - Mold</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.85bb2934.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.a6bdf11c.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,300i,400,400i,500,500i">
+    
+      <link rel="stylesheet" href="css/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#user-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Mold" class="md-header__button md-logo" aria-label="Mold" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Mold
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rocher/mold/alice-adventures.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="index.html" class="md-tabs__link md-tabs__link--active">
+        MOLD
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Mold" class="md-nav__button md-logo" aria-label="Mold" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Mold
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rocher/mold/alice-adventures.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          MOLD
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          MOLD
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Reference Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="reference-guide.html" class="md-nav__link md-nav__link--active">
+        Reference Guide
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overall-process" class="md-nav__link">
+    Overall Process
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-substitution" class="md-nav__link">
+    Variable Substitution
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable Substitution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#substitution-modes" class="md-nav__link">
+    Substitution Modes
+  </a>
+  
+    <nav class="md-nav" aria-label="Substitution Modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal" class="md-nav__link">
+    Normal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional" class="md-nav__link">
+    Optional
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mandatory" class="md-nav__link">
+    Mandatory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-name-substitution" class="md-nav__link">
+    File Name Substitution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions-file" class="md-nav__link">
+    Definitions File
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings" class="md-nav__link">
+    Settings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defined-settings" class="md-nav__link">
+    Defined Settings
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#template-inclusion" class="md-nav__link">
+    Template Inclusion
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation.html" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="user-guide.html" class="md-nav__link">
+        User Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="user-guide">USER GUIDE<a class="headerlink" href="#user-guide" title="Anchor link to this section for reference">🔗</a></h1>
+<h2 id="overall-process">Overall Process<a class="headerlink" href="#overall-process" title="Anchor link to this section for reference">🔗</a></h2>
+<p>Variable substitution takes place in a single file or directory, and
+recursively across all sub-directories. Processed files end with the <code>mold</code>
+extension. The substitution process generates a new file with all the
+variables replaced by the corresponding values. The new file name is the same
+as the source file, but removing the <code>.mold</code> extension:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">   </span>README.md.mold<span class="w"> </span>---<span class="o">[</span><span class="w"> </span>mold<span class="w"> </span>generates<span class="w"> </span><span class="o">]</span>--&gt;<span class="w"> </span>README.md
+</span></code></pre></div>
+<p>By default, if a generated file already exists, Mold issues a error, but it is
+possible to force overwriting existing files.</p>
+<h2 id="variable-substitution">Variable Substitution<a class="headerlink" href="#variable-substitution" title="Anchor link to this section for reference">🔗</a></h2>
+<p>All variables inside a file muts be written with the syntax <code>{{variable}}</code>:</p>
+<div class="language-md highlight"><span class="filename">README.md.mold</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>   {{TITLE}}
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>   Hello {{world}}, this is just an {{example}}
+</span></code></pre></div>
+<p>with any number of spaces between variable name and curly braces:</p>
+<div class="language-md highlight"><span class="filename">README.md.mold</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>   {{  TITLE  }}
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>   Hello {{ world }}, ths is just an {{           example  }}
+</span></code></pre></div>
+<p>Thus, with the following definitions</p>
+<div class="language-toml highlight"><span class="filename">mold.toml</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">   </span><span class="n">TITLE</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;README, please&quot;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">   </span><span class="n">world</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;World&quot;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">   </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;example text&quot;</span>
+</span></code></pre></div>
+<p>the new file contents would be:</p>
+<div class="language-md highlight"><span class="filename">README.md</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>   README, please
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   Hello World, ths is just an example text
+</span></code></pre></div>
+<h3 id="substitution-modes">Substitution Modes<a class="headerlink" href="#substitution-modes" title="Anchor link to this section for reference">🔗</a></h3>
+<p>There are three substitution modes in Mod. The only difference between them is
+the error management when an undefined variable is found.</p>
+<h4 id="normal">Normal<a class="headerlink" href="#normal" title="Anchor link to this section for reference">🔗</a></h4>
+<p>For an undefined variable, the default behavior is to issue a warning and left
+the variables unchanged (not replaced). If <code>world</code> was undefined, the above
+example would be:</p>
+<div class="language-md highlight"><span class="filename">README.md.mold</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>   README, please
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>   Hello {{ world }}, ths is just an example test
+</span></code></pre></div>
+<h4 id="optional">Optional<a class="headerlink" href="#optional" title="Anchor link to this section for reference">🔗</a></h4>
+<p>Optional substitution is written as <code>{{ ?variable }}</code>, for any variable. For
+undefined variables, optional substitution does no issues a warning and the
+<code>{{ ?variable }}</code> text is removed.</p>
+<p>For example,</p>
+<p><div class="language-md highlight"><span class="filename">README.mb.mold</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>   {{  TITLE  }}
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>   Hello {{ ?world }}, this is just an {{           example  }}
+</span></code></pre></div>
+issues no warning and generates</p>
+<div class="language-md highlight"><span class="filename">README.md</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>   README, please
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>   Hello , this is just an example text
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are no <em>optional variables</em>: it is the <em>substitution mode</em> that can be
+optional. Any variable can be used as <code>{{variable}}</code> and <code>{{?variable}}</code> at
+different places, even in the same file. The difference between the
+substitution modes is the error handling when the variable is undefined.</p>
+</div>
+<h4 id="mandatory">Mandatory<a class="headerlink" href="#mandatory" title="Anchor link to this section for reference">🔗</a></h4>
+<p>Mandatory substitution is written as <code>{{ #variable }}</code>. If the variable is
+undefined, Mold issues an error and makes no substitution. By default, the
+substitution process is aborted on error.</p>
+<div class="admonition warning">
+<p class="admonition-title">Syntax</p>
+<p>In optional and mandatory substitution modes, characters <code>?</code> and <code>#</code> are
+part of the variable name, not part of the curly braces. Thus,
+<code>{{?variable}}</code> and <code>{{  #variable  }}</code> are valid variables, while
+<code>{{? variable }}</code> and <code>{{#  variable}}</code> are invalid.</p>
+</div>
+<h2 id="file-name-substitution">File Name Substitution<a class="headerlink" href="#file-name-substitution" title="Anchor link to this section for reference">🔗</a></h2>
+<p>Variables in file names must be written with the syntax <code>__variable__</code>, with
+no spaces between the variable name and underscores.</p>
+<p>For example, the file</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="w">   </span>README___world__.md.mold
+</span></code></pre></div>
+<p>would generate, with the above definitions, a new file called</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="w">   </span>README_World.md
+</span></code></pre></div>
+File name substitution can be disabled. When enabled, undefined variable in a
+file name issues an error (no optional substitution here).</p>
+<div class="admonition danger">
+<p class="admonition-title">Warning</p>
+<p>Although it is possible to use directory names in variables definitions,
+like <code>world = "foo/bar"</code> to generate the file <code>README_foo/bar.md</code>, it is a
+strongly not recommended practice, for portability reasons. Mold does not
+check if you use directory separators in variable values, so use at your
+own risk.</p>
+</div>
+<h2 id="definitions-file">Definitions File<a class="headerlink" href="#definitions-file" title="Anchor link to this section for reference">🔗</a></h2>
+<p>The default definitions file is called <code>mold.toml</code>. It must be a simple TOML
+file, with a</p>
+<div class="language-toml highlight"><span class="filename">variable assignment</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="w">   </span><span class="n">variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;value&quot;</span>
+</span></code></pre></div>
+<p>per line. Only strings are supported, and no arrays nor tables can be present.
+For more information, please read the <a href="https://toml.io">TOML specification</a>.
+Comments and multi-line strings are supported.</p>
+<h2 id="settings">Settings<a class="headerlink" href="#settings" title="Anchor link to this section for reference">🔗</a></h2>
+<p>The <code>mold</code> tool is a CLI wrapper of <code>libmold</code>, so this section applies to both
+implementations. Description is given as in the Ada <code>libmold</code> library. There
+is a flag in <code>mold</code> the exact meaning.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Setting</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right"><code>Rename_Source</code></td>
+<td align="left">Enables the use of variable substitution in the source file name.</td>
+<td align="left"><code>True</code></td>
+</tr>
+<tr>
+<td align="right"><code>Delete_Source</code></td>
+<td align="left">Delete the source file if the variable substitution process finish successfully.</td>
+<td align="left"><code>True</code></td>
+</tr>
+<tr>
+<td align="right"><code>Overwrite</code></td>
+<td align="left">Overwrite the destination file if already exists.</td>
+<td align="left"><code>False</code></td>
+</tr>
+<tr>
+<td align="right"><code>Defined_Settings</code></td>
+<td align="left">Enables the use of defined settings in the definitions fie.</td>
+<td align="left"><code>True</code></td>
+</tr>
+<tr>
+<td align="right"><code>Action</code></td>
+<td align="left">Predefined behavior for normal variable substitution mode in case of undefined variable.</td>
+<td align="left"><code>Ignore</code></td>
+</tr>
+<tr>
+<td align="right"><code>Alert</code></td>
+<td align="left">Predefined error handling for normal variable substitution mode in case of undefined variable.</td>
+<td align="left"><code>Warning</code></td>
+</tr>
+<tr>
+<td align="right"><code>Abort_On_Error</code></td>
+<td align="left">If <code>True</code>, aborts the variable substitution process as soon as an error is detected.</td>
+<td align="left"><code>True</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Action &amp; Alert</p>
+<p><code>Action</code> and <code>Alert</code> only apply to normal substitution of variables when an undefined variable is found:</p>
+<ul>
+<li><code>Action</code> can be <code>Ignore</code>, to left the substitution as is, or <code>Empty</code> to remove the text.</li>
+<li><code>Alert</code> can be <code>None</code>, to silently skip the problem, or <code>Warning</code> to issue a warning message.</li>
+</ul>
+</div>
+<h2 id="defined-settings">Defined Settings<a class="headerlink" href="#defined-settings" title="Anchor link to this section for reference">🔗</a></h2>
+<p>All variables starting with the prefix <code>mold-</code> are considered by Mold as
+<em>setting variables</em>, which means that they change the way in which Mold
+behaves by changing a Mold setting.</p>
+<p>For example,</p>
+<div class="language-toml highlight"><span class="filename">mold.toml</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="w">   </span><span class="n">mold-delete-source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;false&quot;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">   </span><span class="n">TITLE</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;README, please&quot;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">   </span><span class="n">world</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;World&quot;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">   </span><span class="n">example</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;example text&quot;</span>
+</span></code></pre></div>
+<p>would prevent to remove the source file when the variable substitution process
+ends successfully.</p>
+<p>The variable can be used also as a normal variable, so for example</p>
+<div class="language-md highlight"><span class="filename">README___world__.md.mold</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>   {{  TITLE  }}
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>   Hello {{ world }}, ths is just an {{           example  }}
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   Note: This file generated with defined settings
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>         <span class="sb">`delete-source`</span> = &quot;{{?mold-delete-source}}&quot;
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>         <span class="sb">`overwrite`</span>     = &quot;{{?mold-overwrite}}&quot;
+</span></code></pre></div>
+<p>would generate</p>
+<div class="language-md highlight"><span class="filename">README_World.md</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>   README, please
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>   Hello World, ths is just an example text
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   Note: This file generated with defined settings
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>         <span class="sb">`delete-source`</span> = &quot;false&quot;
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>         <span class="sb">`overwrite`</span>     = &quot;&quot;
+</span></code></pre></div>
+<p>All possible defined settings variables are obtained with the above settings,
+in lowercase, replacing <code>_</code> by <code>-</code>, and prefixed with <code>mold-</code>. For example,
+<code>mold-rename-source</code>, <code>mold-delete-source</code>, <code>mold-overwrite</code>, and so on.</p>
+<h2 id="template-inclusion">Template Inclusion<a class="headerlink" href="#template-inclusion" title="Anchor link to this section for reference">🔗</a></h2>
+<p>Other files can be used a generic template for header, footers and so on.
+These template files must have the <code>molt</code> extension. Can be included at any
+point in a <code>mold</code> file, in a single line, with the syntax</p>
+<div class="language-md highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>   {{ include:header.molt }}
+</span></code></pre></div>
+<p>When this line is found, Mold opens and processes the included file and the
+output is sent into the currently generated file.</p>
+<p>This is useful to share template snippets across several files or projects,
+greatly simplifying the maintenance.</p>
+<p>A template file can include other template files. The only limit on how many
+included files are supported is on your system. When circular dependencies are
+detected, an error is reported and the process is stopped.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="installation.html" class="md-footer__link md-footer__link--next" aria-label="Next: Installation" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Installation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; - 2023 Francesc Rocher
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "toc.integrate", "toc.follow"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": false, "draggable": false, "openEffect": "none", "closeEffect": "none", "slideEffect": "slide"});})</script></body>
+</html>
