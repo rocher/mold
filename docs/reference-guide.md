@@ -9,7 +9,7 @@ variables replaced by the corresponding values. The new file name is the same
 as the source file, but removing the `.mold` extension:
 
 ```bash
-   README.md.mold ---[ mold generates ]--> README.md
+   README.md.mold -- [ mold generates ] --> README.md
 ```
 
 By default, if a generated file already exists, Mold issues a error, but it is
