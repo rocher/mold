@@ -16,7 +16,11 @@ licenses = "MIT"
 ada_version = ["-gnat2022", "-gnatX"]
 
 [[depends-on]]
+gnat = ">=2021 | (>=12 & <2000)"
 clic = "~0.2.1"
 simple_logging = "^1.2.0"
-curl = "^7.81.0"
-spdx = "~0.2.0"
+
+[[depends-on]]
+libmold = ">=0.1.0-dev"
+[[pins]]
+libmold = { path = '..' }
