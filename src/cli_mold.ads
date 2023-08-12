@@ -6,11 +6,8 @@
 --
 -------------------------------------------------------------------------------
 
-with CLI_Mold;
+package CLI_Mold is
 
-procedure Mold is
-begin
+   procedure Execute;
 
-   CLI_Mold.Execute;
-
-end Mold;
+end CLI_Mold;

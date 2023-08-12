@@ -5,14 +5,14 @@
 The Ada interface of `libmold` is quite simple. It consists of a unique
 public package with only one function.
 
-All the following descriptions are in the context of the `Mold` package:
+All the following descriptions are in the context of the `Lib_Mold` package:
 
-```ada title="mold.ads"
-   package Mold is
+```ada title="lib_mold.ads"
+   package Lib_Mold is
 
       --  type definitions and function declaration
 
-   end Mold;
+   end Lib_Mold;
 ```
 
 

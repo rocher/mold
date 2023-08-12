@@ -17,13 +17,12 @@ and scaffolding.
 Mold can operate on a single file or recursively in a given directory. All
 files processed by Mold must end with the `mold` extension. The process of
 variable substitution from a mold file generates a new file, with the same
-name except the `mold` extension. If the generated file name already exists,
-an error can be issued or overwriting it can be forced.
+name except the `mold` extension.
 
 ### Three modes of variable substitution
 
 All variables can be used in three different substitution modes: `normal`,
-`optional` and `mandatory`. This provides different error management when Mold
+`optional` and `mandatory`. This provides different error handling when Mold
 encounters an undefined variable.
 
 ### Source file name substitution
@@ -36,19 +35,21 @@ but the concept is the same.
 
 All variable values are assigned in a single TOML file. The accepted file
 format is the most simple TOML format, with a single `vairable = "value"`
-assignment per line.
+assignment per line. Multiline variables are supported, as well.
 
 ### Defined settings
 
-It is possible to use variables prefixed with `mold-`, like `mold-overwrite`,
-to specify Mold settings inside the definitions file. Settings specified by
-the command line or the library interface can be overwritten by these defined
-settings. This enables the possibility to easily remember and force some
-settings during development, regardless of the settings in the project
-configuration.
+It is possible to use special variables prefixed with `mold-`, like
+`mold-delete-source-files`, to specify Mold settings inside the definitions
+file. Settings specified by the command line or the library interface can be
+overwritten by these defined settings. This enables the possibility to easily
+remember and force some settings during development or production, regardless
+of the settings used in the project configuration.
 
 ### Template inclusion
 
-Mold allows the inclusion of template files, which must have extension `molt`.
-This opens the possibility to write small snippets or generic templates that
-can be used across projects.
+Mold allows the inclusion of template files, which must end with the extension
+`molt`. This opens the possibility to write small snippets or generic
+templates that can be easily shared across projects (eg, for headers or
+footers). Template files are processed like regular files, so can contain mold
+variables, too.

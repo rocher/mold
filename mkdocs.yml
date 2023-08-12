@@ -116,6 +116,10 @@ plugins:
 #  - tags:
 #      tags_file: tags.md
 
+extra:
+  version:
+    provider: mike
+
 # extra:
 #   consent:
 #     title: Cookie consent
@@ -131,10 +135,3 @@ nav:
       - 'Reference Guide': reference-guide.md
       - Installation: installation.md
       - 'User Guide': user-guide.md
-#  - "&nbsp;For Participants&nbsp;":
-#    - participant/index.md
-#    - Project Euler: participant/Project_Euler.md
-#    - CodinFame: participant/CodinGame.md
-#    - Advent of Code : participant/Advent_of_code.md
-#  - "&nbsp;For Developers&nbsp;":
-#    - developer/index.md
