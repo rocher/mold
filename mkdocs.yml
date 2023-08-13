@@ -113,6 +113,7 @@ plugins:
         - skip-lightbox
   - offline
   - search
+  - mike
 #  - tags:
 #      tags_file: tags.md
 
