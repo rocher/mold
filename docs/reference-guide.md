@@ -9,7 +9,7 @@ variables replaced with the corresponding values. The new file name is the
 same as the source file, but removing the `.mold` extension:
 
 ```bash
-   README.md.mold -- [ mold generates ] --> README.md
+   README.md.mold ——[ mold generates ]--> README.md
 ```
 
 By default, if a generated file already exists, Mold issues a error, but it is
@@ -118,7 +118,7 @@ the error handling when an undefined variable is found.
 
 #### Normal
 
-For an undefined variable, the default behavior is to issue a warning and left
+For an undefined variable, the default behavior is to issue an error and left
 the variable *ignored*, or unchanged. If `world` was undefined, the above
 example would be:
 
@@ -126,9 +126,29 @@ example would be:
    README, please
    Hello {{ world }}, ths is just an example test
 ```
+For normal substitution, it is possible to specify what to do when an
+undefined variable is found:
 
-It is possible to specify that the undefined variable must be removed and that
-no warning must be issued.
+* *Undefined Variable Action* determines if the undefined variable must be
+  removed or kept in the destination file. It can take the values:
+    * `Ignore`, to left the variables as is
+    * `Empty`, to remove the variable in the destination file
+
+* *Undefined Variable Alert* determines the error handling strategy:
+    * `None`: does nothing
+    * `Warning`: issues a warning
+    * `Error`: issues a replacement error
+
+!!! note "Only for normal"
+
+    These two aspects do not apply to either optional or mandatory
+    substitution modes.
+
+!!! tip "Equivalent modes"
+
+    With a combination of these two aspects, it is possible to force normal
+    substitution mode to behave like optional or mandatory. See the table in
+    [Examples](#examples) below.
 
 #### Optional
 
@@ -153,9 +173,7 @@ issues no warning and generates
 
     There are no *optional variables*: it is the *substitution mode* that can be
     optional. Any variable can be used as `{{variable}}` and `{{?variable}}` at
-    different places, even in the same file. Remember that The difference
-    between the substitution modes is the error handling when the variable is
-    undefined.
+    different places, even in the same file.
 
 #### Mandatory
 
@@ -177,16 +195,17 @@ Examples with defined variable `foo="bar"` and variable `baz` undefined:
 
 Kind       | Action  | Alert   | Variable     | Replace     | Error   | R I E | Like
 -----------|---------|---------|-------------:|:------------|--------:|:-----:|---------
+**Defined variable**
 Normal     | *any*   | *any*   | `{{foo}}`    | `bar`       |         | T F F |
 Optional   | —       | —       | `{{?foo}}`   | `bar`       |         | T F F |
 Mandatory  | —       | —       | `{{#foo}}`   | `bar`       |         | T F F |
-           |         |         |              |             |         |       |
+**Undefined variable**
 Normal     | Ignore  | None    | `{{baz}}`    | `{{baz}}`   |         | F T F |
 Normal     | Ignore  | Warning | `{{baz}}`    | `{{baz}}`   | Warning | F T F |
 Normal     | Ignore  | Error   | `{{baz}}`    | `{{baz}}`   | Error   | F T F | Mandatory
 Normal     | Empty   | None    | `{{baz}}`    |             |         | F F T | Optional
 Normal     | Empty   | Warning | `{{baz}}`    |             | Warning | F F T |
-Normal     | Empty   | Error   | `{{baz}}`    |             | Warning | F F T |
+Normal     | Empty   | Error   | `{{baz}}`    |             | Error   | F F T |
            |         |         |              |             |         |       |
 Optional   | —       | —       | `{{?baz}}`   |             |         | F F T |
 Mandatory  | —       | —       | `{{#baz}}`   | `{{#baz}}`  | Error   | F T F |
@@ -215,9 +234,9 @@ would generate, with the above definitions, a new file called
    README_World.md
 ```
 
-Undefined variables in a file name signals an error; variables cannot by
-optional. Substitution in file names is enabled by default, but can be
-disabled.
+Undefined variables in a file name always issue an error; no optional
+substitution here. Substitution in file names is enabled by default, but can
+be disabled.
 
 !!! danger "Warning"
 
@@ -270,7 +289,7 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
     * `Undefined_Variable_Action` can be `Ignore`, to left the substitution as
       is, or `Empty` to remove the text.
     * `Undefined_Variable_Alert` can be `None`, to silently skip the problem,
-      or `Warning` to issue a warning message.
+      `Warning` to issue a warning and `Error` to issue an error.
 
 
 ## Defined Settings
