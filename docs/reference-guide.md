@@ -171,6 +171,33 @@ substitution process is aborted on error.
     `{{? variable }}` and `{{#  variable}}` are invalid.
 
 
+### Examples
+
+Examples with defined variable `foo="bar"` and variable `baz` undefined:
+
+Kind       | Action  | Alert   | Variable     | Replace     | Error   | R I E | Like
+-----------|---------|---------|-------------:|:------------|--------:|:-----:|---------
+Normal     | *any*   | *any*   | `{{foo}}`    | `bar`       |         | T F F |
+Optional   | —       | —       | `{{?foo}}`   | `bar`       |         | T F F |
+Mandatory  | —       | —       | `{{#foo}}`   | `bar`       |         | T F F |
+           |         |         |              |             |         |       |
+Normal     | Ignore  | None    | `{{baz}}`    | `{{baz}}`   |         | F T F |
+Normal     | Ignore  | Warning | `{{baz}}`    | `{{baz}}`   | Warning | F T F |
+Normal     | Ignore  | Error   | `{{baz}}`    | `{{baz}}`   | Error   | F T F | Mandatory
+Normal     | Empty   | None    | `{{baz}}`    |             |         | F F T | Optional
+Normal     | Empty   | Warning | `{{baz}}`    |             | Warning | F F T |
+Normal     | Empty   | Error   | `{{baz}}`    |             | Warning | F F T |
+           |         |         |              |             |         |       |
+Optional   | —       | —       | `{{?baz}}`   |             |         | F F T |
+Mandatory  | —       | —       | `{{#baz}}`   | `{{#baz}}`  | Error   | F T F |
+
+Meaning of columns 'RIE'; each one can take value True or False:
+
+  * 'R' : variable replaced with a defined value
+  * 'I' : Variable ignored
+  * 'E' : Variable emptied (removed)
+
+
 ## File Name Substitution
 
 Variables in file names must be written with the syntax `__variable__`, with
