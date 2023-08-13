@@ -33,26 +33,51 @@ example:
 
 ```
 
-INPUT DIRECTORY  --[ Mold ]-> OUTPUT DIRECTORY = /tmp/lorem/ipsum
+INPUT DIRECTORY  ─[ Mold ]-> OUTPUT DIRECTORY = /tmp/lorem/ipsum
 
      foo/                             /tmp/
-     |-- bar.txt.mold                  '-- lorem/
-     |-- baz.md.mold                       '-- ipsum/
-     |-- definitions.toml                      |-- foo/
-     |-- header.molt                           |   |-- bar.txt
-     |-- subdir_1/                             |   '-- baz.md
-     |   |-- foo-bar.adb.mold                  |-- subdir_1/
-     |   |-- bar-bar.ads.mold                  |   |-- foo-bar.adb
-     |   '-- footer.molt                       |   '-- foo-bar.ads
-     '-- subdir_2/                             '-- subdir_2/
-         |-- foo-2.adb.mold                        |-- foo-2.adb
-         |-- bar-2.ads.mold                        |-- foo-2.ads
-         |-- local-header.molt                     '-- subdir_3/
-         '-- subdir_3/                                 |-- foo-3.md
-             |-- foo-3.md.mold                         '-- bar.md
-             '-- bar.md.mold
+     ├── bar.txt.mold                  └── lorem/
+     ├── baz.md.mold                       └── ipsum/
+     ├── definitions.toml                      ├── foo/
+     ├── header.molt                           │   ├── bar.txt
+     ├── subdir_1/                             │   └── baz.md
+     │   ├── foo-bar.adb.mold                  ├── subdir_1/
+     │   ├── bar-bar.ads.mold                  │   ├── foo-bar.adb
+     │   └── footer.molt                       │   └── foo-bar.ads
+     └── subdir_2/                             └── subdir_2/
+         ├── foo-2.adb.mold                        ├── foo-2.adb
+         ├── bar-2.ads.mold                        ├── foo-2.ads
+         ├── local-header.molt                     └── subdir_3/
+         └── subdir_3/                                 ├── foo-3.md
+             ├── foo-3.md.mold                         └── bar.md
+             └── bar.md.mold
 
 ```
+
+### Error Handling
+
+There are two types of errors that Mold can detect and handle in different
+ways. First of all, there are the *fatal errors*, those that prevent Mold from
+completing the replacement job. Typical fatal errors are produced when a file
+is not found, the destination directory cannot be written or created or the
+definitions file is corrupted. These errors stop immediately the replacement
+process.
+
+`Fatal Errors`
+
+: Prevent Mold from completing the replacement job. Typical fatal errors are
+produced when a file is not found, the destination directory cannot be written
+or created, or the definitions file is corrupted. These errors stop
+immediately the replacement process.
+
+
+`Replacement Errors`
+
+: Detected during the variable replacement, these errors are caused when a
+variable is found in a mold file but the variable has not been defined.
+Depending on the settings and the type of substitution, Mold can skip this
+error, report a warning or an error, and continue with the process. Next
+section explain how these errors are handled.
 
 
 ## Variable Substitution
@@ -266,7 +291,7 @@ would generate
 ```
 
 Defined setting variables available are, for the corresponding settings
-defined in [settings]:
+defined in [Settings](#settings):
 
 | Setting                       | Variable                           |
 |-------------------------------|------------------------------------|

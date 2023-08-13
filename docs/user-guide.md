@@ -24,7 +24,7 @@ The only function call available is:
    function Apply
    (
       Source      : String          := ".";
-      Output_Dir  : String          := ".";
+      Output_Dir  : String          := "";
       Definitions : String          := "mold.toml";
       Settings    : Settings_Access := null;
       Results     : Results_Access  := null
@@ -51,32 +51,33 @@ The `Settings_Type` is defined as:
 
 ```ada title="mold.ads"
 
-   type Settings_Type is record
-      Rename_Source    : aliased Boolean;
-      Delete_Source    : aliased Boolean;
-      Overwrite        : aliased Boolean;
-      Defined_Settings : aliased Boolean;
-      Action           : aliased Undef_Var_Action;
-      Alert            : aliased Undef_Var_Alert;
-      Abort_On_Error   : aliased Boolean;
-   end record;
+   type Undefined_Variable_Actions is (Ignore, Empty);
+   type Undefined_Variable_Alerts  is (None, Warning);
 
-   type Settings_Access is access all Settings_Type;
+   type Settings_Type is record
+      Replacement_In_File_Names   : aliased Boolean;
+      Delete_Source_Files         : aliased Boolean;
+      Overwrite_Destination_Files : aliased Boolean;
+      Enable_Defined_Settings     : aliased Boolean;
+      Undefined_Variable_Action   : aliased Undefined_Variable_Actions;
+      Undefined_Variable_Alert    : aliased Undefined_Variable_Alerts;
+      Abort_On_Error              : aliased Boolean;
+   end record;
 ```
 
 If you specify a `null` pointer in the `Settings` parameter, then the default
 settings are used, which are defined as:
 
-```ada title="mold.ads"
+```ada title="lib_mold.ads"
    Default_Settings : aliased Settings_Type :=
    (
-      Rename_Source    => True,
-      Delete_Source    => True,
-      Overwrite        => False,
-      Defined_Settings => True,
-      Action           => Ignore,
-      Alert            => Warning,
-      Abort_On_Error   => True
+      Replacement_In_File_Names   => True,
+      Delete_Source_Files         => True,
+      Overwrite_Destination_Files => False,
+      Enable_Defined_Settings     => True,
+      Undefined_Variable_Action   => Ignore,
+      Undefined_Variable_Alert    => Warning,
+      Abort_On_Error              => True
    );
 ```
 
@@ -88,24 +89,23 @@ Refer to [Settings](reference-guide.md#settings) section for more information.
 If you give a pointer to a `Results_Type` object as parameter in the `Apply`
 function, detailed results are provided:
 
-```ada title="mold.ads"
+```ada title="lib_mold.ads"
    type Field_Type is
    (
-      Files,          --  files processed
-      Renamed,        --  files renames
-      Overwritten,    --  files overwritten
-      Variables,      --  variables found
-      Defined,        --  variables with a defined value
-      Undefined,      --  undefined variables found
-      Substituted,    --  replacements made with a defined value
-      Ignored,        --  replacements ignored
-      Emptied,        --  replacements emptied
-      Warnings,       --  warnings issued
-      Errors          --  errors issued
+      Files_Processed,
+      Files_Renamed,
+      Files_Overwritten,
+      Variables_Defined,     --  in the definitions file
+      Variables_Found,       --  in all mold files
+      Variables_Undefined,
+      Variables_Replaced,
+      Variables_Ignored,
+      Variables_Emptied,
+      Replacement_Warnings,
+      Replacement_Errors
    );
 
    type Results_Type is array (Field_Type) of Natural;
-   type Results_Access is access all Results_Type;
 ```
 
 
