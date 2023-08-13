@@ -133,9 +133,9 @@ extra:
 nav:
   - MOLD:
     - Introduction: index.md
-  - 'Reference':
+  - Reference Guide:
     - reference-guide.md
   - User guide:
-    - 'User Guide': user-guide.md
+    - user-guide.md
   - Installation:
     - installation.md
