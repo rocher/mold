@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://rocher.github.io/mold/0.1/index.html</loc>
+         <lastmod>2023-08-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://rocher.github.io/mold/0.1/installation.html</loc>
+         <lastmod>2023-08-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://rocher.github.io/mold/0.1/reference-guide.html</loc>
+         <lastmod>2023-08-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://rocher.github.io/mold/0.1/user-guide.html</loc>
+         <lastmod>2023-08-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+</urlset>
