@@ -6,8 +6,8 @@
 --
 -------------------------------------------------------------------------------
 
-package CLI_Mold is
+package Mold_CLI is
 
    procedure Execute;
 
-end CLI_Mold;
+end Mold_CLI;

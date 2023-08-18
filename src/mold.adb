@@ -6,11 +6,11 @@
 --
 -------------------------------------------------------------------------------
 
-with CLI_Mold;
+with Mold_CLI;
 
 procedure Mold is
 begin
 
-   CLI_Mold.Execute;
+   Mold_CLI.Execute;
 
 end Mold;
