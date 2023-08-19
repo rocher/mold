@@ -10,11 +10,11 @@ with AAA.Strings;
 with GNAT.Strings;
 with CLIC.Subcommand;
 
-with Lib_Mold;
+with Mold_Lib;
 
 package Mold_Apply is
 
-   package Mold renames Lib_Mold;
+   package Mold renames Mold_Lib;
 
    type Cmd_Type is new CLIC.Subcommand.Command with private;
 
