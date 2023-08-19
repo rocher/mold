@@ -62,7 +62,7 @@ package Mold_Apply is
 private
 
    type Cmd_Type is new CLIC.Subcommand.Command with record
-      Settings   : aliased Mold.Settings_Type;
+      Settings   : aliased Mold.Settings_Type         := Mold.Default_Settings;
       Action_Str : aliased GNAT.Strings.String_Access := null;
       Alert_Str  : aliased GNAT.Strings.String_Access := null;
    end record;

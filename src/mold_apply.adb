@@ -34,16 +34,16 @@ package body Mold_Apply is
         (Config,
          Cmd.Settings.Replacement_In_File_Names'Access,
          Switch      => "-r",
-         Long_Switch => "--replace-in-file-names",
-         Help        => "Enable variable substitution in source file names"
+         Long_Switch => "--no-replace-in-file-names",
+         Help        => "Disable variable substitution in source file names"
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Delete_Source_Files'Access,
          Switch      => "-d",
-         Long_Switch => "--delete-source-files",
-         Help        => "Delete source files"
+         Long_Switch => "--no-delete-source-files",
+         Help        => "Do not delete source files"
       );
 
       Define_Switch
@@ -58,8 +58,8 @@ package body Mold_Apply is
         (Config,
          Cmd.Settings.Enable_Defined_Settings'Access,
          Switch      => "-e",
-         Long_Switch => "--defined-settings",
-         Help        => "Enable defined settings"
+         Long_Switch => "--no-defined-settings",
+         Help        => "Disable defined settings"
       );
 
       Define_Switch
@@ -69,7 +69,8 @@ package body Mold_Apply is
          Switch      => "-c:",
          Long_Switch => "--action=",
          Argument    => "ACTION",
-         Help        => "Undefined variable action: ignore or empty"
+         Help        => "Undefined variable action: " &
+                        "ignore or empty, default is ignore"
       );
 
       Define_Switch
@@ -79,15 +80,16 @@ package body Mold_Apply is
          Switch      => "-l:",
          Long_Switch => "--alert=",
          Argument    => "LEVEL",
-         Help        => "Undefined variable alert: warning or error"
+         Help        => "Undefined variable alert: " &
+                        "none, warning or error, default is error"
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Abort_On_Error'Access,
          Switch      => "-a",
-         Long_Switch => "--abort-on-error",
-         Help        => "Abort on error"
+         Long_Switch => "--no-abort-on-error",
+         Help        => "Do not abort on error"
       );
 
       pragma Style_Checks (on);
@@ -171,7 +173,9 @@ package body Mold_Apply is
          Errors :=
            Mold.Apply
              (Definitions => Args.Element (Idx),
-              Source      => Args.Element (Idx + 1), Output_Dir => Output_Dir);
+              Source      => Args.Element (Idx + 1),
+              Settings    => Cmd.Settings'Unrestricted_Access,
+              Output_Dir  => Output_Dir, Log_Level => Log.Level);
       end;
 
    exception
