@@ -7,6 +7,7 @@
 -------------------------------------------------------------------------------
 
 with CLIC.Subcommand; use CLIC.Subcommand;
+with GNAT.OS_Lib;
 with Simple_Logging;
 
 with GNAT.Strings; use GNAT.Strings;
@@ -144,6 +145,7 @@ package body Mold_Apply is
    is
       Args_Length : constant Positive := Positive (Args.Length);
    begin
+      Log.Debug ("BEGIN Mold_Apply.Execute");
       if Cmd.Action_Str.all'Length > 0 then
          Cmd.Settings.Undefined_Variable_Action := Get_Action (Cmd.Action_Str);
       end if;
@@ -160,7 +162,7 @@ package body Mold_Apply is
 
       if Args_Length < 2 or else Args_Length > 3 then
          Log.Error ("Invalid number or arguments");
-         return;
+         GNAT.OS_Lib.OS_Exit (1);
       end if;
 
       declare
@@ -176,14 +178,23 @@ package body Mold_Apply is
               Source      => Args.Element (Idx + 1),
               Settings    => Cmd.Settings'Unrestricted_Access,
               Output_Dir  => Output_Dir, Log_Level => Log.Level);
+         if Errors > 0 then
+            Log.Debug ("END Mold_Apply.Execute");
+            GNAT.OS_Lib.OS_Exit (1);
+         end if;
       end;
+
+      Log.Debug ("END Mold_Apply.Execute");
 
    exception
       when Invalid_Action =>
          Log.Error ("Invalid value '" & Cmd.Action_Str.all & "' for Action");
+         GNAT.OS_Lib.OS_Exit (2);
 
       when Invalid_Alert =>
          Log.Error ("Invalid value '" & Cmd.Alert_Str.all & "' for Alert");
+         GNAT.OS_Lib.OS_Exit (3);
+
    end Execute;
 
 end Mold_Apply;
