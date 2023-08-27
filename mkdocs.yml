@@ -141,3 +141,8 @@ nav:
     - installation.md
   - Change Log:
     - change-log.md
+
+# * SECTION - PUBLISH DOCS
+#   • Locally develop and inspect with 'mkdocs serve'
+#   • Publish new version with 'mike deploy --push --update-aliases REL latest'
+#   • Update web default version with 'mike --set-default --push REL'
