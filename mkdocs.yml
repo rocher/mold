@@ -139,3 +139,5 @@ nav:
     - user-guide.md
   - Installation:
     - installation.md
+  - Change Log:
+    - change-log.md
