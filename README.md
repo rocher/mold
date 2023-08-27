@@ -1,9 +1,3 @@
-name = "mold"
-version = "0.2.0-dev"
-tags = ["template", "template-engine", "template-repo"]
-
-description = "Meta-variable Operations for Lean Development (CLI)"
-long-description = '''
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/mold.json)](https://alire.ada.dev/crates/mold.html)
 [![Alire CI/CD](https://img.shields.io/endpoint?url=https://alire-crate-ci.ada.dev/badges/mold.json)](https://alire-crate-ci.ada.dev/crates/mold.html)
 ![unit-test](https://github.com/rocher/mold_lib/actions/workflows/unit-test.yml/badge.svg)
@@ -53,31 +47,3 @@ information.
 ---
 ## License
 MIT (c) 2023 Francesc Rocher
-'''
-
-authors = ["Francesc Rocher"]
-website = "https://rocher.github.io/mold"
-maintainers = ["Francesc Rocher <francesc.rocher@gmail.com>"]
-maintainers-logins = ["rocher"]
-
-licenses = "MIT"
-
-executables = ["mold"]
-
-[build-profiles]
-"mold" = "release"
-
-[build-switches."*"]
-ada_version = ["-gnat2022", "-gnatX"]
-
-[build-switches]
-release.optimization = ["-O2", "-gnatn"]
-
-[[depends-on]]
-clic = "~0.2.1"
-gnat = ">=2021 | (>=12 & <2000)"
-mold_lib = ">=0.2.0-dev"
-simple_logging = "^1.2.0"
-
-[[pins]]
-mold_lib = { path = '../mold_lib/' }
