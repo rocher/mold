@@ -76,7 +76,7 @@ settings are used, which are defined as:
       Overwrite_Destination_Files => False,
       Enable_Defined_Settings     => True,
       Undefined_Variable_Action   => Ignore,
-      Undefined_Variable_Alert    => Warning,
+      Undefined_Variable_Alert    => Error,
       Abort_On_Error              => True
    );
 ```
