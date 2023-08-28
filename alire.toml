@@ -1,5 +1,5 @@
 name = "mold"
-version = "0.2.0-dev"
+version = "0.2.1"
 tags = ["template", "template-engine", "template-repo"]
 
 description = "Meta-variable Operations for Lean Development (CLI)"
@@ -76,7 +76,7 @@ release.optimization = ["-O2", "-gnatn"]
 [[depends-on]]
 clic = "~0.2.1"
 gnat = ">=2021 | (>=12 & <2000)"
-mold_lib = ">=0.2.0-dev"
+mold_lib = ">=0.2.1"
 simple_logging = "^1.2.0"
 
 [[pins]]
