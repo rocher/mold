@@ -143,7 +143,7 @@ package body Mold_Apply is
    overriding procedure Execute
      (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector)
    is
-      Args_Length : constant Positive := Positive (Args.Length);
+      Args_Length : constant Natural := Natural (Args.Length);
    begin
       Log.Debug ("BEGIN Mold_Apply.Execute");
       if Cmd.Action_Str.all'Length > 0 then
