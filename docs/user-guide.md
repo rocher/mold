@@ -2,17 +2,17 @@
 
 ## Ada Library
 
-The Ada interface of `libmold` is quite simple. It consists of a unique
+The Ada interface of `mold_lib` is quite simple. It consists of a unique
 public package with only one function.
 
-All the following descriptions are in the context of the `Lib_Mold` package:
+All the following descriptions are in the context of the `Mold_Lib` package:
 
-```ada title="lib_mold.ads"
-   package Lib_Mold is
+```ada title="mold_lib.ads"
+   package Mold_Lib is
 
       --  type definitions and function declaration
 
-   end Lib_Mold;
+   end Mold_Lib;
 ```
 
 
@@ -27,6 +27,7 @@ The only function call available is:
       Output_Dir  : String          := "";
       Definitions : String          := "mold.toml";
       Settings    : Settings_Access := null;
+      Filters     : Filter_Array    := [others => null];
       Results     : Results_Access  := null
    )
    return Natural;
@@ -42,7 +43,13 @@ The only function call available is:
   4. `Settings` is a pointer to a `Mold.Settings_Type` object. If `null`, the
      default settings are used. See section below for a complete description.
 
-  5. Return value is the number of errors detected.
+  5. `Filters` is an array `(0..9)` of pointers to functions with the
+     signature
+     ```ada
+        function (S : String) return String;
+     ```
+
+  6. Return value is the number of errors detected.
 
 
 ### Settings
@@ -52,7 +59,7 @@ The `Settings_Type` is defined as:
 ```ada title="mold.ads"
 
    type Undefined_Variable_Actions is (Ignore, Empty);
-   type Undefined_Variable_Alerts  is (None, Warning);
+   type Undefined_Alerts  is (None, Warning, Error);
 
    type Settings_Type is record
       Replacement_In_File_Names   : aliased Boolean;
@@ -60,7 +67,8 @@ The `Settings_Type` is defined as:
       Overwrite_Destination_Files : aliased Boolean;
       Enable_Defined_Settings     : aliased Boolean;
       Undefined_Variable_Action   : aliased Undefined_Variable_Actions;
-      Undefined_Variable_Alert    : aliased Undefined_Variable_Alerts;
+      Undefined_Variable_Alert    : aliased Undefined_Alerts;
+      Undefined_Filter_Alert      : aliased Undefined_Alerts;
       Abort_On_Error              : aliased Boolean;
    end record;
 ```
@@ -68,7 +76,7 @@ The `Settings_Type` is defined as:
 If you specify a `null` pointer in the `Settings` parameter, then the default
 settings are used, which are defined as:
 
-```ada title="lib_mold.ads"
+```ada title="mold_lib.ads"
    Default_Settings : aliased Settings_Type :=
    (
       Replacement_In_File_Names   => True,
@@ -77,6 +85,7 @@ settings are used, which are defined as:
       Enable_Defined_Settings     => True,
       Undefined_Variable_Action   => Ignore,
       Undefined_Variable_Alert    => Error,
+      Undefined_Filter_Alert      => Warning,
       Abort_On_Error              => True
    );
 ```
@@ -89,18 +98,21 @@ Refer to [Settings](reference-guide.md#settings) section for more information.
 If you give a pointer to a `Results_Type` object as parameter in the `Apply`
 function, detailed results are provided:
 
-```ada title="lib_mold.ads"
+```ada title="mold_lib.ads"
    type Field_Type is
    (
       Files_Processed,
       Files_Renamed,
       Files_Overwritten,
+      Files_Deleted,
       Variables_Defined,     --  in the definitions file
       Variables_Found,       --  in all mold files
       Variables_Undefined,
       Variables_Replaced,
       Variables_Ignored,
       Variables_Emptied,
+      Filters_Found,
+      Filters_Applied,
       Replacement_Warnings,
       Replacement_Errors
    );

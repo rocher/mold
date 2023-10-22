@@ -25,6 +25,13 @@ All variables can be used in three different substitution modes: `normal`,
 `optional` and `mandatory`. This provides different error handling when Mold
 encounters an undefined variable.
 
+### Text filters
+
+Text filters are functions that can be applied during variable substitution
+for additional text transformation. There a several predefined text filters
+covering a wide range of uses cases. Additionally, with the mold library it is
+possible to define your custom text filters.
+
 ### Source file name substitution
 
 Variable substitution can be applied also in the source file name. The syntax
@@ -34,7 +41,7 @@ but the concept is the same.
 ### Variable definitions file
 
 All variable values are assigned in a single TOML file. The accepted file
-format is the most simple TOML format, with a single `vairable = "value"`
+format is the most simple TOML format, with a single `variable = "value"`
 assignment per line. Multiline variables are supported, as well.
 
 ### Defined settings

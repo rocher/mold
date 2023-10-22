@@ -217,6 +217,260 @@ Meaning of columns 'RIE'; each one can take value True or False:
   * 'E' : Variable emptied (removed)
 
 
+## Text Filters
+
+Text filters enable text transformations before variable substitution. In the
+command line, there are few predefined text filters. In the library, you can
+provide up to ten filters. In general, a text filter is a function that
+receives the value of the variable as an argument, applies some
+transformation and returns a string.
+
+Text filters are applied independently of the variable substitution mode: if a
+value is found for a variables, then filters are applied to that value.
+
+### Syntax
+
+Text filters are applied when the following syntax is used:
+
+```md title="syntax"
+   {{VARIABLE/<FILTER>}}
+```
+
+where `<FILTER>` is a *filter specification*.
+
+For example:
+
+```md title="example.txt.mold"
+   {{TITLE}}
+   {{TITLE/s-}}
+```
+
+???+ danger "No Trailing spaces"
+
+    Text filter specification can contain the character space, `' '`, as an
+    argument to some filters. Parsing spaces is no problem, unless they appear
+    in the last position of the specification. For this reason, DO NOT USE
+    trailing spaces in variables substitution. For example, the text filter
+    to replace all characters dot `'.'` by an space `' '` is written as
+    `{{ Some_Variable/r. }}`. Using more that one space at the end can confuse
+    the parser if the text filter admits no parameters. For example, the text
+    filter that converts all characters to lower case is written as
+    `{{ Some_Variable/l}}`. But written as `{{ Some_Variable/l }}`, the parser
+    interprets that you are passing the argument `' '` to the filter, which is
+    incorrect.
+
+In this example, the `/s-` part tells mold to apply the predefined filter
+*sequence* with two arguments: the value of `TITLE` (all text filters
+mandatorily receive this argument) and the character `'-'`. The filter returns
+a sequence of `'-'` with the same length as the value of `TITLE`:
+
+```md title="example.txt"
+   README, please
+   --------------
+```
+
+All text filters receive the value of the variable as first argument.
+Predefined text filters (see below) can have additional parameters (one or
+more). Custom filters cannot have additional parameters.
+
+Predefined text filters are named with a single letter, whilst custom filters
+are indexed in the range `0..9`.
+
+### Multiple filters
+
+Text filters can be *chained* or *composed* in a sequence. Like in a pipeline
+of commands, the result of one text filter is used as an argument for the next
+filter.
+
+For example, with the definition:
+```toml title="example.toml"
+   Title = "  This is a     title   "
+```
+
+the following substitution:
+
+!!! info inline end "No escape required"
+
+    The character slash, `'/'`, is the text filter separator. If you want to
+    use it as an argument to a text filter, just write it twice, `'//'`.
+
+!!! warning inline end "No trailing spaces"
+
+    *Remember*: when using text filters, do not use additional trailing spaces!
+
+```ada title="example.txt.mold"
+   {{ Title/Ta}}      -- (1)!
+   {{ Title/Ta/s-}}
+   {{ Title/s-/Ta}}   -- (2)!
+   {{ Title/s///Ta}}  -- (3)!
+```
+
+1. The value of `Title` does not change when a text filter is applied.
+2. The order in which text filters are specified can modify the result.
+3. The double `'//'` is seen as a single `'/'` by the text filter `s`.
+
+would be:
+
+!!! info inline end "Text filters"
+    The text filter `Ta` trims leading and trailing spaces, and replaces
+    consecutive spaces with only one space.
+
+```md title="example.txt"
+   This is a title
+   ---------------
+   ------------------------
+   ////////////////////////
+```
+
+### Predefined Text Filters
+
+In this section, `<DIR>`, `<CHAR>`, `<SRC>` and `<DST>` are single characters,
+and `<NUM>` is a positive number. Text filters that can modify the value of a
+variable by replacing or adding characters start with a lowercase letter. Text
+filters that can delete some characters starts with an uppercase letter.
+
+#### Space trimming
+
+  * `T<DIR>`, *trim* : trim blanks (spaces and tabs) in the specified
+    direction:
+      + `l` *left*
+      + `r` *right*
+      + `b` *both*; equivalent to `/Tl/Tr`
+      + `s` *squash*; replace sequences of multiple blanks (leading, trailing
+        and internal) to a single space
+      * `a` *all* : equivalent to `/Tb/Ts`
+  * `X`, *remove blanks* : remove all tabs and spaces.
+
+  * Examples, with `Line = "␣␉␣␉␣␣This␣␣is␣a␣line␣␣␣full␣of␣␉␣tabs␣and␣spaces␣␣␣"`
+    + `{{Line/Tb}}` $\rightarrow$ `"This␣␣is␣a␣line␣␣␣full␣of␣␉␣tabs␣and␣spaces"`
+    + `{{Line/Ts}}` $\rightarrow$ `"␣This␣is␣a␣line␣full␣of␣tabs␣and␣spaces␣"`
+    + `{{Line/Ta}}` $\rightarrow$ `"This␣is␣a␣line␣full␣of␣tabs␣and␣spaces"`
+    + `{{Line/X}}` $\rightarrow$ `"Thisisalinefulloftabsandspaces"`
+
+#### Character substitution
+
+  * `r<WHICH><SRC><DST>`, *replace* : replace occurrences of character `<SRC>`
+    with character `<DST>`. `<WHICH>` can be
+    + `a`, *all* : replace all occurrences of `<SRC>`.
+    + `f`, *first* : replace first occurrence of `<SRC>`.
+    + `l`, *last* : replace last occurrence of `<SRC>`.
+  * `s<CHAR>`, *sequence* : replace any character with `<CHAR>`; that is,
+    returns a sequence of `<CHAR>` of the same length than the value of the
+    variable.
+  * `D<CHAR>`, *delete all* : delete all occurrences of `<CHAR>`.
+
+  * Examples:
+    + `"Hello, world"/rao0` $\rightarrow$ `"Hell0, w0rld"`
+    + `"Hello, world"/rfo0/rloO` $\rightarrow$ `"Hell0, wOrld"`
+    + `"Hello, world"/s*` $\rightarrow$ `"************"`
+    + `"Hello, world"/Do` $\rightarrow$ `"Hell, wrld"`
+
+#### Padding and truncating
+
+!!! example inline end "Number formatting"
+
+    This text filter can be used to basic number formatting. For example,
+    `/pl05` adjusts a number to the right with five positions and leading
+    zeroes:
+
+      * `"1"/pl05` $\rightarrow$ `00001`
+      * `"42"/pl04` $\rightarrow$ `0042`
+      * `"123"/pl02` $\rightarrow$ `123`
+
+  * `p<DIR><CHAR><NUM>`, *padding* : adjust the value of the variable with
+    leading or trailing `<CHAR>` to the specified width `<NUM>`. `<DIR>` can
+    be:
+    + `l` to add spaces to the left (adjust to right)
+    + `r` to add spaces to the right (adjust to left)
+  * `W<NUM>`, *truncate to width* : truncate the value of the variable to the
+    given width.
+
+  * Examples:
+    + `"Hello, world"/pl*4` $\rightarrow$ `"Hello, world"`
+    + `"Hello, world"/pl=22` $\rightarrow$ `"==========Hello, world"`
+    + `"Hello, world"/pr-22` $\rightarrow$ `"Hello, world----------"`
+    + `"Hello, world"/W4` $\rightarrow$ `"Hell"`
+    + `"Hello, world"/W42` $\rightarrow$ `"Hello, world"`
+
+#### Case transformation and naming style
+
+  * `c<CASE>`, *case conversion*
+    + `l`, *to lowercase*: transform all characters to lowercase
+    + `c`, *to capitals*: transform all words to Capitals
+    + `u`, *to uppercase*: transform all characters to UPPERCASE
+
+  * `n<STYLE>`, *apply naming style*: applies one of the following naming
+    conventions designated by `<STYLE>`; example applied to `"bytes per
+    second"`
+
+    !!! example inline end "Equivalences"
+
+        Some naming styles can be obtained by composing other predefined text
+        filters. For example, `/ns` is the same as `/cl/Ta/ra _`.
+
+    |  Style  | Name             | Example            | Equivalence        |
+    | :-----: | ---------------- | ------------------ | -----------------  |
+    | `f`     | flatcase         | `bytespersecond`   | `/cl/X` or `/X/cl` |
+    | `c`     | lowerCamelCase   | `bytesPerSecond`   |                    |
+    | `C`     | UpperCamelCase   | `BytesPerSecond`   | `/cc/X`            |
+    | `U`     | UPPERCASE        | `BYTESPERSECOND`   | `/cu/X` or `/X/cu` |
+    | `s`     | snake_case       | `bytes_per_second` | `/cl/Ta/ra _`      |
+    | `S`     | camel_Snake_Case | `bytes_Per_Second` |                    |
+    | `i`     | Title_Case       | `Bytes_Per_Second` | `/cc/Ta/ra _`      |
+    | `A`     | ALL_CAPS         | `BYTES_PER_SECOND` | `/cu/Ta/ra _`      |
+    | `d`     | dash-case        | `bytes-per-second` | `/cl/Ta/ra -`      |
+    | `t`     | Train-Case       | `Bytes-Per-Second` | `/cc/Ta/ra -`      |
+    | `T`     | TRAIN-CASE       | `BYTES-PER-SECOND` | `/cu/Ta/ra -`      |
+
+
+#### Paragraph formatting
+
+???+ warning "Work in progress"
+
+    Paragraph formatting is in the features road map. It will consist in two
+    filters to manage paragraphs:
+
+      1. Basic formatting to a given width
+      2. Formatting to a given width adding a prefix at each line
+
+    Additional filters could be provided, like justifying a paragraph.
+
+
+### Custom Text Filters (lib)
+
+!!! info inline end "Note"
+
+    This feature is only available for the library, not for the command line.
+
+A text filter is a pointer to a function with the signature
+
+```ada
+   function Text_Filter (S : String) return String;
+```
+
+Text filters are passed to the mold library as an array of pointers to
+functions numbered in the range `0..9`. Thus, when you want to use a custom
+text filter, you can write
+
+```md title="README.mb.mold"
+   {{  TITLE  }}
+   {{  TITLE/0}}
+   Hello {{ ?world }}, this is just an {{           example  }}
+```
+
+The syntax `/0` after `TITLE`, tells mold to apply the filter in the 0th
+position of the array before the variable substitution. Assuming that the 0th
+element of the array of texts filters points to a function that returns a
+sequence of `"---"` with the same length of the argument, the resulting
+substitution would be:
+
+```md title="README.mb.mold"
+   README, please
+   --------------
+   Hello , this is just an example text
+```
+
+
 ## File Name Substitution
 
 Variables in file names must be written with the syntax `__variable__`, with
@@ -271,15 +525,16 @@ The `mold` tool is a CLI wrapper of `libmold`, so this section applies to both
 implementations. There is a flag in the `mold` tool with the exact meaning:
 
 
-| Setting                       |   Description   | Default |
-|------------------------------:|:----------------|:--------|
-| `Replacement_In_File_Names`   | Enables variable substitution in source file names. | `True` |
-| `Delete_Source_Files`         | Delete source files if variable substitution process finish successfully. | `True` |
-| `Overwrite_Destination_Files` | Overwrite destination files, if already exist. | `False` |
-| `Enable_Defined_Settings`     | Enable the use of mold settings in the definitions fie. | `True` |
-| `Undefined_Variable_Action`   | When undefined, replacement for normal variable substitution mode. | `Ignore` |
-| `Undefined_Variable_Alert`    | When undefined, error handling for normal variable substitution mode. | `Warning`  |
-| `Abort_On_Error`               | If `True`, aborts the variable substitution process as soon as an error is detected. | `True` |
+| Setting                       |   Description                                                             | Default   |
+| ----------------------------: | :-------------------------------------------------------------------------| :-------- |
+| `Replacement_In_File_Names`   | Enables variable substitution in source file names.                       | `True`    |
+| `Delete_Source_Files`         | Delete source files if variable substitution process finish successfully. | `True`    |
+| `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
+| `Enable_Defined_Settings`     | Enable the use of mold settings in the definitions fie.                   | `True`    |
+| `Undefined_Variable_Action`   | Action for undefined variable substitution.                               | `Ignore`  |
+| `Undefined_Variable_Alert`    | Error handling for undefined variable substitution.                       | `Warning` |
+| `Undefined_Filter_Alert`      | Alert level for undefined filters.                                        | `Warning` |
+| `Abort_On_Error`              | If `True`, aborts the process as soon as an error is detected.            | `True`    |
 
 !!! tip "Action & Alert"
 
@@ -346,6 +601,7 @@ defined in [Settings](#settings):
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
 | `Undefined_Variable_Action`   | `mold-undefined-variable-action`   |
 | `Undefined_Variable_Alert`    | `mold-undefined-variable-alert`    |
+| `Undefined_Filter_Alert`      | `mold-undefined-filter-alert`      |
 | `Abort_On_Error`              | `mold-abort-on-error`              |
 
 
