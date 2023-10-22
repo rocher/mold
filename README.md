@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg)](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue)](https://github.com/rocher/mold/blob/master/LICENSE)
 
-<img src="Ada_Mold_CLI.png" width="222" />
+<img src="docs/img/Ada_Mold.png" width="222" />
 
 ## Welcome to **Mold**
 
