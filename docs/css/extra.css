@@ -79,7 +79,17 @@ img {
 img.alice {
     /* margin-top: -3.5em; */
     padding: 0;
-    width: 36%;
+    width: 30%;
+}
+
+img.alice-half {
+    /* margin-top: -3.5em; */
+    padding: 0;
+    width: 15%;
+}
+
+img.badge {
+    padding: 0.1em;
 }
 
 .md-nav {

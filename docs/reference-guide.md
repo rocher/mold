@@ -1,3 +1,5 @@
+![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
+
 # REFERENCE GUIDE
 
 ## Overall Process
@@ -193,8 +195,8 @@ substitution process is aborted on error.
 
 Examples with defined variable `foo="bar"` and variable `baz` undefined:
 
-Kind       | Action  | Alert   | Variable     | Replace     | Error   | R I E | Like
------------|---------|---------|-------------:|:------------|--------:|:-----:|---------
+| Kind | Action | Alert | Variable | Replace | Error | R I E | Like |
+| ---- | ------ | ----- | -------: | :------ | ----: | :---: | ---- |
 **Defined variable**
 Normal     | *any*   | *any*   | `{{foo}}`    | `bar`       |         | T F F |
 Optional   | —       | —       | `{{?foo}}`   | `bar`       |         | T F F |
@@ -408,19 +410,19 @@ filters that can delete some characters starts with an uppercase letter.
         Some naming styles can be obtained by composing other predefined text
         filters. For example, `/ns` is the same as `/cl/Ta/ra _`.
 
-    |  Style  | Name             | Example            | Equivalence        |
-    | :-----: | ---------------- | ------------------ | -----------------  |
-    | `f`     | flatcase         | `bytespersecond`   | `/cl/X` or `/X/cl` |
-    | `c`     | lowerCamelCase   | `bytesPerSecond`   |                    |
-    | `C`     | UpperCamelCase   | `BytesPerSecond`   | `/cc/X`            |
-    | `U`     | UPPERCASE        | `BYTESPERSECOND`   | `/cu/X` or `/X/cu` |
-    | `s`     | snake_case       | `bytes_per_second` | `/cl/Ta/ra _`      |
-    | `S`     | camel_Snake_Case | `bytes_Per_Second` |                    |
-    | `i`     | Title_Case       | `Bytes_Per_Second` | `/cc/Ta/ra _`      |
-    | `A`     | ALL_CAPS         | `BYTES_PER_SECOND` | `/cu/Ta/ra _`      |
-    | `d`     | dash-case        | `bytes-per-second` | `/cl/Ta/ra -`      |
-    | `t`     | Train-Case       | `Bytes-Per-Second` | `/cc/Ta/ra -`      |
-    | `T`     | TRAIN-CASE       | `BYTES-PER-SECOND` | `/cu/Ta/ra -`      |
+    | Style | Name             | Example            | Equivalence        |
+    | :---: | ---------------- | ------------------ | ------------------ |
+    |  `f`  | flatcase         | `bytespersecond`   | `/cl/X` or `/X/cl` |
+    |  `c`  | lowerCamelCase   | `bytesPerSecond`   |                    |
+    |  `C`  | UpperCamelCase   | `BytesPerSecond`   | `/cc/X`            |
+    |  `U`  | UPPERCASE        | `BYTESPERSECOND`   | `/cu/X` or `/X/cu` |
+    |  `s`  | snake_case       | `bytes_per_second` | `/cl/Ta/ra _`      |
+    |  `S`  | camel_Snake_Case | `bytes_Per_Second` |                    |
+    |  `i`  | Title_Case       | `Bytes_Per_Second` | `/cc/Ta/ra _`      |
+    |  `A`  | ALL_CAPS         | `BYTES_PER_SECOND` | `/cu/Ta/ra _`      |
+    |  `d`  | dash-case        | `bytes-per-second` | `/cl/Ta/ra -`      |
+    |  `t`  | Train-Case       | `Bytes-Per-Second` | `/cc/Ta/ra -`      |
+    |  `T`  | TRAIN-CASE       | `BYTES-PER-SECOND` | `/cu/Ta/ra -`      |
 
 
 #### Paragraph formatting
@@ -525,16 +527,16 @@ The `mold` tool is a CLI wrapper of `libmold`, so this section applies to both
 implementations. There is a flag in the `mold` tool with the exact meaning:
 
 
-| Setting                       |   Description                                                             | Default   |
-| ----------------------------: | :-------------------------------------------------------------------------| :-------- |
-| `Replacement_In_File_Names`   | Enables variable substitution in source file names.                       | `True`    |
-| `Delete_Source_Files`         | Delete source files if variable substitution process finish successfully. | `True`    |
+|                       Setting | Description                                                               | Default   |
+| ----------------------------: | :------------------------------------------------------------------------ | :-------- |
+|   `Replacement_In_File_Names` | Enables variable substitution in source file names.                       | `True`    |
+|         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `True`    |
 | `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
-| `Enable_Defined_Settings`     | Enable the use of mold settings in the definitions fie.                   | `True`    |
-| `Undefined_Variable_Action`   | Action for undefined variable substitution.                               | `Ignore`  |
-| `Undefined_Variable_Alert`    | Error handling for undefined variable substitution.                       | `Warning` |
-| `Undefined_Filter_Alert`      | Alert level for undefined filters.                                        | `Warning` |
-| `Abort_On_Error`              | If `True`, aborts the process as soon as an error is detected.            | `True`    |
+|     `Enable_Defined_Settings` | Enable the use of mold settings in the definitions fie.                   | `True`    |
+|   `Undefined_Variable_Action` | Action for undefined variable substitution.                               | `Ignore`  |
+|    `Undefined_Variable_Alert` | Error handling for undefined variable substitution.                       | `Warning` |
+|      `Undefined_Filter_Alert` | Alert level for undefined filters.                                        | `Warning` |
+|              `Abort_On_Error` | If `True`, aborts the process as soon as an error is detected.            | `True`    |
 
 !!! tip "Action & Alert"
 
@@ -595,7 +597,7 @@ Defined setting variables available are, for the corresponding settings
 defined in [Settings](#settings):
 
 | Setting                       | Variable                           |
-|-------------------------------|------------------------------------|
+| ----------------------------- | ---------------------------------- |
 | `Replacement_In_File_Names`   | `mold-replacement-in-file-names`   |
 | `Delete_Source_Files`         | `mold-delete-source-files`         |
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |

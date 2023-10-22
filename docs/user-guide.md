@@ -1,3 +1,5 @@
+![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
+
 # USER GUIDE
 
 ## Ada Library

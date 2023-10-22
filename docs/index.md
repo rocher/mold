@@ -1,6 +1,9 @@
+![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
+
 # WELCOME TO MOLD
 
 > *Meta-variable Operations for Lean Development*
+
 
 Mold is a powerful tool that facilitates the creation and management of
 project templates through customizable files with meta-variables. It allows
