@@ -1,6 +1,8 @@
 # CHANGE LOG
 
+---
 
+[![MOLD](img/Ada_Mold_CLI.png){ .alice-half align=right .off-glb }](https://github.com/rocher/mold)
 ## Mold CLI
 
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/mold.json){.badge}](https://alire.ada.dev/crates/mold.html)
@@ -8,12 +10,15 @@
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg){.badge}](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue){.badge}](https://github.com/rocher/mold/blob/master/LICENSE)
 
-### 0.2.0-dev
+#### 0.2.0-dev
 Date: 2023-08-27
 
   * Basic implementation of the `apply` command:
   * Use `mold_lib-0.2.0-dev`, see [mold_lib repository](https://github.com/rocher/mold_lib)
 
+---
+
+[![MOLD](img/Ada_Mold_Lib.png){ .alice-half align=right .off-glb }](https://github.com/rocher/mold_lib)
 ## Mold Lib
 
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/mold_lib.json){.badge}](https://alire.ada.dev/crates/mold_lib.html)
@@ -23,15 +28,16 @@ Date: 2023-08-27
 [![GitHub release](https://img.shields.io/github/release/rocher/mold_lib.svg){.badge}](https://github.com/rocher/mold_lib/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold_lib.svg?color=blue){.badge}](https://github.com/rocher/mold_lib/blob/master/LICENSE)
 
-### 1.0.0
+#### 1.0.0
 Date: 2023-10-22
 
+  * First stable release
   * Support predefined and custom text filters
   * Complete set of unit tests
   * Reach 100% coverage test
   * Fixed several bugs
 
-### 0.2.1-dev
+#### 0.2.1-dev
 Date: 2023-08-26
 
   * First release with all major features

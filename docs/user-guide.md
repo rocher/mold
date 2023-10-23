@@ -1,7 +1,17 @@
-![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
-
 # USER GUIDE
 
+---
+
+[![MOLD](img/Ada_Mold_CLI.png){ .alice-half align=right .off-glb }](https://github.com/rocher/mold)
+## Command Line Tool
+
+!!! warning
+
+    Work still in progress, no public release still available.
+
+---
+
+[![MOLD](img/Ada_Mold_Lib.png){ .alice-half align=right .off-glb }](https://github.com/rocher/mold_lib)
 ## Ada Library
 
 The Ada interface of `mold_lib` is quite simple. It consists of a unique
@@ -16,7 +26,6 @@ All the following descriptions are in the context of the `Mold_Lib` package:
 
    end Mold_Lib;
 ```
-
 
 ### Apply
 
@@ -121,10 +130,3 @@ function, detailed results are provided:
 
    type Results_Type is array (Field_Type) of Natural;
 ```
-
-
-## Command Line Tool
-
-!!! warning
-
-    Work still in progress.

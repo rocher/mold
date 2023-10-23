@@ -4,7 +4,7 @@ site_author: Francesc Rocher
 site_description: >-
   Meta-variable Operations for Lean Development.
 
-repo_name: GitHub
+repo_name: rocher/mold
 repo_url: https://github.com/rocher/mold
 # remote_branch: main
 
@@ -14,7 +14,7 @@ copyright:
 theme:
   name: material
   icon:
-    repo: fontawesome/brands/git-alt
+    repo: fontawesome/brands/github-alt
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
