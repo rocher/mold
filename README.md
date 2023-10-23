@@ -1,10 +1,11 @@
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/mold.json)](https://alire.ada.dev/crates/mold.html)
 [![Alire CI/CD](https://img.shields.io/endpoint?url=https://alire-crate-ci.ada.dev/badges/mold.json)](https://alire-crate-ci.ada.dev/crates/mold.html)
-![unit-test](https://github.com/rocher/mold_lib/actions/workflows/unit-test.yml/badge.svg)
+![unit-test](https://github.com/rocher/mold/actions/workflows/unit-test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/rocher/mold/graph/badge.svg?token=LB83SI4I0Y)](https://codecov.io/gh/rocher/mold)
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg)](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue)](https://github.com/rocher/mold/blob/master/LICENSE)
 
-<img src="docs/img/Ada_Mold.png" width="222" />
+<img src="docs/img/Ada_Mold_CLI.png" width="222" />
 
 ## Welcome to **Mold**
 
