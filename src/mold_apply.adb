@@ -34,16 +34,16 @@ package body Mold_Apply is
       Define_Switch
         (Config,
          Cmd.Settings.Replacement_In_File_Names'Access,
-         Switch      => "-r",
-         Long_Switch => "--no-replace-in-file-names",
-         Help        => "Disable variable substitution in source file names"
+         Switch      => "-f",
+         Long_Switch => "--keep-filenames",
+         Help        => "No variable substitution in filenames"
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Delete_Source_Files'Access,
          Switch      => "-d",
-         Long_Switch => "--no-delete-source-files",
+         Long_Switch => "--keep-sources",
          Help        => "Do not delete source files"
       );
 
@@ -51,15 +51,15 @@ package body Mold_Apply is
         (Config,
          Cmd.Settings.Overwrite_Destination_Files'Access,
          Switch      => "-o",
-         Long_Switch => "--overwrite-dest-files",
+         Long_Switch => "--overwrite",
          Help        => "Overwrite destination files"
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Enable_Defined_Settings'Access,
-         Switch      => "-e",
-         Long_Switch => "--no-defined-settings",
+         Switch      => "-S",
+         Long_Switch => "--no-settings",
          Help        => "Disable defined settings"
       );
 
@@ -67,11 +67,11 @@ package body Mold_Apply is
         (Config,
         Cmd.Action_Str'Access,
          --  Callback    => Set_Action_Switch'Access,
-         Switch      => "-c:",
+         Switch      => "-a:",
          Long_Switch => "--action=",
          Argument    => "ACTION",
          Help        => "Undefined variable action: " &
-                        "ignore or empty, default is ignore"
+                        "[ignore], empty"
       );
 
       Define_Switch
@@ -82,15 +82,26 @@ package body Mold_Apply is
          Long_Switch => "--alert=",
          Argument    => "LEVEL",
          Help        => "Undefined variable alert: " &
-                        "none, warning or error, default is error"
+                        "none, warning, [error]"
+      );
+
+      Define_Switch
+        (Config,
+        Cmd.Alert_Str'Access,
+         --  Callback    => Set_Alert_Switch'Access,
+         Switch      => "-t:",
+         Long_Switch => "--filter=",
+         Argument    => "LEVEL",
+         Help        => "Undefined filter alert: " &
+                        "[warning], error"
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Abort_On_Error'Access,
-         Switch      => "-a",
-         Long_Switch => "--no-abort-on-error",
-         Help        => "Do not abort on error"
+         Switch      => "-A",
+         Long_Switch => "--no-abort",
+         Help        => "Do not Abort on error"
       );
 
       pragma Style_Checks (on);
@@ -102,14 +113,14 @@ package body Mold_Apply is
    ----------------
 
    function Get_Action
-     (Value : String_Access) return Mold.Undefined_Variable_Actions
+     (Value : String_Access) return Mold_Lib.Undefined_Variable_Actions
    is
    begin
-      return Result : Mold.Undefined_Variable_Actions do
+      return Result : Mold_Lib.Undefined_Variable_Actions do
          Log.Info ("Get_Action");
          Log.Info ("  Value  : " & Value.all);
 
-         Result := Mold.Undefined_Variable_Actions'Value (Value.all);
+         Result := Mold_Lib.Undefined_Variable_Actions'Value (Value.all);
 
       exception
          when Constraint_Error =>
@@ -121,14 +132,13 @@ package body Mold_Apply is
    -- Get_Alert --
    ---------------
 
-   function Get_Alert
-     (Value : String_Access) return Mold.Undefined_Variable_Alerts
+   function Get_Alert (Value : String_Access) return Mold_Lib.Undefined_Alerts
    is
    begin
-      return Result : Mold.Undefined_Variable_Alerts do
+      return Result : Mold_Lib.Undefined_Alerts do
          Log.Info ("Get_Alert");
          Log.Info ("  Value  : " & Value.all);
-         Result := Mold.Undefined_Variable_Alerts'Value (Value.all);
+         Result := Mold_Lib.Undefined_Alerts'Value (Value.all);
 
       exception
          when Constraint_Error =>
@@ -172,12 +182,16 @@ package body Mold_Apply is
          Output_Dir : constant String :=
            (if Args_Length = 3 then Args.Element (Idx + 2) else "");
       begin
+         --!pp off
          Errors :=
-           Mold.Apply
-             (Definitions => Args.Element (Idx),
-              Source      => Args.Element (Idx + 1),
-              Settings    => Cmd.Settings'Unrestricted_Access,
-              Output_Dir  => Output_Dir, Log_Level => Log.Level);
+           Mold_Lib.Apply (
+               Source     => Args.Element (Idx + 1),
+               Output_Dir => Output_Dir,
+               Toml_File  => Args.Element (Idx),
+               Settings   => Cmd.Settings'Unrestricted_Access,
+               Log_Level  => Log.Level
+            );
+         --!pp on
          if Errors > 0 then
             Log.Debug ("END Mold_Apply.Execute");
             GNAT.OS_Lib.OS_Exit (1);
