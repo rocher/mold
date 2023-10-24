@@ -1,5 +1,5 @@
 name = "mold"
-version = "0.2.1"
+version = "1.0.0"
 tags = ["template", "template-engine", "template-repo"]
 
 description = "Meta-variable Operations for Lean Development (cli)"
@@ -71,7 +71,7 @@ executables = ["mold"]
 "mold" = "release"
 
 [build-switches."*"]
-ada_version = ["-gnat2022", "-gnatW8", "-gnatX"]
+ada_version = ["-gnat2022", "-gnatX"]
 
 [build-switches]
 release.optimization = ["-O2", "-gnatn"]
@@ -79,5 +79,8 @@ release.optimization = ["-O2", "-gnatn"]
 [[depends-on]]
 clic = "~0.2.1"
 gnat = ">=2021 | (>=12 & <2000)"
-mold_lib = ">=0.2.1"
 simple_logging = "^1.2.0"
+[[depends-on]]
+mold_lib = "^1.0.2"
+[[pins]]
+mold_lib = { path='../mold_lib' }
