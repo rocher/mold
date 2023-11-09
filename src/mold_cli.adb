@@ -6,32 +6,21 @@
 --
 -------------------------------------------------------------------------------
 
+with Ada.Text_IO;
+with GNAT.OS_Lib;
+
 with CLIC.Subcommand.Instance;
 with CLIC.TTY;
-with GNAT.OS_Lib;
 with Simple_Logging;
-with Text_IO;
 
 with Mold_Apply;
-with Mold_Config;
+with Mold_Lib_Config;
 
 package body Mold_CLI is
 
-   package Conf renames Mold_Config;
    package Log renames Simple_Logging;
 
    use all type Conf.Build_Profile_Kind;
-
-   type Global_Switches_Type (Profile : Mold_Config.Build_Profile_Kind) is
-   record
-      Help    : aliased Boolean := False;
-      Color   : aliased Boolean := True;
-      TTY     : aliased Boolean := True;
-      Verbose : aliased Boolean := False;
-      Debug   : aliased Boolean := False;
-   end record;
-
-   Global_Switch : Global_Switches_Type (Conf.Build_Profile);
 
    procedure Set_Global_Switches
      (Config : in out CLIC.Subcommand.Switches_Configuration);
@@ -41,14 +30,14 @@ package body Mold_CLI is
    (
       Main_Command_Name => Conf.Crate_Name,
       Version => Conf.Crate_Version &
-      (
-         if Conf.Build_Profile = Conf.release then ""
-            else " (" & Conf.Build_Profile'Image & ")"
-      ),
+         " (lib-" & Mold_Lib_Config.Crate_Version & ")" & (
+            if Conf.Build_Profile = Conf.release then ""
+               else " " & Conf.Build_Profile'Image
+         ),
       Set_Global_Switches => Set_Global_Switches,
-      Put                 => Text_IO.Put,
-      Put_Line            => Text_IO.Put_Line,
-      Put_Error           => Text_IO.Put_Line,
+      Put                 => Ada.Text_IO.Put,
+      Put_Line            => Ada.Text_IO.Put_Line,
+      Put_Error           => Ada.Text_IO.Put_Line,
       Error_Exit          => GNAT.OS_Lib.OS_Exit,
       TTY_Chapter         => CLIC.TTY.Info,
       TTY_Description     => CLIC.TTY.Description,
@@ -102,13 +91,17 @@ package body Mold_CLI is
          Help        => "Show command activity"
       );
 
-      Define_Switch (
-         Config,
-         Global_Switch.Debug'Access,
-         Switch      => "-d",
-         Long_Switch => "--debug",
-         Help        => "Enable debug messages"
-      );
+      case Mold_Config.Build_Profile is
+         when Mold_Config.release => null;
+         when others =>
+         Define_Switch (
+            Config,
+            Global_Switch.Debug'Access,
+            Switch      => "-d",
+            Long_Switch => "--debug",
+            Help        => "Enable debug messages"
+         );
+      end case;
 
       pragma Style_Checks (on);
       --!pp on
@@ -127,7 +120,7 @@ package body Mold_CLI is
 
       if Global_Switch.Verbose then
          Log.Level := Log.Detail;
-         Log.Info ("show command activity");
+         Log.Debug ("Log level set to " & Log.Level'Image);
       end if;
 
       if Global_Switch.Debug then
@@ -138,12 +131,12 @@ package body Mold_CLI is
 
       if not Global_Switch.TTY then
          CLIC.TTY.Force_Disable_TTY;
-         Log.Detail ("disable TTY");
+         Log.Debug ("disable TTY");
       end if;
 
       if Global_Switch.Color and then Global_Switch.TTY then
          CLIC.TTY.Enable_Color (Force => False);
-         Log.Detail ("enable Color");
+         Log.Debug ("enable Color");
       end if;
 
       CLI_Command.Execute;

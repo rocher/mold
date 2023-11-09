@@ -28,6 +28,33 @@ Date: 2023-08-27
 [![GitHub release](https://img.shields.io/github/release/rocher/mold_lib.svg){.badge}](https://github.com/rocher/mold_lib/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold_lib.svg?color=blue){.badge}](https://github.com/rocher/mold_lib/blob/master/LICENSE)
 
+
+#### 2.0.0
+Date: 2023-10-29
+
+  * Modified the setting type to unify undefined actions and alerts for
+    variables and text filters
+  * New set of default settings
+  * New, simplified error handling strategy
+  * `mold-undefined-variable-action` changed to `mold-undefined-action`:
+    applies to variables and text filters
+  * `mold-undefined-variable-alert` changed to `mold-undefined-alert`: applies
+    to variables and text filters
+  * Removed defined setting `mold-undefined-filter-alter`
+  * Remove defined setting `abort-on-error`
+  * Removed summary reported by text filter application
+  * Several minor fixes and improvements
+
+#### 1.0.2
+Date: 2023-10-23
+
+  * Fix patch number in Alire description
+
+#### 1.0.1
+Date: 2023-10-23
+
+  * Fix Alire descriptions and dependencies
+
 #### 1.0.0
 Date: 2023-10-22
 

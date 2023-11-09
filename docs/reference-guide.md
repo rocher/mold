@@ -59,24 +59,19 @@ INPUT DIRECTORY  ─[ Mold ]-> OUTPUT DIRECTORY = /tmp/lorem/ipsum
 ### Error Handling
 
 There are two types of errors that Mold can detect and handle in different
-ways. First of all, there are the *fatal errors*, those that prevent Mold from
-completing the replacement job. Typical fatal errors are produced when a file
-is not found, the destination directory cannot be written or created or the
-definitions file is corrupted. These errors stop immediately the replacement
-process.
+ways.
 
-`Fatal Errors`
+#### Fatal Errors
 
-: Prevent Mold from completing the replacement job. Typical fatal errors are
+Prevent Mold from completing the replacement job. Typical fatal errors are
 produced when a file is not found, the destination directory cannot be written
 or created, or the definitions file is corrupted. These errors stop
 immediately the replacement process.
 
+#### Replacement Errors
 
-`Replacement Errors`
-
-: Detected during the variable replacement, these errors are caused when a
-variable is found in a mold file but the variable has not been defined.
+Detected during the variable replacement, these errors are caused when a
+variable has not been defined of an invalid text filter has been specified.
 Depending on the settings and the type of substitution, Mold can skip this
 error, report a warning or an error, and continue with the process. Next
 section explain how these errors are handled.
@@ -490,7 +485,7 @@ would generate, with the above definitions, a new file called
    README_World.md
 ```
 
-Undefined variables in a file name always issue an error; no optional
+Undefined variables in a file name always issue a warning; no optional
 substitution here. Substitution in file names is enabled by default, but can
 be disabled.
 
@@ -533,20 +528,9 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
 |         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `True`    |
 | `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
 |     `Enable_Defined_Settings` | Enable the use of mold settings in the definitions fie.                   | `True`    |
-|   `Undefined_Variable_Action` | Action for undefined variable substitution.                               | `Ignore`  |
-|    `Undefined_Variable_Alert` | Error handling for undefined variable substitution.                       | `Warning` |
-|      `Undefined_Filter_Alert` | Alert level for undefined filters.                                        | `Warning` |
-|              `Abort_On_Error` | If `True`, aborts the process as soon as an error is detected.            | `True`    |
-
-!!! tip "Action & Alert"
-
-    `Undefined_Variable_Action` and `Undefined_Variable_Alert` only apply to
-    normal substitution of variables when an undefined variable is found:
-
-    * `Undefined_Variable_Action` can be `Ignore`, to left the substitution as
-      is, or `Empty` to remove the text.
-    * `Undefined_Variable_Alert` can be `None`, to silently skip the problem,
-      `Warning` to issue a warning and `Error` to issue an error.
+|            `Undefined_Action` | Action for undefined variable or invalid text filter.                     | `Ignore`  |
+|             `Undefined_Alert` | Error handling for undefined variable or invalid text filter.             | `Warning` |
+|  `Abort_On_Replacement_Error` | If `True`, aborts the process as soon as a replacement error is detected. | `True`    |
 
 
 ## Defined Settings
@@ -601,10 +585,9 @@ defined in [Settings](#settings):
 | `Replacement_In_File_Names`   | `mold-replacement-in-file-names`   |
 | `Delete_Source_Files`         | `mold-delete-source-files`         |
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
-| `Undefined_Variable_Action`   | `mold-undefined-variable-action`   |
-| `Undefined_Variable_Alert`    | `mold-undefined-variable-alert`    |
-| `Undefined_Filter_Alert`      | `mold-undefined-filter-alert`      |
-| `Abort_On_Error`              | `mold-abort-on-error`              |
+| `Undefined_Action`            | `mold-undefined-action`            |
+| `Undefined_Alert`             | `mold-undefined-alert`             |
+| `Abort_On_Replacement_Error`  | `mold-abort-on-replacement-error`  |
 
 
 ## Template Inclusion
