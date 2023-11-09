@@ -77,7 +77,7 @@ release.optimization = ["-O2", "-gnatn"]
 clic = "~0.2.1"
 gnat = ">=2021 | (>=12 & <2000)"
 simple_logging = "^1.2.0"
-[[depends-on]]
-mold_lib = "^1.0.2"
+mold_lib = ">=2.0.0"
+
 [[pins]]
 mold_lib = { path='../mold_lib' }
