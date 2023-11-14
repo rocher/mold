@@ -131,16 +131,11 @@ extra:
 #       make our documentation better.
 
 nav:
-  - MOLD:
-    - Introduction: index.md
-  - Reference Guide:
-    - reference-guide.md
-  - User guide:
-    - user-guide.md
-  - Installation:
-    - installation.md
-  - Change Log:
-    - change-log.md
+  - HOME: index.md
+  - Reference Guide: reference-guide.md
+  - User Guide: user-guide.md
+  - Installation: installation.md
+  - Change Log: change-log.md
 
 # * SECTION - PUBLISH DOCS
 #   • Locally develop and inspect with 'mkdocs serve'

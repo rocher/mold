@@ -1,3 +1,7 @@
+---
+icon: octicons/info-24
+---
+
 # USER GUIDE
 
 ---

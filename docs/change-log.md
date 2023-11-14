@@ -1,3 +1,7 @@
+---
+icon: octicons/log-24
+---
+
 # CHANGE LOG
 
 ---
@@ -32,16 +36,35 @@ Date: 2023-08-27
 #### 2.0.0
 Date: 2023-10-29
 
-  * Modified the setting type to unify undefined actions and alerts for
-    variables and text filters
+##### Major Changes
+
+  * New simplified error handling strategy
+    * The new strategy unifies actions and alerts for undefined variables or
+      filters, resulting in a a more clear, compact and understandable
+      strategy
+    * Modified the setting type to unify undefined actions and alerts for
+      variables and text filters
+    * `mold-undefined-variable-action` changed to `mold-undefined-action`:
+      applies to variables and text filters
+    * `mold-undefined-variable-alert` changed to `mold-undefined-alert`: applies
+      to variables and text filters
+    * Removed defined setting `mold-undefined-filter-alter`
+    * Remove defined setting `abort-on-error`
+
+  * Variable definition based on other variables
+    * Now it is possible to define new variables based on other variables;
+      that is, the variable substitution process is also applied to the
+      variables' values
+    * Filters are also applied in this context
+    * Example:
+        * `A = "World"`
+        * `B = "Hello, {{A}}"`
+
+      results in `B = "Hello, World"`
+
+##### Minor Changes
+
   * New set of default settings
-  * New, simplified error handling strategy
-  * `mold-undefined-variable-action` changed to `mold-undefined-action`:
-    applies to variables and text filters
-  * `mold-undefined-variable-alert` changed to `mold-undefined-alert`: applies
-    to variables and text filters
-  * Removed defined setting `mold-undefined-filter-alter`
-  * Remove defined setting `abort-on-error`
   * Removed summary reported by text filter application
   * Several minor fixes and improvements
 

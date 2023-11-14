@@ -1,3 +1,7 @@
+---
+icon: octicons/tools-24
+---
+
 # INSTALLATION
 
 ---

@@ -1,6 +1,10 @@
+---
+icon: octicons/book-24
+---
+
 ![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
 
-# REFERENCE GUIDE
+# MOLD REFERENCE GUIDE
 
 ## Overall Process
 
@@ -75,6 +79,69 @@ variable has not been defined of an invalid text filter has been specified.
 Depending on the settings and the type of substitution, Mold can skip this
 error, report a warning or an error, and continue with the process. Next
 section explain how these errors are handled.
+
+
+## Variable Definition
+
+Variables are defined inside a unique, TOML variable definition file.
+
+### Definitions File
+
+The default definitions file is called `mold.toml`. It must be a simple TOML
+file, with variables like strings or paragraphs (multi-line variables)
+
+```toml title="variable assignment"
+   answer = "42"
+   string = "value"
+   paragraph = '''
+      > This is a quotation.
+   '''
+```
+
+Only strings are supported, and no arrays nor tables can be present. For more
+information, please read the [TOML specification](https://toml.io). Comments
+and multi-line strings are supported.
+
+### Variables inside variables
+
+Variable values can depend on other variables. That is, *the [variable
+substitution](#variable-substitution) process* is performed in its entirety
+inside the value of variables, including [text filters](#text-filters)
+application.
+
+```toml title="original definition"
+   Greet = "Hello"
+   Thing = "World"
+   Greetings = "{{Greet}}, {{Thing}} !!"
+```
+
+```toml title="equivalence"
+   Greet = "Hello"
+   Thing = "World"
+   Greetings = "Hello, World !!"
+```
+
+The definition order of variables is not relevant. The example above will work
+the same as this case,
+
+```toml title="order nor relevant"
+   Greetings = "{{Greet}}, {{Thing}} !!"
+   Greet = "Hello"
+   Thing = "World"
+```
+
+because the variable substitution process is applied once all variables have
+been read.
+
+Of course, avoid recursive and cyclic definitions:
+
+```toml title="recursive definitions"
+   Definition      Substitution
+   -----------     ------------
+   A = "{{A}}" --> A = "{{A}}"
+   B = "{{C}}" --> B = "{{B}}"
+   C = "{{B}}" --> C = "{{C}}"
+```
 
 
 ## Variable Substitution
@@ -499,23 +566,6 @@ be disabled.
     structure and make mold operate in a directory.
 
 
-## Definitions File
-
-The default definitions file is called `mold.toml`. It must be a simple TOML
-file, with variables like strings or paragraphs (multi-line variables)
-
-```toml title="variable assignment"
-   string = "value"
-   paragraph = '''
-      > This is a quotation.
-   '''
-```
-
-Only strings are supported, and no arrays nor tables can be present. For more
-information, please read the [TOML specification](https://toml.io). Comments
-and multi-line strings are supported.
-
-
 ## Settings
 
 The `mold` tool is a CLI wrapper of `libmold`, so this section applies to both
@@ -525,6 +575,7 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
 |                       Setting | Description                                                               | Default   |
 | ----------------------------: | :------------------------------------------------------------------------ | :-------- |
 |   `Replacement_In_File_Names` | Enables variable substitution in source file names.                       | `True`    |
+|    `Replacement_In_Variables` | Enables variable substitution in variables definitions.                   | `True`    |
 |         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `True`    |
 | `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
 |     `Enable_Defined_Settings` | Enable the use of mold settings in the definitions fie.                   | `True`    |
@@ -583,6 +634,7 @@ defined in [Settings](#settings):
 | Setting                       | Variable                           |
 | ----------------------------- | ---------------------------------- |
 | `Replacement_In_File_Names`   | `mold-replacement-in-file-names`   |
+| `Replacement_In_Variables`    | `mold-replacement-in-variables`    |
 | `Delete_Source_Files`         | `mold-delete-source-files`         |
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
 | `Undefined_Action`            | `mold-undefined-action`            |
