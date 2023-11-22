@@ -94,6 +94,10 @@ img.badge {
 
 .md-nav {
     /*font-family: Oswald !important;*/
+    font-size: 0.70rem;
+}
+
+.md-nav__link--active {
     font-size: 0.77rem;
 }
 
@@ -105,6 +109,11 @@ img.badge {
     border-left-width: 4px;
 } */
 
+.md-top {
+    color: var(--md-default-fg-md-color);
+    background-color: var(--md-default-bg-md-color);
+}
+
 .md-typeset code {
     font-size: 0.90em !important;
     font-variant-ligatures: normal;
@@ -113,6 +122,9 @@ img.badge {
 [data-md-color-scheme="default"] {
     --md-primary-fg-color: #0061af !important;
     --md-code-bg-color: #efefef;
+
+    --md-default-fg-md-color: #fff;
+    --md-default-bg-md-color: #33a689;
 }
 
 [data-md-color-scheme="slate"] {
@@ -131,4 +143,7 @@ img.badge {
 
     /* GitHub */
     /* --md-default-bg-color: #0d1117; */
+
+    --md-default-fg-md-color: #fff;
+    --md-default-bg-md-color: #33a689;
 }

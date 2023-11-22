@@ -658,8 +658,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-name-substitution" class="md-nav__link">
-    File Name Substitution
+  <a href="#filename-substitution" class="md-nav__link">
+    Filename Substitution
   </a>
   
 </li>
@@ -669,12 +669,18 @@
     Settings
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#defined-settings" class="md-nav__link">
     Defined Settings
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -780,7 +786,7 @@
 <p>Variable substitution takes place in a single file or directory, and
 recursively, across all its sub-directories. Processed files must end with the
 <code>mold</code> extension. The substitution process generates a new file with all the
-variables replaced with the corresponding values. The new file name is the
+variables replaced with the corresponding values. The new filename is the
 same as the source file, but removing the <code>.mold</code> extension:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">   </span>README.md.mold<span class="w"> </span>——<span class="o">[</span><span class="w"> </span>mold<span class="w"> </span>generates<span class="w"> </span><span class="o">]</span>--&gt;<span class="w"> </span>README.md
 </span></code></pre></div>
@@ -1429,17 +1435,18 @@ substitution would be:</p>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>   --------------
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>   Hello , this is just an example text
 </span></code></pre></div>
-<h2 id="file-name-substitution">File Name Substitution<a class="headerlink" href="#file-name-substitution" title="Anchor link to this section for reference">🔗</a></h2>
-<p>Variables in file names must be written with the syntax <code>__variable__</code>, with
-no spaces between the variable name and underscores.</p>
+<h2 id="filename-substitution">Filename Substitution<a class="headerlink" href="#filename-substitution" title="Anchor link to this section for reference">🔗</a></h2>
+<p>Variables in filenames must be written with the syntax <code>__variable__</code>, with
+no spaces between the variable name and underscores. Text filters cannot be
+used in filename substitution.</p>
 <p>For example, the file</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="w">   </span>README___world__.md.mold
 </span></code></pre></div>
 <p>would generate, with the above definitions, a new file called</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="w">   </span>README_World.md
 </span></code></pre></div>
-<p>Undefined variables in a file name always issue a warning; no optional
-substitution here. Substitution in file names is enabled by default, but can
+<p>Undefined variables in a filename always issue a warning; no optional
+substitution here. Substitution in filenames is enabled by default, but can
 be disabled.</p>
 <div class="admonition danger">
 <p class="admonition-title">Warning</p>
@@ -1463,8 +1470,8 @@ implementations. There is a flag in the <code>mold</code> tool with the exact me
 </thead>
 <tbody>
 <tr>
-<td style="text-align: right;"><code>Replacement_In_File_Names</code></td>
-<td style="text-align: left;">Enables variable substitution in source file names.</td>
+<td style="text-align: right;"><code>Replacement_In_FileNames</code></td>
+<td style="text-align: left;">Enables variable substitution in source filenames.</td>
 <td style="text-align: left;"><code>True</code></td>
 </tr>
 <tr>
@@ -1504,9 +1511,9 @@ implementations. There is a flag in the <code>mold</code> tool with the exact me
 </tr>
 </tbody>
 </table>
-<h2 id="defined-settings">Defined Settings<a class="headerlink" href="#defined-settings" title="Anchor link to this section for reference">🔗</a></h2>
+<h3 id="defined-settings">Defined Settings<a class="headerlink" href="#defined-settings" title="Anchor link to this section for reference">🔗</a></h3>
 <p>All above settings can be defined also in the definitions file, except the
-<code>Enable_Defined_Settings</code></p>
+<code>Enable_Defined_Settings</code> itself.</p>
 <p>All variables starting with the prefix <code>mold-</code> are considered by Mold as
 <em>setting variables</em>, which means that they change the way in which Mold
 behaves by changing a Mold setting.</p>
@@ -1546,8 +1553,8 @@ defined in <a href="#settings">Settings</a>:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>Replacement_In_File_Names</code></td>
-<td><code>mold-replacement-in-file-names</code></td>
+<td><code>Replacement_In_FileNames</code></td>
+<td><code>mold-replacement-in-filenames</code></td>
 </tr>
 <tr>
 <td><code>Replacement_In_Variables</code></td>
@@ -1581,7 +1588,7 @@ and so on. These template files must have the <code>molt</code> extension. Can b
 included at any point in a <code>mold</code> file, in a single line, with the syntax</p>
 <div class="language-md highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>   {{ include:header.molt }}
 </span></code></pre></div>
-<p>The file name can be relative path to the current mold file being processed,
+<p>The filename can be relative path to the current mold file being processed,
 or relative to the working directory from which the mold tool was invoked.</p>
 <p>When this line is found, Mold opens and processes the included file and the
 output is sent into the currently generated file. The same set or defined

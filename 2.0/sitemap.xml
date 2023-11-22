@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://rocher.github.io/mold/2.0/index.html</loc>
-         <lastmod>2023-11-21</lastmod>
+         <lastmod>2023-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://rocher.github.io/mold/2.0/change-log.html</loc>
-         <lastmod>2023-11-21</lastmod>
+         <lastmod>2023-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://rocher.github.io/mold/2.0/installation.html</loc>
-         <lastmod>2023-11-21</lastmod>
+         <lastmod>2023-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://rocher.github.io/mold/2.0/reference-guide.html</loc>
-         <lastmod>2023-11-21</lastmod>
+         <lastmod>2023-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://rocher.github.io/mold/2.0/user-guide.html</loc>
-         <lastmod>2023-11-21</lastmod>
+         <lastmod>2023-11-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
