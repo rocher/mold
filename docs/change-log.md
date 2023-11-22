@@ -91,7 +91,7 @@ Date: 2023-10-22
 Date: 2023-08-26
 
   * First release with all major features
-  * Support for variable replacement in files and directories, as well as in file names
+  * Support for variable replacement in files and directories, as well as in filenames
   * Support *in-place* substitution or with an output directory parameter
   * Remove source files (can be disabled)
   * Simple definition files for variables (TOML format)

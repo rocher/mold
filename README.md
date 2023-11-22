@@ -23,7 +23,7 @@ Main features supported in Mold include
   * for a given directory, variable replacement recursively for all mold files
     in all subdirectories
 
-  * variable replacement in file names
+  * variable replacement in filenames
 
   * inclusion of other templates
 

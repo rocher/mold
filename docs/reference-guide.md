@@ -11,7 +11,7 @@ icon: octicons/book-24
 Variable substitution takes place in a single file or directory, and
 recursively, across all its sub-directories. Processed files must end with the
 `mold` extension. The substitution process generates a new file with all the
-variables replaced with the corresponding values. The new file name is the
+variables replaced with the corresponding values. The new filename is the
 same as the source file, but removing the `.mold` extension:
 
 ```bash
@@ -535,10 +535,11 @@ substitution would be:
 ```
 
 
-## File Name Substitution
+## Filename Substitution
 
-Variables in file names must be written with the syntax `__variable__`, with
-no spaces between the variable name and underscores.
+Variables in filenames must be written with the syntax `__variable__`, with
+no spaces between the variable name and underscores. Text filters cannot be
+used in filename substitution.
 
 For example, the file
 
@@ -552,8 +553,8 @@ would generate, with the above definitions, a new file called
    README_World.md
 ```
 
-Undefined variables in a file name always issue a warning; no optional
-substitution here. Substitution in file names is enabled by default, but can
+Undefined variables in a filename always issue a warning; no optional
+substitution here. Substitution in filenames is enabled by default, but can
 be disabled.
 
 !!! danger "Warning"
@@ -574,7 +575,7 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
 
 |                       Setting | Description                                                               | Default   |
 | ----------------------------: | :------------------------------------------------------------------------ | :-------- |
-|   `Replacement_In_File_Names` | Enables variable substitution in source file names.                       | `True`    |
+|    `Replacement_In_FileNames` | Enables variable substitution in source filenames.                        | `True`    |
 |    `Replacement_In_Variables` | Enables variable substitution in variables definitions.                   | `True`    |
 |         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `True`    |
 | `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
@@ -584,10 +585,10 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
 |  `Abort_On_Replacement_Error` | If `True`, aborts the process as soon as a replacement error is detected. | `True`    |
 
 
-## Defined Settings
+### Defined Settings
 
 All above settings can be defined also in the definitions file, except the
-`Enable_Defined_Settings`
+`Enable_Defined_Settings` itself.
 
 All variables starting with the prefix `mold-` are considered by Mold as
 *setting variables*, which means that they change the way in which Mold
@@ -633,7 +634,7 @@ defined in [Settings](#settings):
 
 | Setting                       | Variable                           |
 | ----------------------------- | ---------------------------------- |
-| `Replacement_In_File_Names`   | `mold-replacement-in-file-names`   |
+| `Replacement_In_FileNames`    | `mold-replacement-in-filenames`    |
 | `Replacement_In_Variables`    | `mold-replacement-in-variables`    |
 | `Delete_Source_Files`         | `mold-delete-source-files`         |
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
@@ -652,7 +653,7 @@ included at any point in a `mold` file, in a single line, with the syntax
    {{ include:header.molt }}
 ```
 
-The file name can be relative path to the current mold file being processed,
+The filename can be relative path to the current mold file being processed,
 or relative to the working directory from which the mold tool was invoked.
 
 When this line is found, Mold opens and processes the included file and the

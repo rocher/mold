@@ -39,10 +39,10 @@ for additional text transformation. There a several predefined text filters
 covering a wide range of uses cases. Additionally, with the mold library it is
 possible to define your custom text filters.
 
-### Source file name substitution
+### Source filename substitution
 
-Variable substitution can be applied also in the source file name. The syntax
-for variables is slightly different for file names, for portability reasons,
+Variable substitution can be applied also in the source filename. The syntax
+for variables is slightly different for filenames, for portability reasons,
 but the concept is the same.
 
 ### Variable definitions file

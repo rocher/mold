@@ -38,22 +38,23 @@ The only function call available is:
 ```ada title="mold.ads"
    function Apply
    (
-      Source      : String          := ".";
-      Output_Dir  : String          := "";
-      Definitions : String          := "mold.toml";
-      Settings    : Settings_Access := null;
-      Filters     : Filter_Array    := [others => null];
-      Results     : Results_Access  := null
+      Source     : String          := ".";
+      Output_Dir : String          := "";
+      Toml_File  : String          := "mold.toml";
+      Settings   : Settings_Access := null;
+      Filters    : Filter_Access   := null;
+      Results    : Results_Access  := null;
+      Log_Level  : Log.Levels      := Log.Info;
    )
-   return Natural;
+   return Boolean;
 ```
 
-  1. `Source` is a file or directory name.
+  1. `Source` is a filename or directory name.
 
-  2. `Output_Dir` is a directory name used when `Source` is a file name to
-     create the generated file in a different directory.
+  2. `Output_Dir` is a directory name used when `Source` is a filename to
+     create the output file in a different directory.
 
-  3. `Definition` is the file name that contains the variables definition.
+  3. `Toml_File` is the filename that contains the variables definition.
 
   4. `Settings` is a pointer to a `Mold.Settings_Type` object. If `null`, the
      default settings are used. See section below for a complete description.
@@ -63,8 +64,13 @@ The only function call available is:
      ```ada
         function (S : String) return String;
      ```
+     See [Custom Text Filters](reference-guide.md#custom-text-filters-lib) for
+     more  information.
 
-  6. Return value is the number of errors detected.
+  6. `Results` is a pointer to a `Results_Type` object. If not `null`, a
+     report of all mold activity will be filled.
+
+  6. Return value is `True` when the process finishes successfully.
 
 
 ### Settings
@@ -72,19 +78,17 @@ The only function call available is:
 The `Settings_Type` is defined as:
 
 ```ada title="mold.ads"
-
    type Undefined_Variable_Actions is (Ignore, Empty);
    type Undefined_Alerts  is (None, Warning, Error);
 
    type Settings_Type is record
-      Replacement_In_File_Names   : aliased Boolean;
+      Replacement_In_Filenames    : aliased Boolean;
+      Replacement_In_Variables    : aliased Boolean;
       Delete_Source_Files         : aliased Boolean;
       Overwrite_Destination_Files : aliased Boolean;
       Enable_Defined_Settings     : aliased Boolean;
-      Undefined_Variable_Action   : aliased Undefined_Variable_Actions;
-      Undefined_Variable_Alert    : aliased Undefined_Alerts;
-      Undefined_Filter_Alert      : aliased Undefined_Alerts;
-      Abort_On_Error              : aliased Boolean;
+      Undefined_Action            : aliased Undefined_Actions;
+      Undefined_Alert             : aliased Undefined_Alerts;
    end record;
 ```
 
@@ -94,14 +98,13 @@ settings are used, which are defined as:
 ```ada title="mold_lib.ads"
    Default_Settings : aliased Settings_Type :=
    (
-      Replacement_In_File_Names   => True,
-      Delete_Source_Files         => True,
-      Overwrite_Destination_Files => False,
+      Replacement_In_Filenames    => True,
+      Replacement_In_Variables    => True,
+      Delete_Source_Files         => False,
+      Overwrite_Destination_Files => True,
       Enable_Defined_Settings     => True,
-      Undefined_Variable_Action   => Ignore,
-      Undefined_Variable_Alert    => Error,
-      Undefined_Filter_Alert      => Warning,
-      Abort_On_Error              => True
+      Undefined_Action            => Ignore,
+      Undefined_Alert             => Warning
    );
 ```
 
@@ -120,16 +123,13 @@ function, detailed results are provided:
       Files_Renamed,
       Files_Overwritten,
       Files_Deleted,
-      Variables_Defined,     --  in the definitions file
+      Variables_Defined,     --  in the toml file
       Variables_Found,       --  in all mold files
       Variables_Undefined,
       Variables_Replaced,
       Variables_Ignored,
       Variables_Emptied,
-      Filters_Found,
-      Filters_Applied,
-      Replacement_Warnings,
-      Replacement_Errors
+      Warnings
    );
 
    type Results_Type is array (Field_Type) of Natural;
