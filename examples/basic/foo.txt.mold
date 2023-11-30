@@ -1,0 +1,4 @@
+Only {{foo}} variable replaced
+
+{{foo}}, {{   foo   }}, {{     foo                  }}, {{foo       }} BAR
+{{foo}}, {{  foo  }}, {{ foo    }}, {{foo}} BAR

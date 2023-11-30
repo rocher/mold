@@ -1,0 +1,8 @@
+
+This is a multiline test, with a paragraph like this one
+{{ Fibonacci }}
+and others like
+
+{{ par01 }}
+{{ par02 }}
+{{ par03 }}

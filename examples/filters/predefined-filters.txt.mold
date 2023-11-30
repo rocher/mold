@@ -1,0 +1,70 @@
+
+                                 Number of filters      Σ
+                                 ------------------------
+NN : {{N1/s///pr-33}}                            2
+N1 : {{N1/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N2 : {{N2/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N3 : {{N3/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N4 : {{N4/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N5 : {{N5/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N6 : {{N6/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N7 : {{N7/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N8 : {{N8/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N9 : {{N9/pl07/pl 11/pl.22/pr 23/pr_33}}         5
+N0 : {{N0/pl07/pl 11/pl.22/pr//23/pr_33}}        5
+NN : {{N0/s///pl//33}}                           2     54
+
+No filter                : {{Title}}             0
+Replace first i with @   : {{Title/rfi@}}        1
+Replace last i with @    : {{Title/rli@}}        1
+Replace all chars    '/' : {{Title/s//}}         1     57
+Random Transforms        : {{Title/rai1/rlt*/rae3/rat_/ra_^/raa4/ras5/rao0/raf7}} 9, 66
+Pad to 20 right          : {{Title/pr*20}}           1
+Pad to 40 right          : {{Title/pr*40}}       1
+Pad to 40 left           : {{Title/pl*40}}       1
+Truncate to 10           : 1234567890
+Truncate to 10           : {{Title/W10}}         1     70
+Truncate to 15           : 123456789.123456789.123456789.123456789.
+Truncate to 15           : {{Title/W15}}         1
+Truncate to 25           : 123456789.123456789.123456789.123456789.
+Truncate to 25           : {{Title/W25}}         1
+Truncate to 35           : 123456789.123456789.123456789.123456789.
+Truncate to 35           : {{Title/W35}}         1     73
+
+Truncate to 10           : {{Title/W10}}         1
+Truncate to 11           : {{Title/W11}}         1
+Truncate to 12           : {{Title/W12}}         1
+Truncate to 13           : {{Title/W13}}         1
+Truncate to 14           : {{Title/W14}}         1
+Truncate to 15           : {{Title/W15}}         1
+Truncate to 16           : {{Title/W16}}         1     80
+Truncate to 17           : {{Title/W17}}         1
+Truncate to 18           : {{Title/W18}}         1
+Truncate to 19           : {{Title/W19}}         1
+Truncate to 20           : {{Title/W20}}         1     84
+
+Line        : [{{ Line  }}]                      0
+Line/Tl     : [{{ Line/Tl}}]                     1
+Line/Tr     : [{{ Line/Tr}}]                     1
+Line/Tb     : [{{ Line/Tb}}]                     1
+Line/Ts     : [{{ Line/Ts}}]                     1
+Line/Tl/ts  : [{{ Line/Tl/Ts}}]                  2     90
+Line/Ta     : [{{ Line/Ta}}]                     1
+Line/X      : [{{ Line/X}}]                      1
+Line/D      : [{{ Line/D }}]                     1
+Line/Di     : [{{ Line/Di}}]                     1
+Line/Ta/cl  : [{{ Line/Ta/cl}}]                  2
+Line/Ta/cc  : [{{ Line/Ta/cc}}]                  2
+Line/Ta/cu  : [{{ Line/Ta/cu}}]                  2    100
+
+Line/Nf    : [{{ Line/nf}}]                      1    101
+Line/Nc    : [{{ Line/nc}}]                      1
+Line/NC    : [{{ Line/nC}}]                      1
+Line/NU    : [{{ Line/nU}}]                      1
+Line/Ns    : [{{ Line/ns}}]                      1
+Line/NS    : [{{ Line/nS}}]                      1
+Line/Ni    : [{{ Line/ni}}]                      1
+Line/NA    : [{{ Line/nA}}]                      1
+Line/Nd    : [{{ Line/nd}}]                      1
+Line/Nt    : [{{ Line/nt}}]                      1
+Line/NT    : [{{ Line/nT}}]                      1    111
