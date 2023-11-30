@@ -1,5 +1,5 @@
 name = "mold"
-version = "1.0.0"
+version = "1.0.1"
 tags = ["template", "template-engine", "template-repo"]
 
 description = "Meta-variable Operations for Lean Development (cli)"
@@ -34,6 +34,8 @@ Main features supported in Mold include
   * definition of variables with a simple TOML file
 
   * predefined and custom text filters to easy text transformations
+
+  * variable values can be defined with other variables
 
 Variable replacement can be specified as *normal*, *optional* or *mandatory*.
 For example, the variable `foo = "bar"` can be specified with `{{foo}}`,
@@ -78,6 +80,3 @@ clic = "~0.2.1"
 gnat = ">=2021 | (>=12 & <2000)"
 simple_logging = "^1.2.0"
 mold_lib = ">=2.0.0"
-
-[[pins]]
-mold_lib = { path='../mold_lib' }
