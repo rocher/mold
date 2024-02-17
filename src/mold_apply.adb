@@ -21,42 +21,25 @@ package body Mold_Apply is
    package Log renames Simple_Logging;
    use all type Log.Levels;
 
-   Invalid_Action : exception;
-   Invalid_Alert  : exception;
+   Invalid_Behavior : exception;
 
-   ----------------
-   -- Get_Action --
-   ----------------
+   ------------------
+   -- Get_Behavior --
+   ------------------
 
-   function Get_Action (Value : String) return Mold_Lib.Undefined_Actions is
+   function Get_Behavior (Value : String) return Mold_Lib.Undefined_Behaviors
+   is
    begin
-      return Result : Mold_Lib.Undefined_Actions do
-         Log.Debug ("Get_Action");
+      return Result : Mold_Lib.Undefined_Behaviors do
+         Log.Debug ("Get_Behavior");
          Log.Debug ("   Value  : " & Value);
-         Result := Mold_Lib.Undefined_Actions'Value (Value);
+         Result := Mold_Lib.Undefined_Behaviors'Value (Value);
 
       exception
          when Constraint_Error =>
-            raise Invalid_Action;
+            raise Invalid_Behavior;
       end return;
-   end Get_Action;
-
-   ---------------
-   -- Get_Alert --
-   ---------------
-
-   function Get_Alert (Value : String) return Mold_Lib.Undefined_Alerts is
-   begin
-      return Result : Mold_Lib.Undefined_Alerts do
-         Log.Debug ("Get_Alert");
-         Log.Debug ("   Value  : " & Value);
-         Result := Mold_Lib.Undefined_Alerts'Value (Value);
-
-      exception
-         when Constraint_Error =>
-            raise Invalid_Alert;
-      end return;
-   end Get_Alert;
+   end Get_Behavior;
 
    --------------------
    -- Setup_Switches --
@@ -75,50 +58,54 @@ package body Mold_Apply is
         (Config,
          Cmd.Settings.Replacement_In_Filenames'Access,
          Switch      => "-f",
-         Long_Switch => "--replace-filenames",
-         Help        => "Variable substitution in filenames"
+         Long_Switch => "--no-filenames",
+         Help        => "No variable substitution in filenames",
+         Value       => False
       );
+
+      Define_Switch
+         (Config,
+          Cmd.Settings.Replacement_In_Variables'Access,
+          Switch      => "-v",
+          Long_Switch => "--no-variables",
+          Help        => "No variable substitution in variables",
+          Value       => False
+         );
 
       Define_Switch
         (Config,
          Cmd.Settings.Delete_Source_Files'Access,
          Switch      => "-d",
          Long_Switch => "--delete-sources",
-         Help        => "Delete source files"
+         Help        => "Delete source files",
+         Value       => True
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Overwrite_Destination_Files'Access,
          Switch      => "-o",
-         Long_Switch => "--overwrite",
-         Help        => "Overwrite destination files"
+         Long_Switch => "--no-overwrite",
+         Help        => "Do not overwrite destination files",
+         Value       => False
       );
 
       Define_Switch
         (Config,
          Cmd.Settings.Enable_Defined_Settings'Access,
          Switch      => "-s",
-         Long_Switch => "--defined-settings",
-         Help        => "Enable defined settings"
+         Long_Switch => "--no-settings",
+         Help        => "Disable defined settings",
+         Value       => False
       );
 
       Define_Switch
         (Config,
-        Cmd.Action_Str'Access,
-         Switch      => "-c:",
-         Long_Switch => "--action=",
-         Argument    => "ACTION",
-         Help        => "Undefined action: [ignore], empty"
-      );
-
-      Define_Switch
-        (Config,
-         Cmd.Alert_Str'Access,
-         Switch      => "-l:",
-         Long_Switch => "--alert=",
-         Help        => "Undefined alert: none, warning, [error]",
-         Argument    => "LEVEL"
+        Cmd.Behavior_Str'Access,
+         Switch      => "-b:",
+         Long_Switch => "--behavior=",
+         Argument    => "BEHAVIOR",
+         Help        => "Undefined behavior: [ignore], empty, error"
       );
 
       pragma Style_Checks (on);
@@ -134,16 +121,11 @@ package body Mold_Apply is
    is
       Args_Length : constant Natural := Natural (Args.Length);
    begin
-      if Cmd.Action_Str.all'Length > 0 then
-         Cmd.Settings.Undefined_Action := Get_Action (Cmd.Action_Str.all);
+      if Cmd.Behavior_Str.all'Length > 0 then
+         Cmd.Settings.Undefined_Behavior :=
+           Get_Behavior (Cmd.Behavior_Str.all);
       else
-         Cmd.Settings.Undefined_Action := Mold_Lib.Ignore;
-      end if;
-
-      if Cmd.Alert_Str.all'Length > 0 then
-         Cmd.Settings.Undefined_Alert := Get_Alert (Cmd.Alert_Str.all);
-      else
-         Cmd.Settings.Undefined_Alert := Mold_Lib.Error;
+         Cmd.Settings.Undefined_Behavior := Mold_Lib.Ignore;
       end if;
 
       Log.Debug ("Cmd.Settings = " & Cmd'Image);
@@ -192,6 +174,9 @@ package body Mold_Apply is
             T.Append ("  replacement in filename");
             T.Append (Bool (Cmd.Settings.Replacement_In_Filenames));
             T.New_Row;
+            T.Append("  replacement in variables");
+            T.Append (Bool (Cmd.Settings.Replacement_In_Variables));
+            T.New_Row;
             T.Append ("  delete source files");
             T.Append (Bool (Cmd.Settings.Delete_Source_Files));
             T.New_Row;
@@ -201,11 +186,8 @@ package body Mold_Apply is
             T.Append ("  enable defined settings");
             T.Append (Bool (Cmd.Settings.Enable_Defined_Settings));
             T.New_Row;
-            T.Append ("  undefined action");
-            T.Append (Cmd.Settings.Undefined_Action'Image);
-            T.New_Row;
-            T.Append ("  undefined alert");
-            T.Append (Cmd.Settings.Undefined_Alert'Image);
+            T.Append ("  undefined behavior");
+            T.Append (Cmd.Settings.Undefined_Behavior'Image);
             T.New_Row;
             T.Print;
          end;
@@ -236,13 +218,10 @@ package body Mold_Apply is
       end;
 
    exception
-      when Invalid_Action =>
-         Log.Error ("Invalid value '" & Cmd.Action_Str.all & "' for Action");
+      when Invalid_Behavior =>
+         Log.Error
+           ("Invalid value '" & Cmd.Behavior_Str.all & "' for Behavior");
          GNAT.OS_Lib.OS_Exit (2);
-
-      when Invalid_Alert =>
-         Log.Error ("Invalid value '" & Cmd.Alert_Str.all & "' for Alert");
-         GNAT.OS_Lib.OS_Exit (3);
 
    end Execute;
 

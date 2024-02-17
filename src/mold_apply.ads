@@ -33,7 +33,7 @@ package Mold_Apply is
    overriding function Long_Description
      (Cmd: Cmd_Type) return AAA.Strings.Vector is
      (AAA.Strings.Empty_Vector
-         .Append ("Apply variable substitution process to a file or directory. It requires a definitions file and a path, ether a file or directory")
+         .Append ("Apply variable substitution process to a file or directory. It requires a definitions file and a path, either a file or directory")
          .New_Line
          .Append ("DEFINITIONS file is a TOML file with variables defined like 'foo=""bar""'. Multiline variables are supported. See https://toml.io for more information. Definitions file can also contain mold settings that are applied when enabled.")
          .New_Line
@@ -60,9 +60,8 @@ package Mold_Apply is
 private
 
    type Cmd_Type is new CLIC.Subcommand.Command with record
-      Settings   : aliased Mold_Lib.Settings_Type := Mold_Lib.Default_Settings;
-      Action_Str : aliased GNAT.Strings.String_Access := null;
-      Alert_Str  : aliased GNAT.Strings.String_Access := null;
+      Settings : aliased Mold_Lib.Settings_Type := Mold_Lib.Default_Settings;
+      Behavior_Str : aliased GNAT.Strings.String_Access := null;
    end record;
 
 end Mold_Apply;
