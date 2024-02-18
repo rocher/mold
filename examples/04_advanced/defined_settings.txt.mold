@@ -1,0 +1,3 @@
+foo is defined as "{{foo}}"
+bar is defined as "{{bar}}"
+undef is "{{undef}}"

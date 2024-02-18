@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+--
+--  AOC{{Year}}{{ZDay}} - Advent of Code {{Year}} - Day {{Day}} - Part 1
+--  Copyright (c) {{Year}} {{Address}}
+--  SPDX-License-Identifier: {{License}}
+--
+-------------------------------------------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Part_1 is
+   Input    : File_Type;
+   Answer   : Natural         := 42;
+   Filename : constant String := "input.txt";
+
+begin
+   Input.Open (In_File, Filename);
+   loop
+      declare
+         Line : constant String := Input.Get_Line;
+      begin
+         Answer := @ + Line'Length;
+      end;
+      exit when Input.End_Of_File;
+   end loop;
+   Input.Close;
+
+   Put_Line (f"Answer: {Answer}");
+end Part_1;

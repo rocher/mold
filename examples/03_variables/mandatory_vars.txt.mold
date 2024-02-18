@@ -1,0 +1,5 @@
+"{{  foo }}" is "the normal" replacement of foo
+"{{ #foo }}" is "the mandatory" replacement of foo
+
+"{{  bar }}" is "the normal" replacement of bar (ignored with '-u ignore')
+"{{ #bar }}" is "the mandatory" replacement of bar (always error if undefined)

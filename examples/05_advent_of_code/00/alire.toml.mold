@@ -1,0 +1,10 @@
+authors = ["{{Author}}"]
+name = "aoc_{{Year}}_{{ZDay}}"
+version = "{{Year}}.{{ZDay}}"
+description = "Advent of Code {{Year}} - Day {{Day}}"
+licenses = "{{License}}"
+
+executables = ["part_1", "part_2"]
+
+[build-switches."*"]
+ada_version = ["-gnat2022", "-gnatX0", "-gnatW8"]

@@ -1,0 +1,6 @@
+mold-replacement-in-filenames = "false"
+mold-replacement-in-variables = "false"
+mold-on-undefined = "empty"
+
+foo = "foo"
+bar = "{{foo}}"

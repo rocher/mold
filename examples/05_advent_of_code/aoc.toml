@@ -1,0 +1,10 @@
+Day = "1"
+Year = "2024"
+
+Author = "Name Surname"
+Email = "your.email@example.com"
+Github_Username = "username"
+Github_Repository = "advent_of_code-{{Year}}"
+Address = "{{Author}} <{{Email}}>"
+ZDay = "{{Day/pl02}}"
+License = "MIT"
