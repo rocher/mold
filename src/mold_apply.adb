@@ -27,13 +27,13 @@ package body Mold_Apply is
    -- Get_Behavior --
    ------------------
 
-   function Get_Behavior (Value : String) return Mold_Lib.Undefined_Behaviors
+   function Get_Behavior (Value : String) return Mold_Lib.On_Undefined_Handling
    is
    begin
-      return Result : Mold_Lib.Undefined_Behaviors do
+      return Result : Mold_Lib.On_Undefined_Handling do
          Log.Debug ("Get_Behavior");
          Log.Debug ("   Value  : " & Value);
-         Result := Mold_Lib.Undefined_Behaviors'Value (Value);
+         Result := Mold_Lib.On_Undefined_Handling'Value (Value);
 
       exception
          when Constraint_Error =>
@@ -102,10 +102,10 @@ package body Mold_Apply is
       Define_Switch
         (Config,
         Cmd.Behavior_Str'Access,
-         Switch      => "-b:",
-         Long_Switch => "--behavior=",
-         Argument    => "BEHAVIOR",
-         Help        => "Undefined behavior: [ignore], empty, error"
+         Switch      => "-u:",
+         Long_Switch => "--on-undefined=",
+         Argument    => "ACTION",
+         Help        => "Action on undefined: ignore, empty, [error]"
       );
 
       pragma Style_Checks (on);
@@ -122,10 +122,7 @@ package body Mold_Apply is
       Args_Length : constant Natural := Natural (Args.Length);
    begin
       if Cmd.Behavior_Str.all'Length > 0 then
-         Cmd.Settings.Undefined_Behavior :=
-           Get_Behavior (Cmd.Behavior_Str.all);
-      else
-         Cmd.Settings.Undefined_Behavior := Mold_Lib.Ignore;
+         Cmd.Settings.On_Undefined := Get_Behavior (Cmd.Behavior_Str.all);
       end if;
 
       Log.Debug ("Cmd.Settings = " & Cmd'Image);
@@ -171,10 +168,10 @@ package body Mold_Apply is
             T.Append (Bold ("Settings"));
             T.Append ("");
             T.New_Row;
-            T.Append ("  replacement in filename");
+            T.Append ("  replacement in filenames");
             T.Append (Bool (Cmd.Settings.Replacement_In_Filenames));
             T.New_Row;
-            T.Append("  replacement in variables");
+            T.Append ("  replacement in variables");
             T.Append (Bool (Cmd.Settings.Replacement_In_Variables));
             T.New_Row;
             T.Append ("  delete source files");
@@ -186,8 +183,8 @@ package body Mold_Apply is
             T.Append ("  enable defined settings");
             T.Append (Bool (Cmd.Settings.Enable_Defined_Settings));
             T.New_Row;
-            T.Append ("  undefined behavior");
-            T.Append (Cmd.Settings.Undefined_Behavior'Image);
+            T.Append ("  undefined action");
+            T.Append (Cmd.Settings.On_Undefined'Image);
             T.New_Row;
             T.Print;
          end;
