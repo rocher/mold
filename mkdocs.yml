@@ -9,7 +9,7 @@ repo_url: https://github.com/rocher/mold
 # remote_branch: main
 
 copyright:
-  Copyright &copy; - 2023 Francesc Rocher
+  Copyright &copy; - 2023, 2024 Francesc Rocher
 
 theme:
   name: material
