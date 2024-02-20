@@ -82,4 +82,4 @@ release.optimization = ["-O2", "-gnatn"]
 clic = "~0.2.1"
 gnat = ">=2021 | (>=12 & <2000)"
 simple_logging = "^1.2.0"
-mold_lib = ">=2.0.0"
+mold_lib = "^2.2.0"
