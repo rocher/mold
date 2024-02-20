@@ -2,4 +2,4 @@
 "{{ ?foo }}" is "the optional" replacement of foo
 
 "{{  bar }}" is "the normal" replacement of bar (ignored with '-u ignore')
-"{{ ?bar }}" is "the optional" replacement of bar (always ignored if undefined)
+"{{ ?bar }}" is "the optional" replacement of bar (always emptied if undefined)

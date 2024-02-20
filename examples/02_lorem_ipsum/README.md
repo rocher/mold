@@ -6,7 +6,7 @@ directory for a better understanding of the examples contained here.
 
 After running all examples, you should have these files:
 
-  * In Linux:
+  * md5sum in Linux/MacOS:
     ```
     ff416bfec859c59a3834c46d60250e25  lorem-ipsum-includes-01.txt
     ff416bfec859c59a3834c46d60250e25  lorem-ipsum-includes-02.txt
@@ -14,7 +14,7 @@ After running all examples, you should have these files:
     ff416bfec859c59a3834c46d60250e25  lorem-ipsum.txt
     ```
 
-  * In windows:
+  * md5sum in Windows:
     ```
     8880f5a8180491db9710d884c81f4117  lorem-ipsum-includes-01.txt
     8880f5a8180491db9710d884c81f4117  lorem-ipsum-includes-02.txt
