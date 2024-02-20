@@ -9,9 +9,79 @@ icon: octicons/info-24
 [![MOLD](img/Ada_Mold_CLI.png){ .alice-half align=right .off-glb }](https://github.com/rocher/mold)
 ## Command Line Tool
 
-!!! warning
+### Running mold
 
-    Work still in progress, no public release still available.
+Run `mold` to get more information on mold commands and common options.
+
+```txt title="mold"
+mold 1.0.0 (lib-2.2.1)
+
+ⓘ USAGE
+   mold [global options] <command> [command options] [<arguments>]
+
+   mold help [<command>|<topic>]
+
+ⓘ ARGUMENTS
+    <command>     Command to execute
+    <arguments>   List of arguments for the command
+
+ⓘ GLOBAL OPTIONS
+   -h (--help)     Display command help
+   --no-color      Disable color
+   --no-tty        Disable control characters
+   -v (--verbose)  Show command activity
+
+ⓘ COMMANDS
+   General
+   help        Shows help on the given command/topic
+
+   Process
+   apply       Apply variable substitution to a file or directory
+```
+
+#### Apply
+
+The main mold command is `apply`. Run `mold apply -h` to get more information:
+
+```txt title="mold apply -h"
+ⓘ SUMMARY
+   Apply variable substitution to a file or directory
+
+ⓘ USAGE
+   mold apply [options] DEFINITIONS PATH [ OUTPUT_DIRECTORY ]
+
+ⓘ OPTIONS
+   -f (--no-filenames)         No variable substitution in filenames
+   -v (--no-variables)         No variable substitution in variables
+   -d (--delete-sources)       Delete source files
+   -o (--no-overwrite)         Do not overwrite destination files
+   -s (--no-settings)          Disable defined settings
+   -u (--on-undefined=ACTION)  Action on undefined: ignore, empty, [error]
+
+ⓘ GLOBAL OPTIONS
+   -h (--help)     Display command help
+   --no-color      Disable color
+   --no-tty        Disable control characters
+   -v (--verbose)  Show command activity
+   -d (--debug)    Enable debug messages
+
+ⓘ DESCRIPTION
+   Apply variable substitution process to a file or directory. It requires a
+   definitions file and a path, either a file or directory
+
+   DEFINITIONS file is a TOML file with variables defined like 'foo="bar"'.
+   Multiline variables are supported. See https://toml.io for more information.
+   Definitions file can also contain mold settings that are applied when
+   enabled.
+
+   PATH is either a mold file or directory. When a directory is used, the
+   variable substitution process is applied to all mold files, recursively in
+   all subdirectories. Mold files must have the 'mold' extension. Generated
+   files by the process have the same name removing the 'mold' extension.
+   Variable substitution process is applied also to filenames.
+
+   Please visit https://rocher.github.io/mold for a complete reference.
+```
 
 ---
 
@@ -78,8 +148,7 @@ The only function call available is:
 The `Settings_Type` is defined as:
 
 ```ada title="mold.ads"
-   type Undefined_Variable_Actions is (Ignore, Empty);
-   type Undefined_Alerts  is (None, Warning, Error);
+   type Undefined_Behaviors is (None, Empty, Error);
 
    type Settings_Type is record
       Replacement_In_Filenames    : aliased Boolean;
@@ -87,8 +156,7 @@ The `Settings_Type` is defined as:
       Delete_Source_Files         : aliased Boolean;
       Overwrite_Destination_Files : aliased Boolean;
       Enable_Defined_Settings     : aliased Boolean;
-      Undefined_Action            : aliased Undefined_Actions;
-      Undefined_Alert             : aliased Undefined_Alerts;
+      On_Undefined                : aliased On_Undefined_Handling;
    end record;
 ```
 
@@ -103,8 +171,7 @@ settings are used, which are defined as:
       Delete_Source_Files         => False,
       Overwrite_Destination_Files => True,
       Enable_Defined_Settings     => True,
-      Undefined_Action            => Ignore,
-      Undefined_Alert             => Warning
+      On_Undefined                => Error
    );
 ```
 

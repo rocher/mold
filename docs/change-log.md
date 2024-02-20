@@ -14,7 +14,14 @@ icon: octicons/log-24
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg){.badge}](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue){.badge}](https://github.com/rocher/mold/blob/master/LICENSE)
 
-#### 0.2.0-dev
+### 1.0.2
+Date: 20-02-2024
+
+  * First public release
+  * Use `mold_lib-2.2.1`
+  * Refactor examples
+
+### 0.2.0-dev
 Date: 2023-08-27
 
   * Basic implementation of the `apply` command:
@@ -32,11 +39,48 @@ Date: 2023-08-27
 [![GitHub release](https://img.shields.io/github/release/rocher/mold_lib.svg){.badge}](https://github.com/rocher/mold_lib/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold_lib.svg?color=blue){.badge}](https://github.com/rocher/mold_lib/blob/master/LICENSE)
 
+### 2.2.1
+Date: 2024-02-18
 
-#### 2.0.0
+#### Bugs fixed
+
+  * Prevent replacement errors in empty files
+
+### 2.2.0
+Date: 2024-02-18
+
+#### Major changes
+
+  * Renamed setting `Undefined_Behavior` to `On_Undefined`; succinct and clear
+    option to express its purpose.
+  * When `On_Undefined` is `Ignore`, no warning is issues; when `Empty`, a
+    warning is issued. Default value is `Error`
+
+### 2.1.1
+Date: 2024-02-17
+
+#### Bugs fixed
+
+  * Disabling variable substitution in variables now works as expected
+  * Source code formatting
+
+### 2.1.0
+Date: 2024-02-17
+
+#### Major changes
+
+  * Unified the undefined action and alert into the undefined behavior:
+    * `Undefined_Action` and `Undefined_Alert` are now `Undefined_Behavior`
+    * Possible values for `Undefined_Behavior` are `Ignore`, `Empty` and
+      `Error`
+    * `Ignore` leaves undefined variables and text filters unchanged
+    * `Empty` removes undefined variables and text filters
+    * `Ignore` and `Empty` behaviors always issue a warning
+
+### 2.0.0
 Date: 2023-11-21
 
-##### Major Changes
+#### Major changes
 
   * New simplified error handling strategy
     * The new strategy unifies actions and alerts for undefined variables or
@@ -62,23 +106,23 @@ Date: 2023-11-21
 
       results in `B = "Hello, World"`
 
-##### Minor Changes
+#### Minor changes
 
   * New set of default settings
   * Removed summary reported by text filter application
   * Several minor fixes and improvements
 
-#### 1.0.2
+### 1.0.2
 Date: 2023-10-23
 
   * Fix patch number in Alire description
 
-#### 1.0.1
+### 1.0.1
 Date: 2023-10-23
 
   * Fix Alire descriptions and dependencies
 
-#### 1.0.0
+### 1.0.0
 Date: 2023-10-22
 
   * First stable release
@@ -87,7 +131,7 @@ Date: 2023-10-22
   * Reach 100% coverage test
   * Fixed several bugs
 
-#### 0.2.1-dev
+### 0.2.1-dev
 Date: 2023-08-26
 
   * First release with all major features

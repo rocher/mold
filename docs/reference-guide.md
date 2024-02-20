@@ -12,15 +12,11 @@ Variable substitution takes place in a single file or directory, and
 recursively, across all its sub-directories. Processed files must end with the
 `mold` extension. The substitution process generates a new file with all the
 variables replaced with the corresponding values. The new filename is the
-same as the source file, but removing the `.mold` extension:
+same as the source file, but removing the `.mold`:
 
 ```bash
-   README.md.mold ——[ mold generates ]--> README.md
+   README.md.mold ——[ Mold generates ]--> README.md
 ```
-
-By default, if a generated file already exists, Mold issues a error, but it is
-possible to force overwriting existing files.
-
 
 ### Operating in directories
 
@@ -30,34 +26,47 @@ case comes in handy to create a new project directory starting from a given
 template project.
 
 Mold recurses all subdirectories and applies the variable substitution to all
-mold files found. The generated file is created in the same path, but relative
+Mold files found. The generated file is created in the same path, but relative
 to the output directory. If necessary, all parent directories are created as
 well.
 
-Files not processed by mold won't be found in the output directory. For
-example:
+Only Mold files, those ending with the extension `mold`, are processed.
+Definition files and Mold templates are considered _working files_ and won't
+be found in the output directory.
+
+In the context of Mold, definition or variables files are `toml` files that
+contain a set of variables defined in them. Template files with the extension
+`molt` that can be included from Mold files. Templates files are used to
+contain common parts of the contents, like headers, footers and the like.
+
+The next example shows a template project with the `definitions.toml` file,
+some `*.molt` templates and a set of Mold files. The project is structured in
+several (sub)directories. The diagram show the files generated when Mold
+processes the input directory `foo/` into the output path `/tmp/lorem/ipsum/`.
+Not used files (non-appearing in the output tree) ara marked with `•->`:
 
 ```
-
 INPUT DIRECTORY  ─[ Mold ]-> OUTPUT DIRECTORY = /tmp/lorem/ipsum
 
-     foo/                             /tmp/
-     ├── bar.txt.mold                  └── lorem/
-     ├── baz.md.mold                       └── ipsum/
-     ├── definitions.toml                      ├── foo/
-     ├── header.molt                           │   ├── bar.txt
-     ├── subdir_1/                             │   └── baz.md
-     │   ├── foo-bar.adb.mold                  ├── subdir_1/
-     │   ├── bar-bar.ads.mold                  │   ├── foo-bar.adb
-     │   └── footer.molt                       │   └── foo-bar.ads
-     └── subdir_2/                             └── subdir_2/
-         ├── foo-2.adb.mold                        ├── foo-2.adb
-         ├── bar-2.ads.mold                        ├── foo-2.ads
-         ├── local-header.molt                     └── subdir_3/
-         └── subdir_3/                                 ├── foo-3.md
-             ├── foo-3.md.mold                         └── bar.md
-             └── bar.md.mold
-
+                                    /tmp/
+                                     └── lorem/
+                                         └── ipsum/
+    foo/   ------------------------------>   ├── foo/
+    ├── bar.txt.mold                         │   ├── bar.txt
+    ├── baz.md.mold                          │   └── baz.md
+    ├── definitions.toml                     |   •-> definitions file
+    ├── header.molt                          |   •-> template file
+    ├── subdir_1/   --------------------->   ├── subdir_1/
+    │   ├── foo-bar.adb.mold                 │   ├── foo-bar.adb
+    │   ├── bar-bar.ads.mold                 │   └── foo-bar.ads
+    │   └── footer.molt                      |   •-> template file
+    └── subdir_2/   --------------------->   └── subdir_2/
+        ├── foo-2.adb.mold                       ├── foo-2.adb
+        ├── bar-2.ads.mold                       ├── foo-2.ads
+        ├── local-header.molt                    •-> template file
+        └── subdir_3/   ----------------->       └── subdir_3/
+            ├── foo-3.md.mold                        ├── foo-3.md
+            └── bar.md.mold                          └── bar.md
 ```
 
 ### Error Handling
@@ -77,8 +86,7 @@ immediately the replacement process.
 Detected during the variable replacement, these errors are caused when a
 variable has not been defined of an invalid text filter has been specified.
 Depending on the settings and the type of substitution, Mold can skip this
-error, report a warning or an error, and continue with the process. Next
-section explain how these errors are handled.
+error, report a warning or an error, and continue with the process.
 
 
 ## Variable Definition
@@ -172,19 +180,19 @@ the new file contents would be:
 
 ```md title="README.md"
    README, please
-   Hello World, ths is just an example text
+   Hello World, this is just an example text
 ```
 
 ### Substitution Modes
 
-There are three substitution modes in Mod. The only difference between them is
+There are three substitution modes inMold. The only difference between them is
 the error handling when an undefined variable is found.
 
 #### Normal
 
-For an undefined variable, the default behavior is to issue an error and left
-the variable *ignored*, or unchanged. If `world` was undefined, the above
-example would be:
+For an undefined variable, the default behavior is to issue an error and stop
+the substitution process. If `world` was undefined, the above example would
+be:
 
 ```md title="README.md.mold"
    README, please
@@ -193,31 +201,17 @@ example would be:
 For normal substitution, it is possible to specify what to do when an
 undefined variable is found:
 
-* *Undefined Variable Action* determines if the undefined variable must be
-  removed or kept in the destination file. It can take the values:
-    * `Ignore`, to left the variables as is
-    * `Empty`, to remove the variable in the destination file
-
-* *Undefined Variable Alert* determines the error handling strategy:
-    * `None`: does nothing
-    * `Warning`: issues a warning
-    * `Error`: issues a replacement error
-
-!!! note "Only for normal"
-
-    These two aspects do not apply to either optional or mandatory
-    substitution modes.
-
-!!! tip "Equivalent modes"
-
-    With a combination of these two aspects, it is possible to force normal
-    substitution mode to behave like optional or mandatory. See the table in
-    [Examples](#examples) below.
+* *On Undefined Action* determines if the normal substitution of an undefined
+  variable must be ignored, emptied or errored. It can take the values:
+    * `Ignore`, to left the variables as is; no warning issued
+    * `Empty`, to replace the variable with an empty string; a warning is
+      issued
+    * `Error`, to issue an error; this is the default action
 
 #### Optional
 
 Optional substitution is written as `{{ ?variable }}`, for any variable. For
-undefined variables, optional substitution does no issues a warning and the
+undefined variables, optional substitution does not issue a warning and the
 `{{ ?variable }}` text is removed.
 
 For example,
@@ -236,14 +230,16 @@ issues no warning and generates
 !!! note
 
     There are no *optional variables*: it is the *substitution mode* that can be
-    optional. Any variable can be used as `{{variable}}` and `{{?variable}}` at
+    optional. But we refer to them as _optional variables_ indistinctly.
+
+    Any variable can be used as `{{variable}}` and `{{?variable}}` at
     different places, even in the same file.
 
 #### Mandatory
 
 Mandatory substitution is written as `{{ #variable }}`. If the variable is
-undefined, Mold issues an error and makes no substitution. By default, the
-substitution process is aborted on error.
+undefined, Mold issues an error and makes no substitution. The substitution
+process is aborted on error.
 
 !!! warning "Syntax"
 
@@ -257,36 +253,25 @@ substitution process is aborted on error.
 
 Examples with defined variable `foo="bar"` and variable `baz` undefined:
 
-| Kind | Action | Alert | Variable | Replace | Error | R I E | Like |
-| ---- | ------ | ----- | -------: | :------ | ----: | :---: | ---- |
-**Defined variable**
-Normal     | *any*   | *any*   | `{{foo}}`    | `bar`       |         | T F F |
-Optional   | —       | —       | `{{?foo}}`   | `bar`       |         | T F F |
-Mandatory  | —       | —       | `{{#foo}}`   | `bar`       |         | T F F |
-**Undefined variable**
-Normal     | Ignore  | None    | `{{baz}}`    | `{{baz}}`   |         | F T F |
-Normal     | Ignore  | Warning | `{{baz}}`    | `{{baz}}`   | Warning | F T F |
-Normal     | Ignore  | Error   | `{{baz}}`    | `{{baz}}`   | Error   | F T F | Mandatory
-Normal     | Empty   | None    | `{{baz}}`    |             |         | F F T | Optional
-Normal     | Empty   | Warning | `{{baz}}`    |             | Warning | F F T |
-Normal     | Empty   | Error   | `{{baz}}`    |             | Error   | F F T |
-           |         |         |              |             |         |       |
-Optional   | —       | —       | `{{?baz}}`   |             |         | F F T |
-Mandatory  | —       | —       | `{{#baz}}`   | `{{#baz}}`  | Error   | F T F |
-
-Meaning of columns 'RIE'; each one can take value True or False:
-
-  * 'R' : variable replaced with a defined value
-  * 'I' : Variable ignored
-  * 'E' : Variable emptied (removed)
-
+| Kind | Action | Variable | Replace | Error? |
+| ---- | ------ | -------: | :------ | :----- |
+**Defined variables**
+Normal     | *any*   | `"{{foo}}"`  | `"bar"`     |         |
+Optional   | —       | `"{{?foo}}"` | `"bar"`     |         |
+Mandatory  | —       | `"{{#foo}}"` | `"bar"`     |         |
+**Undefined variables**
+Normal     | Ignore  | `"{{baz}}"`  | `"{{baz}}"` |         |
+Normal     | Empty   | `"{{baz}}"`  | `""`        | Warning |
+Normal     | Error   | `"{{baz}}"`  | *none*      | Error   |
+Optional   | —       | `"{{?baz}}"` | `""`        |         |
+Mandatory  | —       | `"{{#baz}}"` | *none*      | Error   |
 
 ## Text Filters
 
 Text filters enable text transformations before variable substitution. In the
 command line, there are few predefined text filters. In the library, you can
-provide up to ten filters. In general, a text filter is a function that
-receives the value of the variable as an argument, applies some
+additionally provide up to ten custom filters. In general, a text filter is a
+function that receives the value of the variable as an argument, applies some
 transformation and returns a string.
 
 Text filters are applied independently of the variable substitution mode: if a
@@ -323,7 +308,7 @@ For example:
     interprets that you are passing the argument `' '` to the filter, which is
     incorrect.
 
-In this example, the `/s-` part tells mold to apply the predefined filter
+In this example, the `/s-` part tells Mold to apply the predefined filter
 *sequence* with two arguments: the value of `TITLE` (all text filters
 mandatorily receive this argument) and the character `'-'`. The filter returns
 a sequence of `'-'` with the same length as the value of `TITLE`:
@@ -467,11 +452,6 @@ filters that can delete some characters starts with an uppercase letter.
     conventions designated by `<STYLE>`; example applied to `"bytes per
     second"`
 
-    !!! example inline end "Equivalences"
-
-        Some naming styles can be obtained by composing other predefined text
-        filters. For example, `/ns` is the same as `/cl/Ta/ra _`.
-
     | Style | Name             | Example            | Equivalence        |
     | :---: | ---------------- | ------------------ | ------------------ |
     |  `f`  | flatcase         | `bytespersecond`   | `/cl/X` or `/X/cl` |
@@ -486,13 +466,17 @@ filters that can delete some characters starts with an uppercase letter.
     |  `t`  | Train-Case       | `Bytes-Per-Second` | `/cc/Ta/ra -`      |
     |  `T`  | TRAIN-CASE       | `BYTES-PER-SECOND` | `/cu/Ta/ra -`      |
 
+!!! example "Equivalences"
+
+    Some naming styles can be obtained by composing other predefined text
+    filters. For example, `/ns` is the same as `/cl/Ta/ra _`.
 
 #### Paragraph formatting
 
 ???+ warning "Work in progress"
 
-    Paragraph formatting is in the features road map. It will consist in two
-    filters to manage paragraphs:
+    Paragraph formatting is in the road map. It will consist in two filters to
+    manage paragraphs:
 
       1. Basic formatting to a given width
       2. Formatting to a given width adding a prefix at each line
@@ -500,7 +484,7 @@ filters that can delete some characters starts with an uppercase letter.
     Additional filters could be provided, like justifying a paragraph.
 
 
-### Custom Text Filters (lib)
+### Custom Text Filters
 
 !!! info inline end "Note"
 
@@ -512,7 +496,7 @@ A text filter is a pointer to a function with the signature
    function Text_Filter (S : String) return String;
 ```
 
-Text filters are passed to the mold library as an array of pointers to
+Text filters are passed to the Mold library as an array of pointers to
 functions numbered in the range `0..9`. Thus, when you want to use a custom
 text filter, you can write
 
@@ -522,7 +506,7 @@ text filter, you can write
    Hello {{ ?world }}, this is just an {{           example  }}
 ```
 
-The syntax `/0` after `TITLE`, tells mold to apply the filter in the 0th
+The syntax `/0` after `TITLE`, tells Mold to apply the filter in the 0th
 position of the array before the variable substitution. Assuming that the 0th
 element of the array of texts filters points to a function that returns a
 sequence of `"---"` with the same length of the argument, the resulting
@@ -537,9 +521,9 @@ substitution would be:
 
 ## Filename Substitution
 
-Variables in filenames must be written with the syntax `__variable__`, with
-no spaces between the variable name and underscores. Text filters cannot be
-used in filename substitution.
+Variables in filenames must be written with the syntax `__variable__`, with no
+spaces between the variable name and the two underscores. Text filters cannot
+be used in filename substitution.
 
 For example, the file
 
@@ -553,9 +537,7 @@ would generate, with the above definitions, a new file called
    README_World.md
 ```
 
-Undefined variables in a filename always issue a warning; no optional
-substitution here. Substitution in filenames is enabled by default, but can
-be disabled.
+Substitution in filenames is enabled by default, but can be disabled.
 
 !!! danger "Warning"
 
@@ -564,25 +546,23 @@ be disabled.
     strongly not recommended practice, for portability reasons. Mold does not
     check if you use directory separators in variable values, so use at your
     own risk. It is better to create previously the necessary directory
-    structure and make mold operate in a directory.
+    structure and makeMold operate in a directory.
 
 
 ## Settings
 
-The `mold` tool is a CLI wrapper of `libmold`, so this section applies to both
+The `mold` tool is a CLI wrapper of `mold_lib`, so this section applies to both
 implementations. There is a flag in the `mold` tool with the exact meaning:
 
 
 |                       Setting | Description                                                               | Default   |
 | ----------------------------: | :------------------------------------------------------------------------ | :-------- |
-|    `Replacement_In_FileNames` | Enables variable substitution in source filenames.                        | `True`    |
+|    `Replacement_In_Filenames` | Enables variable substitution in source filenames.                        | `True`    |
 |    `Replacement_In_Variables` | Enables variable substitution in variables definitions.                   | `True`    |
-|         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `True`    |
-| `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `False`   |
-|     `Enable_Defined_Settings` | Enable the use of mold settings in the definitions fie.                   | `True`    |
-|            `Undefined_Action` | Action for undefined variable or invalid text filter.                     | `Ignore`  |
-|             `Undefined_Alert` | Error handling for undefined variable or invalid text filter.             | `Warning` |
-|  `Abort_On_Replacement_Error` | If `True`, aborts the process as soon as a replacement error is detected. | `True`    |
+|         `Delete_Source_Files` | Delete source files if variable substitution process finish successfully. | `False`   |
+| `Overwrite_Destination_Files` | Overwrite destination files, if already exist.                            | `True`    |
+|     `Enable_Defined_Settings` | Enable the use of Mold settings in the definitions fie.                   | `True`    |
+|                `On_Undefined` | Action when undefined variables or invalid text filters are found.        | `Error`   |
 
 
 ### Defined Settings
@@ -634,13 +614,12 @@ defined in [Settings](#settings):
 
 | Setting                       | Variable                           |
 | ----------------------------- | ---------------------------------- |
-| `Replacement_In_FileNames`    | `mold-replacement-in-filenames`    |
+| `Replacement_In_Filenames`    | `mold-replacement-in-filenames`    |
 | `Replacement_In_Variables`    | `mold-replacement-in-variables`    |
 | `Delete_Source_Files`         | `mold-delete-source-files`         |
 | `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
-| `Undefined_Action`            | `mold-undefined-action`            |
-| `Undefined_Alert`             | `mold-undefined-alert`             |
-| `Abort_On_Replacement_Error`  | `mold-abort-on-replacement-error`  |
+| `Enable_Defined_Settings`     | `mold-enable-defined-settings`     |
+| `On_Undefined`                | `mold-on-undefined`                |
 
 
 ## Template Inclusion
@@ -653,8 +632,8 @@ included at any point in a `mold` file, in a single line, with the syntax
    {{ include:header.molt }}
 ```
 
-The filename can be relative path to the current mold file being processed,
-or relative to the working directory from which the mold tool was invoked.
+The filename can be relative path to the current Mold file being processed,
+or relative to the working directory from which the Mold tool was invoked.
 
 When this line is found, Mold opens and processes the included file and the
 output is sent into the currently generated file. The same set or defined

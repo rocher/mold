@@ -41,7 +41,7 @@ theme:
     - content.code.copy
     - navigation.footer
     - navigation.path
-#    - navigation.sections
+    - navigation.sections
     - navigation.tabs
     - navigation.top
     - navigation.tracking
@@ -132,9 +132,10 @@ extra:
 
 nav:
   - HOME: index.md
-  - Reference Guide: reference-guide.md
-  - User Guide: user-guide.md
+  - Overview: overview.md
   - Installation: installation.md
+  - User Guide: user-guide.md
+  - Reference Guide: reference-guide.md
   - Change Log: change-log.md
 
 # * SECTION - PUBLISH DOCS

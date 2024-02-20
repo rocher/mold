@@ -92,13 +92,17 @@ img.badge {
     padding: 0.0;
 }
 
+.md-grid {
+    max-width: 55rem !important;
+}
+
 .md-nav {
     /*font-family: Oswald !important;*/
     font-size: 0.70rem;
 }
 
 .md-nav__link--active {
-    font-size: 0.77rem;
+    /* font-size: 0.77rem; */
 }
 
 /* Old style admonitions */
