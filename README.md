@@ -1,7 +1,5 @@
 [![Alire](https://img.shields.io/endpoint?url=https://alire.ada.dev/badges/mold.json)](https://alire.ada.dev/crates/mold.html)
 [![Alire CI/CD](https://img.shields.io/endpoint?url=https://alire-crate-ci.ada.dev/badges/mold.json)](https://alire-crate-ci.ada.dev/crates/mold.html)
-![unit-test](https://github.com/rocher/mold/actions/workflows/unit-test.yml/badge.svg)
-[![codecov](https://codecov.io/gh/rocher/mold/graph/badge.svg?token=LB83SI4I0Y)](https://codecov.io/gh/rocher/mold)
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg)](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue)](https://github.com/rocher/mold/blob/master/LICENSE)
 
@@ -16,18 +14,25 @@ templates. The main motivation of Mold is to have repositories in GitHub used
 as template repositories to create new, customized repositories for other
 users.
 
+Mold is the CLI wrapper of the [mold_lib](https://github.com/rocher/mold_lib),
+the Ada library that implements all Mold functionality.
+
 Main features supported in Mold include
 
   * variable replacement in mold files (*.mold)
+
+  * definition of variables with a simple TOML file
 
   * for a given directory, variable replacement recursively for all mold files
     in all subdirectories
 
   * variable replacement in filenames
 
-  * inclusion of other templates
+  * variables in variables
 
-  * definition of variables with a simple TOML file
+  * predefined text filters (and custom text filters)
+
+  * inclusion of other templates
 
 Variable replacement can be specified as *normal*, *optional* or *mandatory*.
 For example, the variable `foo = "bar"` can be specified with `{{foo}}`,
