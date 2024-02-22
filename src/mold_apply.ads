@@ -14,17 +14,18 @@ with Mold_Lib;
 
 package Mold_Apply is
 
-  type Cmd_Type is new CLIC.Subcommand.Command with private;
+   type Cmd_Type is new CLIC.Subcommand.Command with private;
 
-  overriding function Name
-   (Cmd : Cmd_Type) return CLIC.Subcommand.Identifier is
-   ("apply");
+   overriding function Name
+     (Cmd : Cmd_Type) return CLIC.Subcommand.Identifier is
+     ("apply");
 
-  overriding function Usage_Custom_Parameters (Cmd : Cmd_Type) return String is
-   ("DEFINITIONS PATH [ OUTPUT_DIRECTORY ]");
+   overriding function Usage_Custom_Parameters
+     (Cmd : Cmd_Type) return String is
+     ("DEFINITIONS PATH [ OUTPUT_DIRECTORY ]");
 
-  overriding function Short_Description (Cmd : Cmd_Type) return String is
-   ("Apply variable substitution to a file or directory");
+   overriding function Short_Description (Cmd : Cmd_Type) return String is
+     ("Apply variable substitution to a file or directory");
 
    --!pp off
    pragma Style_Checks (off);
@@ -45,22 +46,22 @@ package Mold_Apply is
    pragma Style_Checks (on);
    --!pp on
 
-  overriding function Switch_Parsing
-   (Cmd : Cmd_Type) return CLIC.Subcommand.Switch_Parsing_Kind is
-   (CLIC.Subcommand.Parse_All);
+   overriding function Switch_Parsing
+     (Cmd : Cmd_Type) return CLIC.Subcommand.Switch_Parsing_Kind is
+     (CLIC.Subcommand.Parse_All);
 
-  overriding procedure Setup_Switches
-   (Cmd    : in out Cmd_Type;
-    Config : in out CLIC.Subcommand.Switches_Configuration);
+   overriding procedure Setup_Switches
+     (Cmd    : in out Cmd_Type;
+      Config : in out CLIC.Subcommand.Switches_Configuration);
 
-  overriding procedure Execute
-   (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector);
+   overriding procedure Execute
+     (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector);
 
 private
 
-  type Cmd_Type is new CLIC.Subcommand.Command with record
-    Settings     : aliased Mold_Lib.Settings_Type := Mold_Lib.Default_Settings;
-    Behavior_Str : aliased GNAT.Strings.String_Access := null;
-  end record;
+   type Cmd_Type is new CLIC.Subcommand.Command with record
+      Settings : aliased Mold_Lib.Settings_Type := Mold_Lib.Default_Settings;
+      Behavior_Str : aliased GNAT.Strings.String_Access := null;
+   end record;
 
 end Mold_Apply;
