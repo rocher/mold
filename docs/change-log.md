@@ -14,8 +14,14 @@ icon: octicons/log-24
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg){.badge}](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue){.badge}](https://github.com/rocher/mold/blob/master/LICENSE)
 
+### 1.0.3
+Date: 2024-02-23
+
+  * Use `clic-0.3.0` to compile with alr-2.0.0-beta2
+  * Remove prefix "🛈" from output
+
 ### 1.0.2
-Date: 20-02-2024
+Date: 2024-02-20
 
   * First public release
   * Use `mold_lib-2.2.1`

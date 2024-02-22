@@ -1,5 +1,5 @@
 ---
-icon: octicons/home-fill-24
+icon: octicons/home-24
 ---
 
 ![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }

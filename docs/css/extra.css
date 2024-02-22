@@ -71,6 +71,12 @@ h4 {
     box-shadow: none !important;
 }
 
+a.md-logo img {
+    padding: 0 !important;
+    padding-bottom: 0 !important;
+    fill: "white" !important;
+}
+
 img {
     padding: 2em;
     padding-bottom: 1em;

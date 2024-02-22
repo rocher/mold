@@ -13,6 +13,8 @@ copyright:
 
 theme:
   name: material
+  logo: img/star.svg
+  favicon: img/favicon.ico
   icon:
     repo: fontawesome/brands/github-alt
   palette:

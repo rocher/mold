@@ -1,5 +1,5 @@
 ---
-icon: octicons/info-24
+icon: octicons/person-24
 ---
 
 # USER GUIDE
@@ -14,24 +14,24 @@ icon: octicons/info-24
 Run `mold` to get more information on mold commands and common options.
 
 ```txt title="mold"
-mold 1.0.0 (lib-2.2.1)
+mold 1.0.3 (lib-2.2.1)
 
-ⓘ USAGE
+USAGE
    mold [global options] <command> [command options] [<arguments>]
 
    mold help [<command>|<topic>]
 
-ⓘ ARGUMENTS
+ARGUMENTS
     <command>     Command to execute
     <arguments>   List of arguments for the command
 
-ⓘ GLOBAL OPTIONS
+GLOBAL OPTIONS
    -h (--help)     Display command help
    --no-color      Disable color
    --no-tty        Disable control characters
    -v (--verbose)  Show command activity
 
-ⓘ COMMANDS
+COMMANDS
    General
    help        Shows help on the given command/topic
 
@@ -44,13 +44,13 @@ mold 1.0.0 (lib-2.2.1)
 The main mold command is `apply`. Run `mold apply -h` to get more information:
 
 ```txt title="mold apply -h"
-ⓘ SUMMARY
+SUMMARY
    Apply variable substitution to a file or directory
 
-ⓘ USAGE
+USAGE
    mold apply [options] DEFINITIONS PATH [ OUTPUT_DIRECTORY ]
 
-ⓘ OPTIONS
+OPTIONS
    -f (--no-filenames)         No variable substitution in filenames
    -v (--no-variables)         No variable substitution in variables
    -d (--delete-sources)       Delete source files
@@ -58,14 +58,13 @@ The main mold command is `apply`. Run `mold apply -h` to get more information:
    -s (--no-settings)          Disable defined settings
    -u (--on-undefined=ACTION)  Action on undefined: ignore, empty, [error]
 
-ⓘ GLOBAL OPTIONS
+GLOBAL OPTIONS
    -h (--help)     Display command help
    --no-color      Disable color
    --no-tty        Disable control characters
    -v (--verbose)  Show command activity
-   -d (--debug)    Enable debug messages
 
-ⓘ DESCRIPTION
+DESCRIPTION
    Apply variable substitution process to a file or directory. It requires a
    definitions file and a path, either a file or directory
 
@@ -81,6 +80,7 @@ The main mold command is `apply`. Run `mold apply -h` to get more information:
    Variable substitution process is applied also to filenames.
 
    Please visit https://rocher.github.io/mold for a complete reference.
+
 ```
 
 ---

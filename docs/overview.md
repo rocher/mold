@@ -1,5 +1,5 @@
 ---
-icon: octicons/home-fill-24
+icon: octicons/telescope-24
 ---
 
 # OVERVIEW
