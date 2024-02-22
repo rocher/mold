@@ -141,10 +141,10 @@ package body Mold_Apply is
             T : AAA.Table_IO.Table;
 
             function Bold (S : String) return String is
-              (if Mold_CLI.Global_Switch.TTY then TTY.Bold (S) else S);
+              (if Mold_CLI.Global_Switch.No_TTY then TTY.Bold (S) else S);
 
             function Bool (B : Boolean) return String is
-              (if Mold_CLI.Global_Switch.TTY then
+              (if Mold_CLI.Global_Switch.No_TTY then
                  (if B then TTY.OK ("TRUE") else TTY.Error ("FALSE"))
                else B'Image);
          begin

@@ -69,7 +69,7 @@ package body Mold_CLI is
 
       Define_Switch (
          Config,
-         Global_Switch.Color'Access,
+         Global_Switch.No_Color'Access,
          Long_Switch => "--no-color",
          Help        => "Disable color",
          Value       => False
@@ -77,7 +77,7 @@ package body Mold_CLI is
 
       Define_Switch (
          Config,
-         Global_Switch.TTY'Access,
+         Global_Switch.No_TTY'Access,
          Long_Switch => "--no-tty",
          Help        => "Disable control characters",
          Value       => False
@@ -129,14 +129,14 @@ package body Mold_CLI is
          Log.Debug ("Global_Switch" & Global_Switch'Image);
       end if;
 
-      if not Global_Switch.TTY then
+      if not Global_Switch.No_TTY then
          CLIC.TTY.Force_Disable_TTY;
          Log.Debug ("disable TTY");
       end if;
 
-      if Global_Switch.Color and then Global_Switch.TTY then
-         CLIC.TTY.Enable_Color (Force => False);
-         Log.Debug ("enable Color");
+      if Global_Switch.No_Color and then Global_Switch.No_TTY then
+         CLIC.TTY.Enable_Color (Force => True);
+         Log.Debug ("disable Color");
       end if;
 
       CLI_Command.Execute;
