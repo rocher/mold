@@ -74,12 +74,10 @@ executables = ["mold"]
 
 [build-switches."*"]
 ada_version = ["-gnat2022", "-gnatX"]
-
-[build-switches]
-release.optimization = ["-O2", "-gnatn"]
+optimization = ["-O2", "-gnatn"]
 
 [[depends-on]]
-clic = "~0.2.1"
+clic = "~0.3.0"
 gnat = ">=2021 | (>=12 & <2000)"
 simple_logging = "^1.2.0"
 mold_lib = "^2.2.0"
