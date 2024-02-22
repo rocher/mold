@@ -7,6 +7,7 @@
 -------------------------------------------------------------------------------
 
 with Ada.Text_IO;
+with Ada.Strings.UTF_Encoding;
 with GNAT.OS_Lib;
 
 with CLIC.Subcommand.Instance;
@@ -21,6 +22,11 @@ package body Mold_CLI is
    package Log renames Simple_Logging;
 
    use all type Conf.Build_Profile_Kind;
+
+   subtype UTF_8_String is Ada.Strings.UTF_Encoding.UTF_8_String;
+
+   function Info (Text : CLIC.TTY.UTF_8_String := "") return UTF_8_String is
+     (CLIC.TTY.Bold (Text));
 
    procedure Set_Global_Switches
      (Config : in out CLIC.Subcommand.Switches_Configuration);
@@ -39,7 +45,7 @@ package body Mold_CLI is
       Put_Line            => Ada.Text_IO.Put_Line,
       Put_Error           => Ada.Text_IO.Put_Line,
       Error_Exit          => GNAT.OS_Lib.OS_Exit,
-      TTY_Chapter         => CLIC.TTY.Info,
+      TTY_Chapter         => Info,
       TTY_Description     => CLIC.TTY.Description,
       TTY_Version         => CLIC.TTY.Version,
       TTY_Underline       => CLIC.TTY.Underline,
