@@ -11,6 +11,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://rocher.github.io/mold/2.2/examples.html</loc>
+         <lastmod>2024-02-23</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://rocher.github.io/mold/2.2/installation.html</loc>
          <lastmod>2024-02-23</lastmod>
          <changefreq>daily</changefreq>
