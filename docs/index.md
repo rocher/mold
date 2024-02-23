@@ -1,5 +1,8 @@
 ---
 icon: octicons/home-24
+hide:
+    # - navigation
+    # - toc
 ---
 
 ![MOLD](img/Ada_Mold.png){ .alice align=right .off-glb }
@@ -32,7 +35,7 @@ project templates through customizable files with {meta-}variables.
     This is a mold file
     ```
 
-!!! quote  "foo-bar.txt.mold"
+!!! quote "foo-bar.txt.mold"
 
     ```txt
     {{foo}} {{bar}},

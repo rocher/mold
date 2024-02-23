@@ -2,7 +2,7 @@
 icon: octicons/book-24
 ---
 
-# MOLD REFERENCE GUIDE
+# REFERENCE GUIDE
 
 ## Overall Process
 

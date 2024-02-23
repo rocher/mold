@@ -6,6 +6,7 @@ icon: octicons/telescope-24
 
 This document contains a mold guide that shows the main features of mold, with
 brief examples that will help you understand basic operation.
+
 ### Different sources
 
 Mold can operate on a single file or recursively in a given directory. All

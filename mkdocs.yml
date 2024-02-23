@@ -41,10 +41,14 @@ theme:
   features:
     - content.code.annotate
     - content.code.copy
+    - navigation.instant
+    - navigation.instant.prefetch
     - navigation.footer
-    - navigation.path
+    # - navigation.path
+    # - navigation.prune
     - navigation.sections
     - navigation.tabs
+    # - navigation.tabs.sticky
     - navigation.top
     - navigation.tracking
     - search.highlight
@@ -138,7 +142,9 @@ nav:
   - Installation: installation.md
   - User Guide: user-guide.md
   - Reference Guide: reference-guide.md
+  - Examples: examples.md
   - Change Log: change-log.md
+  # - Contribute: contribute.md
 
 # * SECTION - PUBLISH DOCS
 #   • Locally develop and inspect with 'mkdocs serve'
