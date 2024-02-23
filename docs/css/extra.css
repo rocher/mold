@@ -106,14 +106,19 @@ img.badge {
     max-width: 55rem !important;
 }
 
+.md-nav__link--active {
+    font-size: 1.2em !important;
+    padding-bottom: 0.77em !important;
+}
+
 .md-nav {
     /*font-family: Oswald !important;*/
     font-size: 0.70rem;
 }
 
-.md-nav__link--active {
-    font-size: 1.2em !important;
-    padding-bottom: 0.77em !important;
+.md-nav__link--passed {
+    font-size: 0.70rem !important;
+    padding-bottom: 0 !important;
 }
 
 /* Old style admonitions */
