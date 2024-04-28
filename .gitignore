@@ -6,3 +6,4 @@
 /config/
 /site/
 /examples/**/*.txt
+/venv/

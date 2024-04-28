@@ -146,7 +146,20 @@ nav:
   - Change Log: change-log.md
   # - Contribute: contribute.md
 
+# ------------------------------------------------------------------------------
+#
+# * SECTION - LOCAL TEST OF DOCS
+#   • cd mold/
+#   • python -m venv venv
+#   • . ./venv/bin/activate
+#   • pip install mkdocs-material mkdocs-glightbox mike
+#   • mkdocs serve
+#   • Point you browser to http://localhost:8000/mold
+#
+#
 # * SECTION - PUBLISH DOCS
 #   • Locally develop and inspect with 'mkdocs serve'
 #   • Publish new version with 'mike deploy --push --update-aliases REL latest'
 #   • Update web default version with 'mike --set-default --push REL'
+#
+# ------------------------------------------------------------------------------
