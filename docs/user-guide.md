@@ -134,7 +134,7 @@ The only function call available is:
      ```ada
         function (S : String) return String;
      ```
-     See [Custom Text Filters](reference-guide.md#custom-text-filters-lib) for
+     See [Custom Text Filters](reference-guide.md#custom-text-filters) for
      more  information.
 
   6. `Results` is a pointer to a `Results_Type` object. If not `null`, a
