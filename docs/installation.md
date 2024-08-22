@@ -45,7 +45,7 @@ the [Alire community index](https://alire.ada.dev/crates/mold_lib.html):
 
 ### Run the unit tests
 
-To build and run the unis tests:
+To build and run the unit tests:
 
 ```sh title="unit tests"
     cd mold_lib_*/tests
