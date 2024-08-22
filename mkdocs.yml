@@ -1,3 +1,30 @@
+# ------------------------------------------------------------------------------
+#
+# SECTION - LOCAL TEST OF DOCS
+#   • cd mold/
+#   • python -m venv venv
+#   • . ./venv/bin/activate
+#   • pip install mkdocs-material mkdocs-glightbox mike
+#   • mkdocs serve
+#   • Point you browser to http://localhost:8000/mold
+#
+# More information about these projects:
+#   • https://www.mkdocs.org/
+#   • https://squidfunk.github.io/mkdocs-material/
+#   • https://pypi.org/project/mike
+#
+# SECTION - PUBLISH DOCS
+#   • Locally develop and inspect with 'mkdocs serve'
+#   • Publish new version:
+#         mike deploy --push --update-aliases <REL> latest
+#   • Update web default version:
+#         mike --set-default --push <REL>
+#
+# Keep <REL> number in sync with the mold_lib version number (see file
+# alire.toml). Use only two digits, if possible.
+#
+# ------------------------------------------------------------------------------
+
 site_name: Mold
 site_url: https://rocher.github.io/mold
 site_author: Francesc Rocher
@@ -145,21 +172,3 @@ nav:
   - Examples: examples.md
   - Change Log: change-log.md
   # - Contribute: contribute.md
-
-# ------------------------------------------------------------------------------
-#
-# * SECTION - LOCAL TEST OF DOCS
-#   • cd mold/
-#   • python -m venv venv
-#   • . ./venv/bin/activate
-#   • pip install mkdocs-material mkdocs-glightbox mike
-#   • mkdocs serve
-#   • Point you browser to http://localhost:8000/mold
-#
-#
-# * SECTION - PUBLISH DOCS
-#   • Locally develop and inspect with 'mkdocs serve'
-#   • Publish new version with 'mike deploy --push --update-aliases REL latest'
-#   • Update web default version with 'mike --set-default --push REL'
-#
-# ------------------------------------------------------------------------------
