@@ -56,7 +56,7 @@ OPTIONS
    -d (--delete-sources)       Delete source files
    -o (--no-overwrite)         Do not overwrite destination files
    -s (--no-settings)          Disable defined settings
-   -u (--on-undefined=ACTION)  Action on undefined: ignore, empty, [error]
+   -u (--on-undefined=ACTION)  Action on undefined: ignore, warning, [error]
 
 GLOBAL OPTIONS
    -h (--help)     Display command help
@@ -148,7 +148,7 @@ The only function call available is:
 The `Settings_Type` is defined as:
 
 ```ada title="mold.ads"
-   type Undefined_Behaviors is (None, Empty, Error);
+   type Undefined_Behaviors is (None, Warning, Error);
 
    type Settings_Type is record
       Replacement_In_Filenames    : aliased Boolean;

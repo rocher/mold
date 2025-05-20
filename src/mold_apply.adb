@@ -105,7 +105,7 @@ package body Mold_Apply is
          Switch      => "-u:",
          Long_Switch => "--on-undefined=",
          Argument    => "ACTION",
-         Help        => "Action on undefined: ignore, empty, [error]"
+         Help        => "Action on undefined: ignore, warning, [error]"
       );
 
       pragma Style_Checks (on);

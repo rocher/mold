@@ -122,7 +122,7 @@ of the settings used in the project configuration.
 
 ```toml title="defined settings"
     mold-replacement-in-filenames = "false"
-    mold-on-undefined = "empty"
+    mold-on-undefined = "warning"
 ```
 
 ### Template inclusion

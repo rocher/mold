@@ -202,8 +202,8 @@ undefined variable is found:
 * *On Undefined Action* determines if the normal substitution of an undefined
   variable must be ignored, emptied or errored. It can take the values:
     * `Ignore`, to left the variables as is; no warning issued
-    * `Empty`, to replace the variable with an empty string; a warning is
-      issued
+    * `Warning`, to replace the variable with an empty string and issue a
+      warning
     * `Error`, to issue an error; this is the default action
 
 #### Optional
@@ -259,7 +259,7 @@ Optional   | —       | `"{{?foo}}"` | `"bar"`     |         |
 Mandatory  | —       | `"{{#foo}}"` | `"bar"`     |         |
 **Undefined variables**
 Normal     | Ignore  | `"{{baz}}"`  | `"{{baz}}"` |         |
-Normal     | Empty   | `"{{baz}}"`  | `""`        | Warning |
+Normal     | Warning | `"{{baz}}"`  | `""`        | Warning |
 Normal     | Error   | `"{{baz}}"`  | *none*      | Error   |
 Optional   | —       | `"{{?baz}}"` | `""`        |         |
 Mandatory  | —       | `"{{#baz}}"` | *none*      | Error   |
