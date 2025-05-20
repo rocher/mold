@@ -264,6 +264,98 @@ Normal     | Error   | `"{{baz}}"`  | *none*      | Error   |
 Optional   | —       | `"{{?baz}}"` | `""`        |         |
 Mandatory  | —       | `"{{#baz}}"` | *none*      | Error   |
 
+
+## Predefined Variables
+
+### Calendar
+
+The predefined variable is `{mold-date-<FORMAT>}`, where `<FORMAT>` is a string
+to describe the desired date and time output.
+
+`<FORMAT>` follows the GNU Date Specification and accepts the following tags:
+
+=== "==&nbsp;&nbsp;Text Fields&nbsp;&nbsp;=="
+
+    | **Tag**  | **Output**       |
+    |----------|------------------|
+    | `%%`     | a literal `%`    |
+    | `n`      | a newline        |
+    | `t`      | a horizontal tab |
+
+=== "==&nbsp;&nbsp;Time Fields&nbsp;&nbsp;=="
+
+    | **Tag**  | **Output**                       |
+    |----------|----------------------------------|
+    | `%H`     | hour (00..23)                    |
+    | `%I`     | hour (01..12)                    |
+    | `%k`     | hour ( 0..23)                    |
+    | `%l`     | hour ( 1..12)                    |
+    | `%M`     | minute (00..59)                  |
+    | `%p`     | locale's AM or PM                |
+    | `%r`     | time, 12-hour (hh\:mm\:ss [AP]M) |
+    | `%s`     | seconds since 1970-01-01 00:00:00 UTC (non-standard extension) |
+    | `%S`     | second (00..59)                  |
+    | `%T`     | time, 24-hour (hh\:mm\:ss)       |
+    | `%:::z`  | numeric time zone with \: to necessary precision (e.g., -04, +05:30) |
+
+=== "==&nbsp;&nbsp;Date Fields&nbsp;&nbsp;=="
+
+    | **Tag** | **Output**                                                     |
+    |---------|----------------------------------------------------------------|
+    | `%a`    | locale's abbreviation weekday name (Sun..Sat)                  |
+    | `%A`    | locale's full weekday name, variable length (Sunday..Saturday) |
+    | `%b`    | locale's abbreviated month name (Jan..Dec)                     |
+    | `%B`    | locale's full month name, variable length (January..December)  |
+    | `%c`    | locale's date and time (Sat Nov 04 12\:02\:33 EST 1989)        |
+    | `%d`    | day of month (01..31)                                          |
+    | `%D`    | date (mm/dd/yy)                                                |
+    | `%h`    | same as `%b`                                                   |
+    | `%j`    | day of year (001..366)                                         |
+    | `%m`    | month (01..12)                                                 |
+    | `%U`    | week number of year with Sunday as first day of week (00..53)  |
+    | `%w`    | day of week (0..6) with 0 corresponding to Sunday              |
+    | `%W`    | week number of year with Monday as first day of week (00..53)  |
+    | `%x`    | locale's date representation (mm/dd/yy)                        |
+    | `%y`    | last two digits of year (00..99)                               |
+    | `%Y`    | year (1970...)                                                 |
+
+=== "==&nbsp;&nbsp;Padding Extensions&nbsp;&nbsp;=="
+
+    Be default, date pads numeric fields with zeroes. GNU date recognizes the
+    following nonstandard numeric modifiers:
+
+    | **Modifiers** | **Output**                             |
+    |---------------|----------------------------------------|
+    | `-`           | (hyphen) do not pad the field          |
+    | `_`           | (underscore) pad the field with spaces |
+
+=== "==&nbsp;&nbsp;Time Extensions&nbsp;&nbsp;=="
+
+    | **Tag** | **Output**              |
+    |---------|-------------------------|
+    | `%i`    | milliseconds (3 digits) |
+    | `%e`    | microseconds (6 digits) |
+    | `%o`    | nanoseconds  (9 digits) |
+
+=== "==&nbsp;&nbsp;Shortcuts&nbsp;&nbsp;=="
+
+    | **Tag**    | **Output**                             |
+    |------------|----------------------------------------|
+    | `ISO_Time` | Equivalent to `%Y-%m-%dT%H:%M:%S%:::z` |
+    | `ISO_Date` | Equivalent to `%Y-%m-%d`               |
+    | `US_Date`  | Equivalent to `%m/%d/%y`               |
+    | `EU_Date`  | Equivalent to `%d/%m/%y`               |
+
+Examples, assuming date is `2024-08-22:20T08:19+2`:
+
+  * `{mold-date-%H}` $\rightarrow$ `"Hell0, w0rld"`
+
+### Mold Settings
+
+Most of the configurable settings that mold accepts can be also modified via
+predefined variables. See section [Settings](#settings) for more information.
+
+
 ## Text Filters
 
 Text filters enable text transformations before variable substitution. In the

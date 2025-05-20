@@ -42,7 +42,7 @@ Start by creating a definitions file like this one, using your real data:
 
 ```toml title="aoc.toml"
 Day = "1"
-Year = "2024"
+Year = "{{Year}}"
 
 Author = "Name Surname"
 Email = "your.email@example.com"
