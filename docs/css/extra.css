@@ -63,11 +63,11 @@ a.headerlink {
     font-size: .90em !important;
 }
 
-[data-md-color-scheme="slate"] .gslider {
+[data-md-color-scheme="slate"] .gslide-image img {
     background: #22252a;
 }
 
-[data-md-color-scheme="default"] .gslider {
+[data-md-color-scheme="default"] .gslide-image img {
     background: #fff;
 }
 
