@@ -1,24 +1,35 @@
 # ------------------------------------------------------------------------------
 #
-# SECTION - LOCAL TEST OF DOCS
-#   • cd mold/
-#   • python -m venv venv
-#   • . ./venv/bin/activate
-#   • pip install mkdocs-material mkdocs-glightbox mike
-#   • mkdocs serve
-#   • Point you browser to http://localhost:8000/mold
+# SECTION - Documentation Maintenance
 #
-# More information about these projects:
+# NOTE - Environment installation
+# In Linux:
+#
+#   python3 -m venv venv
+#   source venv/bin/activate
+#   pip install mkdocs
+#   pip install $(mkdocs get-deps)
+#
+# NOTE - Local development
+# With:
+#
+#   mkdocs serve
+#
+# Docs are locally available at http://localhost:8000/mold
+#
+# NOTE - More information about mkdocs and mike
 #   • https://www.mkdocs.org/
 #   • https://squidfunk.github.io/mkdocs-material/
 #   • https://pypi.org/project/mike
 #
-# SECTION - PUBLISH DOCS
-#   • Locally develop and inspect with 'mkdocs serve'
-#   • Publish new version:
-#         mike deploy --push --update-aliases <REL> latest
-#   • Update web default version:
-#         mike --set-default --push <REL>
+# NOTE - Publish docs
+# Publish new version:
+#
+#   mike deploy --push --update-aliases <REL> latest
+#
+# Update web default version:
+#
+#   mike --set-default --push <REL>
 #
 # Keep <REL> number in sync with the mold_lib version number (see file
 # alire.toml). Use only two digits, if possible.
