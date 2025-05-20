@@ -27,7 +27,7 @@ Main features supported in Mold include
   * for a given directory, variable replacement recursively for all mold files
     in all subdirectories
 
-  * variable replacement in filenames
+  * variable replacement in file names
 
   * inclusion of other templates
 
@@ -35,7 +35,11 @@ Main features supported in Mold include
 
   * predefined and custom text filters to easy text transformations
 
-  * variable values can be defined with other variables
+  * predefined variables to use in templates
+
+  * support for optional and mandatory variables
+
+  * support for custom filter and variables
 
 Variable replacement can be specified as *normal*, *optional* or *mandatory*.
 For example, the variable `foo = "bar"` can be specified with `{{foo}}`,
