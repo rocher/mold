@@ -1,6 +1,6 @@
 mold-replacement-in-filenames = "false"
 mold-replacement-in-variables = "false"
-mold-on-undefined = "empty"
+mold-on-undefined = "warning"
 
 foo = "foo"
 bar = "{{foo}}"

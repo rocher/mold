@@ -1,5 +1,5 @@
 Day = "1"
-Year = "2024"
+Year = "{{mold-date-%Y}}"
 
 Author = "Name Surname"
 Email = "your.email@example.com"
