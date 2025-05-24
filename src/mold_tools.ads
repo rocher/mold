@@ -6,7 +6,6 @@
 --
 -------------------------------------------------------------------------------
 
-with AAA.Strings;
 with AAA.Table_IO;
 with CLIC.TTY;
 use CLIC;
@@ -25,7 +24,7 @@ package Mold_Tools is
        else B'Image);
 
    procedure Show_Settings
-     (Settings : Mold_Lib.Settings_Type; Args : AAA.Strings.Vector);
+     (Settings : Mold_Lib.Settings_Type);
 
    procedure Append_Settings
      (T        : in out AAA.Table_IO.Table;

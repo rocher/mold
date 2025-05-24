@@ -58,7 +58,7 @@ package body Mold_Show_Variables is
       end if;
 
       if Log.Level >= Log.Detail then
-         Mold_Tools.Show_Settings (Cmd.Settings, Args);
+         Mold_Tools.Show_Settings (Cmd.Settings);
       end if;
 
       Errors :=

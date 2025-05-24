@@ -18,7 +18,7 @@ package body Mold_Tools is
    -------------------
 
    procedure Show_Settings
-     (Settings : Mold_Lib.Settings_Type; Args : AAA.Strings.Vector)
+     (Settings : Mold_Lib.Settings_Type)
    is
       T : AAA.Table_IO.Table;
    begin
