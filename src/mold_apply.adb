@@ -6,15 +6,14 @@
 --
 -------------------------------------------------------------------------------
 
+with AAA.Table_IO;
 with GNAT.Strings; use GNAT.Strings;
 with GNAT.OS_Lib;
 
-with AAA.Table_IO;
 with CLIC.Subcommand; use CLIC.Subcommand;
-with CLIC.TTY;        use CLIC;
 with Simple_Logging;
 
-with Mold_CLI;
+with Mold_Tools;
 
 package body Mold_Apply is
 
@@ -45,32 +44,27 @@ package body Mold_Apply is
    -- Setup_Switches --
    --------------------
 
-   overriding procedure Setup_Switches
+   overriding
+   procedure Setup_Switches
      (Cmd    : in out Cmd_Type;
-      Config : in out CLIC.Subcommand.Switches_Configuration)
-   is
+      Config : in out CLIC.Subcommand.Switches_Configuration) is
 
    begin
-      --!pp off
-      pragma Style_Checks (off);
-
       Define_Switch
         (Config,
          Cmd.Settings.Replacement_In_Filenames'Access,
          Switch      => "-f",
          Long_Switch => "--no-filenames",
          Help        => "No variable substitution in filenames",
-         Value       => False
-      );
+         Value       => False);
 
       Define_Switch
-         (Config,
-          Cmd.Settings.Replacement_In_Variables'Access,
-          Switch      => "-v",
-          Long_Switch => "--no-variables",
-          Help        => "No variable substitution in variables",
-          Value       => False
-         );
+        (Config,
+         Cmd.Settings.Replacement_In_Variables'Access,
+         Switch      => "-v",
+         Long_Switch => "--no-variables",
+         Help        => "No variable substitution in variables",
+         Value       => False);
 
       Define_Switch
         (Config,
@@ -78,8 +72,7 @@ package body Mold_Apply is
          Switch      => "-d",
          Long_Switch => "--delete-sources",
          Help        => "Delete source files",
-         Value       => True
-      );
+         Value       => True);
 
       Define_Switch
         (Config,
@@ -87,8 +80,7 @@ package body Mold_Apply is
          Switch      => "-o",
          Long_Switch => "--no-overwrite",
          Help        => "Do not overwrite destination files",
-         Value       => False
-      );
+         Value       => False);
 
       Define_Switch
         (Config,
@@ -96,29 +88,23 @@ package body Mold_Apply is
          Switch      => "-s",
          Long_Switch => "--no-settings",
          Help        => "Disable defined settings",
-         Value       => False
-      );
+         Value       => False);
 
       Define_Switch
         (Config,
-        Cmd.Behavior_Str'Access,
+         Cmd.Behavior_Str'Access,
          Switch      => "-u:",
          Long_Switch => "--on-undefined=",
          Argument    => "ACTION",
-         Help        => "Action on undefined: ignore, warning, [error]"
-      );
-
-      pragma Style_Checks (on);
-      --!pp on
+         Help        => "Action on undefined: ignore, warning, [error]");
    end Setup_Switches;
 
    -------------
    -- Execute --
    -------------
 
-   overriding procedure Execute
-     (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector)
-   is
+   overriding
+   procedure Execute (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector) is
       Args_Length : constant Natural := Natural (Args.Length);
    begin
       if Cmd.Behavior_Str.all'Length > 0 then
@@ -139,16 +125,8 @@ package body Mold_Apply is
       if Log.Level >= Log.Detail then
          declare
             T : AAA.Table_IO.Table;
-
-            function Bold (S : String) return String is
-              (if Mold_CLI.Global_Switch.No_TTY then TTY.Bold (S) else S);
-
-            function Bool (B : Boolean) return String is
-              (if Mold_CLI.Global_Switch.No_TTY then
-                 (if B then TTY.OK ("TRUE") else TTY.Error ("FALSE"))
-               else B'Image);
          begin
-            T.Append (Bold ("Arguments"));
+            T.Append (Mold_Tools.Bold ("Arguments"));
             T.Append ("");
             T.New_Row;
             T.Append ("  variables (TOML file)");
@@ -164,28 +142,7 @@ package body Mold_Apply is
                T.Append ("");
             end if;
             T.New_Row;
-
-            T.Append (Bold ("Settings"));
-            T.Append ("");
-            T.New_Row;
-            T.Append ("  replacement in filenames");
-            T.Append (Bool (Cmd.Settings.Replacement_In_Filenames));
-            T.New_Row;
-            T.Append ("  replacement in variables");
-            T.Append (Bool (Cmd.Settings.Replacement_In_Variables));
-            T.New_Row;
-            T.Append ("  delete source files");
-            T.Append (Bool (Cmd.Settings.Delete_Source_Files));
-            T.New_Row;
-            T.Append ("  overwrite destination files");
-            T.Append (Bool (Cmd.Settings.Overwrite_Destination_Files));
-            T.New_Row;
-            T.Append ("  enable defined settings");
-            T.Append (Bool (Cmd.Settings.Enable_Defined_Settings));
-            T.New_Row;
-            T.Append ("  undefined action");
-            T.Append (Cmd.Settings.On_Undefined'Image);
-            T.New_Row;
+            Mold_Tools.Append_Settings (T, Cmd.Settings);
             T.Print;
          end;
       end if;

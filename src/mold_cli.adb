@@ -15,6 +15,7 @@ with CLIC.TTY;
 with Simple_Logging;
 
 with Mold_Apply;
+with Mold_Show_Variables;
 with Mold_Lib_Config;
 
 package body Mold_CLI is
@@ -152,5 +153,6 @@ begin
 
    CLI_Command.Register ("General", new CLI_Command.Builtin_Help);
    CLI_Command.Register ("Process", new Mold_Apply.Cmd_Type);
+   CLI_Command.Register ("Process", new Mold_Show_Variables.Cmd_Type);
 
 end Mold_CLI;
