@@ -45,6 +45,7 @@ package body Mold_Show_Variables is
    procedure Execute (Cmd : in out Cmd_Type; Args : AAA.Strings.Vector) is
       Errors      : Boolean;
       Args_Length : constant Natural := Natural (Args.Length);
+      pragma Unreferenced (Errors);
    begin
       Log.Debug ("Cmd.Settings = " & Cmd'Image);
       Log.Debug ("Args = " & Args'Image);

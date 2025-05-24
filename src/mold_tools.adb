@@ -6,12 +6,7 @@
 --
 -------------------------------------------------------------------------------
 
-with Simple_Logging;
-
 package body Mold_Tools is
-
-   package Log renames Simple_Logging;
-   use all type Log.Levels;
 
    -------------------
    -- Show_Settings --
