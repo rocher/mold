@@ -64,7 +64,9 @@ package body Mold_Show_Variables is
 
       Errors :=
         Mold_Lib.Show_Variables
-          (Toml_File => Args (1), Settings => Cmd.Settings'Unchecked_Access);
+          (Toml_File => Args (1),
+           Settings  => Cmd.Settings'Unchecked_Access,
+           Log_Level => Log.Level);
    end Execute;
 
 end Mold_Show_Variables;
