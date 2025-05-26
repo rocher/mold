@@ -1,13 +1,28 @@
 Predefined Variables
 
-   NAME               : VALUE
-   -------------------:--------------------
-   mold-version       : {{mold-version}}
-   mold-host-os       : {{mold-host-os}}
-   mold-host-arch     : {{mold-host-arch}}
-   mold-host-distro   : {{mold-host-distro}}
-   mold-build-profile : {{mold-build-profile}}
-   mold-documentation : {{mold-documentation}}
-   mold-copyright     : {{mold-copyright}}
-   mold-license       : {{mold-license}}
-   mold-license-spdx  : {{mold-license-spdx}}
+   NAME                             : VALUE
+   ---------------------------------:--------------------
+   mold-version                     : {{mold-version}}
+   mold-documentation               : {{mold-documentation}}
+   mold-copyright                   : {{mold-copyright}}
+   mold-license                     : {{mold-license}}
+   mold-license-spdx                : {{mold-license-spdx}}
+   mold-host-os                     : {{mold-host-os}}
+   mold-host-arch                   : {{mold-host-arch}}
+   mold-host-distro                 : {{mold-host-distro}}
+   mold-build-profile               : {{mold-build-profile}}
+   mold-replacement-in-filenames    : {{mold-replacement-in-filenames}}
+   mold-replacement-in-variables    : {{mold-replacement-in-variables}}
+   mold-delete-source-files         : {{mold-delete-source-files}}
+   mold-overwrite-destination-files : {{mold-overwrite-destination-files}}
+   mold-enable-defined-settings     : {{mold-enable-defined-settings}}
+   mold-on-undefined                : {{mold-on-undefined}}
+   mold-date-ISO_Time               : {{mold-date-ISO_Time}}
+   mold-date-ISO_Date               : {{mold-date-ISO_Date}}
+   mold-date-US_Date                : {{mold-date-US_Date}}
+   mold-date-EU_Date                : {{mold-date-EU_Date}}
+   mold-date-%i (ms)                : {{mold-date-%i}} ms
+   mold-date-%e (us)                : {{mold-date-%e}} us
+   mold-date-%o (ns)                : {{mold-date-%o}} ns
+
+   See {{mold-documentation}} for more info about "mold-date-<FORMAT>"
