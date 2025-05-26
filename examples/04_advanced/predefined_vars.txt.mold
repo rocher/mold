@@ -1,0 +1,13 @@
+Predefined Variables
+
+   NAME               : VALUE
+   -------------------:--------------------
+   mold-version       : {{mold-version}}
+   mold-host-os       : {{mold-host-os}}
+   mold-host-arch     : {{mold-host-arch}}
+   mold-host-distro   : {{mold-host-distro}}
+   mold-build-profile : {{mold-build-profile}}
+   mold-documentation : {{mold-documentation}}
+   mold-copyright     : {{mold-copyright}}
+   mold-license       : {{mold-license}}
+   mold-license-spdx  : {{mold-license-spdx}}
