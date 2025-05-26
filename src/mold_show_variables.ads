@@ -28,19 +28,17 @@ package Mold_Show_Variables is
    function Short_Description (Cmd : Cmd_Type) return String
    is ("Show variables defined in a definitions file");
 
+   pragma Style_Checks (off);
    overriding
    function Long_Description (Cmd : Cmd_Type) return AAA.Strings.Vector
    is (AAA.Strings.Empty_Vector.Append
-         ("Show all variables defined in a definitions file once variable ")
-         .Append ("substitution and filters are applied. ")
+         ("Show all variables defined in a definitions file once variable substitution and filters are applied. ")
          .New_Line
-         .Append ("DEFINITIONS_FILE is a TOML file with variables defined ")
-         .Append ("like 'foo=""bar""'. Multiline variables are supported. ")
-         .Append ("See https://toml.io for more information.")
+         .Append ("DEFINITIONS_FILE is a TOML file with variables defined like 'foo=""bar""'. Multiline variables are supported. See https://toml.io for more information.")
          .New_Line
-         .Append ("Please visit https://rocher.github.io/mold for a complete ")
-         .Append ("reference.")
+         .Append ("Please visit https://rocher.github.io/mold for a complete reference.")
          .New_Line);
+   pragma Style_Checks (on);
 
    overriding
    function Switch_Parsing

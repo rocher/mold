@@ -27,30 +27,19 @@ package Mold_Apply is
    overriding function Short_Description (Cmd : Cmd_Type) return String is
      ("Apply variable substitution to a file or directory");
 
+   pragma Style_Checks (off);
    overriding
    function Long_Description (Cmd : Cmd_Type) return AAA.Strings.Vector
    is (AAA.Strings.Empty_Vector.Append
-         ("Apply variable substitution process to a file or ")
-         .Append ("directory. It requires a definitions file and a path, ")
-         .Append ("either a file or directory.")
+         ("Apply variable substitution process to a file or directory. It requires a definitions file and a path, either a file or directory.")
          .New_Line
-         .Append ("DEFINITIONS file is a TOML file with variables defined ")
-         .Append ("like 'foo=""bar""'. Multiline variables are supported. ")
-         .Append ("See https://toml.io for more information. Definitions ")
-         .Append ("file can also contain mold settings that are applied when ")
-         .Append ("enabled.")
+         .Append ("DEFINITIONS file is a TOML file with variables defined like 'foo=""bar""'. Multiline variables are supported. See https://toml.io for more information. Definitions file can also contain mold settings that are applied when enabled.")
          .New_Line
-         .Append ("PATH is either a mold file or directory. When a directory ")
-         .Append ("is used, the variable substitution process is applied to ")
-         .Append ("all mold files, recursively in all subdirectories. Mold ")
-         .Append ("files must have the 'mold' extension. Generated files by ")
-         .Append ("the process have the same name removing the 'mold' ")
-         .Append ("extension. Variable substitution process is applied also ")
-         .Append ("to filenames.")
+         .Append ("PATH is either a mold file or directory. When a directory is used, the variable substitution process is applied to all mold files, recursively in all subdirectories. Mold files must have the 'mold' extension. Generated files by the process have the same name removing the 'mold' extension. Variable substitution process is applied also to filenames.")
          .New_Line
-         .Append ("Please visit https://rocher.github.io/mold for a complete ")
-         .Append ("reference.")
+         .Append ("Please visit https://rocher.github.io/mold for a complete reference.")
          .New_Line);
+   pragma Style_Checks (on);
 
    overriding function Switch_Parsing
      (Cmd : Cmd_Type) return CLIC.Subcommand.Switch_Parsing_Kind is
