@@ -75,6 +75,9 @@ executables = ["mold"]
 
 [build-profiles]
 "mold" = "release"
+# development only:
+# "mold" = "development"
+# "mold_lib" = "development"
 
 [build-switches."*"]
 ada_version = ["-gnat2022", "-gnatX"]
@@ -87,5 +90,5 @@ mold_lib = "^2.3.0"
 simple_logging = "^1.2.0"
 
 # development only:
-#[[pins]]
-#mold_lib = { path = "../mold_lib" }
+# [[pins]]
+# mold_lib = { path = "../mold_lib" }
