@@ -1,5 +1,5 @@
 name = "mold"
-version = "1.0.3"
+version = "1.1.0"
 tags = ["template", "template-engine", "template-repo"]
 
 description = "Meta-variable Operations for Lean Development (cli)"

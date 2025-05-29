@@ -14,6 +14,12 @@ icon: octicons/log-24
 [![GitHub release](https://img.shields.io/github/release/rocher/mold.svg){.badge}](https://github.com/rocher/mold/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold.svg?color=blue){.badge}](https://github.com/rocher/mold/blob/master/LICENSE)
 
+### 1.1.0
+Date: 2025-05-29
+
+  * Use `mold_lib v2.3.*`
+  * Add `show-vars` command
+
 ### 1.0.3
 Date: 2024-02-23
 
