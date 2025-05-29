@@ -11,3 +11,6 @@ www = "{{vvv/raww}}-{{baf/rabw/raaw/rafw}}"
 xxx = "{{www/raxx}}-{{baz/rabx/raax/razx}}"
 yyy = "{{xxx/rayy}}-{{mof/ramy/raoy/rafy}}"
 zzz = "{{yyy/razz}}-{{puf/rapz/rauz/rafz}}"
+
+zzzz-date-time = "Date {{mold-date-ISO_Date}} and time {{mold-date-ISO_Time}}"
+zzzz-date_time = "{{zzzz-date-time/ra-_}}"      #  replace all '-' with '_'
