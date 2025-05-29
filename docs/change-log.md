@@ -17,6 +17,8 @@ icon: octicons/log-24
 ### 1.0.3
 Date: 2024-02-23
 
+  * Add process `show-vars`: show variable values once variable replacement
+    and text filters have been applied.
   * Use `clic-0.3.0` to compile with alr-2.0.0-beta2
   * Remove prefix "🛈" from output
 
@@ -44,6 +46,36 @@ Date: 2023-08-27
 [![codecov](https://codecov.io/gh/rocher/mold_lib/graph/badge.svg?token=LB83SI4I0Y){.badge}](https://codecov.io/gh/rocher/mold_lib)
 [![GitHub release](https://img.shields.io/github/release/rocher/mold_lib.svg){.badge}](https://github.com/rocher/mold_lib/releases/latest)
 [![License](https://img.shields.io/github/license/rocher/mold_lib.svg?color=blue){.badge}](https://github.com/rocher/mold_lib/blob/master/LICENSE)
+
+### 2.3.1
+Date: 2025-05-29
+
+#### Bugs fixed
+
+  * Minor bug fixed in the algorithm that combines text filters and variable
+    substitution.
+
+### 2.3.0
+Date: 2025-05-25
+
+#### Major Changes
+
+  * Incompatible: In `On_Undefined_Handling` enumeration, rename
+    `Empty` to `Warning` for consistency.
+
+  * New: add `Show_Variables` procedure to see final values of variables once
+    variable replacement and text filters have been applied.
+
+  * New: add `mold-date-<FORMAT>` predefined variable.
+
+#### Bugs fixed
+
+  * Fixed undefined behavior of text filters combined with variable
+    substitution.
+
+  * \#16: [Fix compilation with GNAT FSF
+    15](https://github.com/rocher/mold_lib/pull/16), fixed by [César
+    Sagaert](https://github.com/AldanTanneo).
 
 ### 2.2.1
 Date: 2024-02-18

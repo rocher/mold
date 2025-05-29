@@ -14,7 +14,7 @@ icon: octicons/person-24
 Run `mold` to get more information on mold commands and common options.
 
 ```txt title="mold"
-mold 1.0.3 (lib-2.2.1)
+mold 1.0.3 (lib-2.3.0)
 
 USAGE
    mold [global options] <command> [command options] [<arguments>]
@@ -33,10 +33,11 @@ GLOBAL OPTIONS
 
 COMMANDS
    General
-   help        Shows help on the given command/topic
+   help          Shows help on the given command/topic
 
    Process
-   apply       Apply variable substitution to a file or directory
+   apply         Apply variable substitution to a file or directory
+   show-vars     Show variables defined in a definitions file
 ```
 
 #### Apply
@@ -78,6 +79,40 @@ DESCRIPTION
    all subdirectories. Mold files must have the 'mold' extension. Generated
    files by the process have the same name removing the 'mold' extension.
    Variable substitution process is applied also to filenames.
+
+   Please visit https://rocher.github.io/mold for a complete reference.
+
+```
+#### Show Variables
+
+If you have a complex variable definition, including predefined variables,
+text filters, and variable substitution (variables inside other variables), it
+may be helpful to preview the final values of these variables before applying
+them to a mold file.
+
+```txt title="mold show-vars -h"
+SUMMARY
+   Show variables defined in a definitions file
+
+USAGE
+   mold show-vars [options] DEFINITIONS_FILE
+
+OPTIONS
+   -v (--no-variables)  No variable substitution in variables
+
+GLOBAL OPTIONS
+   -h (--help)     Display command help
+   --no-color      Disable color
+   --no-tty        Disable control characters
+   -v (--verbose)  Show command activity
+   -d (--debug)    Enable debug messages
+
+DESCRIPTION
+   Show all variables defined in a definitions file once variable substitution
+   and filters are applied.
+
+   DEFINITIONS_FILE is a TOML file with variables defined like 'foo="bar"'.
+   Multiline variables are supported. See https://toml.io for more information.
 
    Please visit https://rocher.github.io/mold for a complete reference.
 

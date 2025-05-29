@@ -141,12 +141,13 @@ been read.
 
 Of course, avoid recursive and cyclic definitions:
 
-```toml title="recursive definitions"
+```toml title="INVALID cyclic and recursive definitions"
    Definition      Substitution
    -----------     ------------
-   A = "{{A}}" --> A = "{{A}}"
-   B = "{{C}}" --> B = "{{B}}"
-   C = "{{B}}" --> C = "{{C}}"
+   A = "{{A}}" --> A = "{{A}}" --> "{{A}}" --> ...
+   B = "{{C}}" --> B = "{{D}}" --> "{{C}}" --> ...
+   C = "{{D}}" --> C = "{{B}}" --> "{{D}}" --> ...
+   D = "{{B}}" --> D = "{{C}}" --> "{{B}}" --> ...
 ```
 
 
@@ -267,10 +268,59 @@ Mandatory  | —       | `"{{#baz}}"` | *none*      | Error   |
 
 ## Predefined Variables
 
-### Calendar
+Mold contains a set of predefined variables that let you extract internal
+information of mold (version, license, etc) or the date and time according to
+a format.
 
-The predefined variable is `{mold-date-<FORMAT>}`, where `<FORMAT>` is a string
-to describe the desired date and time output.
+### Mold internals
+
+#### Basic information
+
+  | Name                 | Value                                   |
+  |----------------------|-----------------------------------------|
+  | `mold-version`       | 2.3.0-pre.2                             |
+  | `mold-documentation` | https://rocher.github.io/mold           |
+  | `mold-copyright`     | Copyright (c) 2023-2025 Francesc Rocher |
+  | `mold-license`       | MIT                                     |
+  | `mold-license-spdx`  | SPDX-License-Identifier: MIT            |
+
+#### Host and build information
+
+  | Name                 | Value (examples)                        |
+  |----------------------|-----------------------------------------|
+  | `mold-host-os`       | linux                                   |
+  | `mold-host-arch`     | x86_64                                  |
+  | `mold-host-distro`   | ubuntu                                  |
+  | `mold-build-profile` | DEVELOPMENT                             |
+
+Examples:
+
+  * `Mold version: {{mold-version}}` $\rightarrow$ `Mold version: 2.3.0-pre.2`
+  * `Mold license: {{mold-license}}` $\rightarrow$ `Mold license: MIT`
+
+<!-- It allows you to replace -->
+
+### Mold Settings
+
+Most of the configurable settings that mold accepts (command line arguments)
+can also be modified via predefined variables. In this case, you use them in
+the toml file to set or modify a mold setting.
+
+For example, to make sure that you always overwrite destination files, no
+matter how `mold apply` is invoked, you can use:
+
+```toml title="mold.toml"
+    # other regular variable definitions
+    ...
+    mold-overwrite-destination-files = "true"
+```
+
+See [section Settings](#settings) for more information.
+
+### Date and time variables
+
+A predefined date variable has the form `{mold-date-<FORMAT>}`, where
+`<FORMAT>` is a string to describe the desired date and time output.
 
 `<FORMAT>` follows the GNU Date Specification and accepts the following tags:
 
@@ -346,14 +396,23 @@ to describe the desired date and time output.
     | `US_Date`  | Equivalent to `%m/%d/%y`               |
     | `EU_Date`  | Equivalent to `%d/%m/%y`               |
 
-Examples, assuming date is `2024-08-22:20T08:19+2`:
+Examples:
 
-  * `{mold-date-%H}` $\rightarrow$ `"Hell0, w0rld"`
+  * `Today is {{mold-date-ISO_Date}}` $\rightarrow$ `Today is 2025-05-21`
+  * `{{mold-date-%H}}` $\rightarrow$ `13`
+  * `{{mold-date-%I%p}}` $\rightarrow$ `13PM`
+  * `{{mold-date-%A-%B-%d}}` $\rightarrow$ `Wednesday-May-21`
+  * `{{mold-date-%o}}` $\rightarrow$ `810831000`
 
-### Mold Settings
+???+ note "Unique point in time"
 
-Most of the configurable settings that mold accepts can be also modified via
-predefined variables. See section [Settings](#settings) for more information.
+    All date/time variables are referred to the same point in time. That is,
+    there is a time variable that is instantiated with the clock time when
+    `mold` is launched, and all date/time variables are referred to this
+    variable. This means that, if you use two times the expression
+    `{{mold-date-%o}}` to get the nanoseconds, you always will get the same
+    result, no matter if both expressions are separated in time by several
+    variables replaced in different files.
 
 
 ## Text Filters
@@ -504,6 +563,15 @@ filters that can delete some characters starts with an uppercase letter.
     + `"Hello, world"/s*` $\rightarrow$ `"************"`
     + `"Hello, world"/Do` $\rightarrow$ `"Hell, wrld"`
 
+!!! example end "Filers and predefined variables"
+
+    Filters can be applied to predefined variables, e.g. to `mold-date<FORMAT>` variables:
+
+      * `{{mold-date-ISO_Time}}` $\rightarrow$ `2025-05-10T22:47:28+02`
+      * `{{mold-date-ISO_Time/ra0O}}` $\rightarrow$ `2O25-O5-1OT22:47:28+O2`
+      * `{{mold-date-ISO_Time/ra0O/ra5S}}` $\rightarrow$ `2O2S-OS-1OT22:47:28+O2`
+      * `{{mold-date-ISO_Time/ra0O/ra5S/ra4A}}` $\rightarrow$ `2O2S-OS-1OT22:A7:28+O2`
+
 #### Padding and truncating
 
 !!! example inline end "Number formatting"
@@ -602,12 +670,43 @@ element of the array of texts filters points to a function that returns a
 sequence of `"---"` with the same length of the argument, the resulting
 substitution would be:
 
-```md title="README.mb.mold"
+```md title="README.mb"
    README, please
    --------------
    Hello , this is just an example text
 ```
 
+!!! danger "Security Alert"
+
+    Custom filters can run arbitrary code. Use them only on your own. Do not
+    run modified versions of the library that offer _awesome custom filters_
+    if you do not trust the author or the source.
+
+### Variable substitution
+
+When using text filter with variable values, the replacement algorithm applies
+first all variable substitution and then applies all filters.
+
+For example, if date/time variables are defined like this:
+
+```toml title="date-time.toml"
+   date-time = "Date {{mold-date-ISO_Date}} and time {{mold-date-ISO_time}}"
+   date_time = "{{date-time/ra-_}}"  # replace all '-' with '_'
+```
+
+when applied to the file:
+
+```txt title="destination.txt.mold"
+   date-time is {{date-time}}
+   date_time is {{date_time}}
+```
+
+the result is this:
+
+```txt title="destination.txt"
+   date-time is Date 2025-05-29 and time 2025-05-29T19:30:36+02
+   date_time is DAte 2025_05_29 and time 2025_05_29T19:30:36+02
+```
 
 ## Filename Substitution
 
@@ -629,7 +728,7 @@ would generate, with the above definitions, a new file called
 
 Substitution in filenames is enabled by default, but can be disabled.
 
-!!! danger "Warning"
+!!! warning "Warning"
 
     Although it is possible to use directory names in variables definitions,
     like `world = "foo/bar"` to generate the file `README_foo/bar.md`, it is a
@@ -657,7 +756,7 @@ implementations. There is a flag in the `mold` tool with the exact meaning:
 
 ### Defined Settings
 
-All above settings can be defined also in the definitions file, except the
+All the above settings can be defined also in the definitions file, except the
 `Enable_Defined_Settings` itself.
 
 All variables starting with the prefix `mold-` are considered by Mold as
@@ -667,7 +766,7 @@ behaves by changing a Mold setting.
 For example,
 
 ```toml title="mold.toml"
-   mold-delete-source-files = "false"
+   mold-delete-source-files = "true"
 
    TITLE   = "README, please"
    world   = "World"
@@ -684,32 +783,39 @@ Setting variables can be used also as a normal variable, so for example
    Hello {{ world }}, ths is just an {{           example  }}
 
    Note: This file generated with defined settings
-         `mold-delete-source-files`          = "{{?mold-delete-source-files}}"
-         `mold-overwrite-destination-files`  = "{{?mold-overwrite-destination-files}}"
+         `mold-delete-source-files`         = "{{mold-delete-source-files}}"
+         `mold-overwrite-destination-files` = "{{mold-overwrite-destination-files}}"
 ```
 
 would generate
+
+!!! info inline end note "Values"
+
+    The value of `mold-delete-source-file` comes from the toml file. The value
+    of `mold-overwrite-destination-files` is the default value for that setting.
+
 
 ```md title="README_World.md"
    README, please
    Hello World, ths is just an example text
 
    Note: This file generated with defined settings
-         `mold-delete-source-files`                   = "false"
-         `mold-overwrite-overwrite-destination-files` = ""
+         `mold-delete-source-files`         = "true"
+         `mold-overwrite-destination-files` = "true"
 ```
 
-Defined setting variables available are, for the corresponding settings
+
+The set of defined setting available are, for the corresponding settings
 defined in [Settings](#settings):
 
-| Setting                       | Variable                           |
-| ----------------------------- | ---------------------------------- |
-| `Replacement_In_Filenames`    | `mold-replacement-in-filenames`    |
-| `Replacement_In_Variables`    | `mold-replacement-in-variables`    |
-| `Delete_Source_Files`         | `mold-delete-source-files`         |
-| `Overwrite_Destination_Files` | `mold-overwrite-destination-files` |
-| `Enable_Defined_Settings`     | `mold-enable-defined-settings`     |
-| `On_Undefined`                | `mold-on-undefined`                |
+| Setting                       | Variable                           | Possible values              |
+| ----------------------------- | ---------------------------------- | ---------------------------- |
+| `Replacement_In_Filenames`    | `mold-replacement-in-filenames`    | `True`, `False`              |
+| `Replacement_In_Variables`    | `mold-replacement-in-variables`    | `True`, `False`              |
+| `Delete_Source_Files`         | `mold-delete-source-files`         | `True`, `False`              |
+| `Overwrite_Destination_Files` | `mold-overwrite-destination-files` | `True`, `False`              |
+| `Enable_Defined_Settings`     | `mold-enable-defined-settings`     | `True`, `False`              |
+| `On_Undefined`                | `mold-on-undefined`                | `Ignore`, `Warning`, `Error` |
 
 
 ## Template Inclusion
