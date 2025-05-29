@@ -9,7 +9,9 @@
   {
     "version": "2.0",
     "title": "Release 2.0",
-    "aliases": []
+    "aliases": [
+      "latest"
+    ]
   },
   {
     "version": "1.0",
